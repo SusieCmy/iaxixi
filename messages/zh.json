@@ -73,6 +73,7 @@
     "title": "AI 助手",
     "subtitle": "DeepSeek AI",
     "clearChat": "清空",
+    "clearChatConfirm": "确定要清空所有对话记录吗？此操作无法撤销。",
     "you": "你",
     "ai": "AI",
     "thinking": "思考中...",

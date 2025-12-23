@@ -21,7 +21,7 @@ export const MessageInput = forwardRef<HTMLTextAreaElement, MessageInputProps>(
   ({ value, onChange, onSend, onKeyDown, disabled, isLoading }, ref) => {
     return (
       <div className="safe-bottom flex-none border-base-300 border-t bg-base-100">
-        <div className="mx-auto max-w-4xl px-3 py-3 sm:px-4 sm:py-4 md:px-6">
+        <div className="mx-auto max-w-screen-2xl px-3 py-3 sm:px-4 sm:py-4 md:px-6">
           <div className="flex gap-2 rounded-xl border-2 border-base-300 bg-base-200 p-2 transition-colors duration-200 focus-within:border-primary sm:gap-3 sm:p-3">
             <textarea
               ref={ref}

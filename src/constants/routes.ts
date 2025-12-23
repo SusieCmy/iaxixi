@@ -5,6 +5,7 @@
 
 export const ROUTES = {
   // 主要页面
+  INDEX: '/',
   HOME: '/home',
   ABOUT: '/about',
   CONTACT: '/contact',

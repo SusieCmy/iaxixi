@@ -20,6 +20,7 @@ export default function DialoguePage() {
   const [streamingMessageId, setStreamingMessageId] = useState<string | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
+  const currentAssistantMessageIdRef = useRef<string>('')
 
   // 使用 React Query mutation 发送消息
   const sendMessageMutation = useSendMessage({
@@ -31,12 +32,13 @@ export default function DialoguePage() {
     },
     onError: (error) => {
       setStreamingMessageId(null)
-      addMessage({
-        id: `error-${Date.now()}`,
-        role: 'assistant',
-        content: `❌ 错误: ${error.message || '发送失败，请重试'}`,
-        timestamp: Date.now(),
-      })
+      // 更新已存在的 assistant 消息为错误内容，而不是新增消息
+      if (currentAssistantMessageIdRef.current) {
+        updateMessage(
+          currentAssistantMessageIdRef.current,
+          `❌ 错误: ${error.message || '发送失败，请重试'}`
+        )
+      }
     },
   })
 
@@ -68,6 +70,9 @@ export default function DialoguePage() {
       timestamp: Date.now(),
     }
 
+    // 保存 assistantMessageId 供 onError 使用
+    currentAssistantMessageIdRef.current = assistantMessage.id
+
     addMessage(userMessage)
     addMessage(assistantMessage)
     setInput('')
@@ -90,6 +95,9 @@ export default function DialoguePage() {
         content: '',
         timestamp: Date.now(),
       }
+
+      // 保存 assistantMessageId 供 onError 使用
+      currentAssistantMessageIdRef.current = newAssistantMessage.id
 
       clearMessages()
       messagesToKeep.forEach((msg) => addMessage(msg))

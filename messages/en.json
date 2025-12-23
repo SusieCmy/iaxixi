@@ -73,6 +73,7 @@
     "title": "AI Assistant",
     "subtitle": "DeepSeek AI",
     "clearChat": "Clear",
+    "clearChatConfirm": "Are you sure you want to clear all chat history? This action cannot be undone.",
     "you": "You",
     "ai": "AI",
     "thinking": "Thinking...",
