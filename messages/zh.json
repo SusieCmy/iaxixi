@@ -1,0 +1,185 @@
+{
+  "nav": {
+    "home": "首页",
+    "homeDesc": "个人介绍",
+    "blog": "博客",
+    "blogDesc": "技术文章",
+    "aigc": "AIGC",
+    "aigcDesc": "AI 内容",
+    "dialogue": "AI对话",
+    "dialogueDesc": "AI 对话",
+    "dashboard": "数据大屏",
+    "dashboardDesc": "数据看板",
+    "projects": "项目",
+    "projectsDesc": "项目经历",
+    "about": "关于",
+    "aboutDesc": "关于我",
+    "contact": "联系",
+    "contactDesc": "联系方式",
+    "toggleTheme": "切换主题",
+    "toggleToDark": "切换到深色模式",
+    "toggleToLight": "切换到浅色模式",
+    "toggleMenu": "切换菜单",
+    "closeMenu": "关闭菜单"
+  },
+  "common": {
+    "loading": "加载中...",
+    "error": "出错了",
+    "retry": "重试",
+    "cancel": "取消",
+    "confirm": "确认",
+    "save": "保存",
+    "delete": "删除",
+    "edit": "编辑",
+    "search": "搜索",
+    "filter": "筛选",
+    "sort": "排序",
+    "viewMore": "查看更多",
+    "backToHome": "返回首页"
+  },
+  "toast": {
+    "workflowCreateSuccess": "工作流创建成功！",
+    "workflowSaveSuccess": "工作流保存成功！",
+    "saveFailed": "保存失败，请重试",
+    "pleaseEnterWorkflowName": "请输入工作流名称",
+    "workflowDeleted": "工作流已删除",
+    "deleteFailed": "删除失败，请重试",
+    "triggerTypeSet": "已设置触发类型：{name}",
+    "connectionDeleted": "已删除连接",
+    "nodeAdded": "已添加节点：{name}",
+    "nodeDeleted": "已删除节点",
+    "createFailed": "创建失败，请重试",
+    "workflowStarted": "工作流已开始运行"
+  },
+  "home": {
+    "name": "陈慕宇",
+    "position": "前端开发工程师",
+    "aboutTitle": "关于我",
+    "description": "热爱编程，专注于前端技术栈的探索与实践。擅长使用 React、Next.js 等现代框架构建高性能 Web 应用。持续关注前沿技术，致力于提升用户体验和开发效率。",
+    "stats": {
+      "projects": "项目经验",
+      "articles": "技术文章",
+      "stars": "开源贡献",
+      "followers": "关注者"
+    },
+    "techStack": "技术栈",
+    "frontendFramework": "前端框架",
+    "stateManagement": "状态管理",
+    "styling": "样式方案",
+    "backendServices": "后端服务",
+    "devTools": "开发工具"
+  },
+  "chat": {
+    "title": "AI 助手",
+    "subtitle": "DeepSeek AI",
+    "clearChat": "清空",
+    "you": "你",
+    "ai": "AI",
+    "thinking": "思考中...",
+    "regenerate": "重新生成",
+    "inputPlaceholder": "输入消息...",
+    "emptyTitle": "开始新对话",
+    "emptyDescription": "探索 AI 的无限可能，从以下话题开始，或输入您感兴趣的任何内容",
+    "quickPrompts": {
+      "quantum": "解释量子计算原理",
+      "reactHook": "写一个 React Hook",
+      "typescript": "TypeScript 学习建议",
+      "performance": "网站性能优化技巧"
+    }
+  },
+  "blog": {
+    "title": "技术博客",
+    "readTime": "{minutes} 分钟阅读",
+    "publishedOn": "发布于",
+    "tags": "标签",
+    "toc": "目录",
+    "backToBlog": "返回博客",
+    "notFound": "文章未找到",
+    "notFoundDesc": "抱歉，您访问的文章不存在",
+    "relatedPosts": "相关文章"
+  },
+  "workflow": {
+    "title": "AIGC 工作流",
+    "createNew": "创建工作流",
+    "editWorkflow": "编辑工作流",
+    "deleteWorkflow": "删除工作流",
+    "workflowName": "工作流名称",
+    "workflowDesc": "工作流描述",
+    "nodes": "节点",
+    "edges": "连线",
+    "save": "保存",
+    "cancel": "取消"
+  },
+  "metadata": {
+    "siteTitle": "chenmuyu - iaxixi.com",
+    "siteDescription": "chenmuyu的个人网站，分享前端技术、项目经验和个人思考",
+    "keywords": "前端开发,React,Next.js,TypeScript,个人博客"
+  },
+  "userInfo": {
+    "name": "陈慕宇",
+    "position": "前端开发工程师",
+    "location": "长沙",
+    "timeline": "2019 至今",
+    "aboutTitle": "关于我",
+    "introduction": "欢迎来到陈慕宇的个人网站！我是一名前端开发工程师，专注于现代前端技术。这个网站会记录本人平时使用 / 学习的技术栈以及一些个人的见解。希望你能喜欢这里的内容！",
+    "tags": {
+      "webDeveloper": "Web Developer",
+      "fullStack": "Full Stack",
+      "openSource": "Open Source"
+    },
+    "stats": {
+      "title": "数据统计",
+      "projectExperience": "项目经验",
+      "techArticles": "技术文章",
+      "openSource": "开源贡献",
+      "codeLines": "代码行数",
+      "projectsValue": "5+年",
+      "articlesValue": "50+篇",
+      "openSourceValue": "20+次",
+      "codeLinesValue": "100k+"
+    },
+    "quickAccess": {
+      "title": "快速访问",
+      "blog": "技术博客",
+      "projects": "项目经历"
+    },
+    "techStack": {
+      "title": "技术广度",
+      "frontend": "前端框架",
+      "styling": "样式方案",
+      "tools": "开发工具",
+      "others": "其他技能",
+      "learning": "正在学习"
+    }
+  },
+  "footer": {
+    "blog": "日记",
+    "projects": "历程",
+    "about": "关于我",
+    "contact": "联系我"
+  },
+  "aigc": {
+    "title": "我的工作流",
+    "subtitle": "创建和管理你的 AI 工作流",
+    "createWorkflow": "创建工作流",
+    "emptyTitle": "还没有工作流",
+    "emptyDescription": "点击上方按钮创建你的第一个工作流",
+    "noDescription": "暂无描述",
+    "nodeCount": "{count} 节点",
+    "deleteWorkflow": "删除工作流",
+    "backToList": "返回工作流列表",
+    "editWorkflowInfo": "编辑工作流信息",
+    "edit": "编辑",
+    "save": "保存",
+    "saveWorkflow": "保存工作流",
+    "defaultTriggerLabel": "选择触发条件",
+    "untitledWorkflow": "未命名工作流",
+    "addNextNode": "添加下一个节点",
+    "deleteNode": "删除节点",
+    "workflowEditorError": "工作流编辑器错误",
+    "workflowEditorErrorMessage": "抱歉，工作流编辑器遇到了问题，请尝试重新加载",
+    "reloadEditor": "重新加载编辑器",
+    "runWorkflow": "运行工作流",
+    "running": "运行中..."
+  }
+}

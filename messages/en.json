@@ -1,0 +1,185 @@
+{
+  "nav": {
+    "home": "Home",
+    "homeDesc": "Personal Introduction",
+    "blog": "Blog",
+    "blogDesc": "Tech Articles",
+    "aigc": "AIGC",
+    "aigcDesc": "AI Content",
+    "dialogue": "AI Chat",
+    "dialogueDesc": "AI Dialogue",
+    "dashboard": "Dashboard",
+    "dashboardDesc": "Data Dashboard",
+    "projects": "Projects",
+    "projectsDesc": "Project Experience",
+    "about": "About",
+    "aboutDesc": "About Me",
+    "contact": "Contact",
+    "contactDesc": "Contact Info",
+    "toggleTheme": "Toggle Theme",
+    "toggleToDark": "Switch to Dark Mode",
+    "toggleToLight": "Switch to Light Mode",
+    "toggleMenu": "Toggle Menu",
+    "closeMenu": "Close Menu"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error occurred",
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "viewMore": "View More",
+    "backToHome": "Back to Home"
+  },
+  "toast": {
+    "workflowCreateSuccess": "Workflow created successfully!",
+    "workflowSaveSuccess": "Workflow saved successfully!",
+    "saveFailed": "Save failed, please try again",
+    "pleaseEnterWorkflowName": "Please enter workflow name",
+    "workflowDeleted": "Workflow deleted",
+    "deleteFailed": "Delete failed, please try again",
+    "triggerTypeSet": "Trigger type set: {name}",
+    "connectionDeleted": "Connection deleted",
+    "nodeAdded": "Node added: {name}",
+    "nodeDeleted": "Node deleted",
+    "createFailed": "Create failed, please try again",
+    "workflowStarted": "Workflow started"
+  },
+  "home": {
+    "name": "Chen Muyu",
+    "position": "Front-End Development Engineer",
+    "aboutTitle": "About Me",
+    "description": "Passionate about programming, focused on exploring and practicing front-end technology stack. Proficient in building high-performance web applications using modern frameworks such as React and Next.js. Continuously following cutting-edge technologies, committed to improving user experience and development efficiency.",
+    "stats": {
+      "projects": "Project Experience",
+      "articles": "Tech Articles",
+      "stars": "Open Source",
+      "followers": "Followers"
+    },
+    "techStack": "Tech Stack",
+    "frontendFramework": "Frontend Framework",
+    "stateManagement": "State Management",
+    "styling": "Styling",
+    "backendServices": "Backend Services",
+    "devTools": "Dev Tools"
+  },
+  "chat": {
+    "title": "AI Assistant",
+    "subtitle": "DeepSeek AI",
+    "clearChat": "Clear",
+    "you": "You",
+    "ai": "AI",
+    "thinking": "Thinking...",
+    "regenerate": "Regenerate",
+    "inputPlaceholder": "Type a message...",
+    "emptyTitle": "Start New Conversation",
+    "emptyDescription": "Explore the infinite possibilities of AI, start with the topics below, or enter anything you're interested in",
+    "quickPrompts": {
+      "quantum": "Explain quantum computing principles",
+      "reactHook": "Write a React Hook",
+      "typescript": "TypeScript learning advice",
+      "performance": "Website performance optimization tips"
+    }
+  },
+  "blog": {
+    "title": "Tech Blog",
+    "readTime": "{minutes} min read",
+    "publishedOn": "Published on",
+    "tags": "Tags",
+    "toc": "Table of Contents",
+    "backToBlog": "Back to Blog",
+    "notFound": "Article Not Found",
+    "notFoundDesc": "Sorry, the article you're looking for doesn't exist",
+    "relatedPosts": "Related Posts"
+  },
+  "workflow": {
+    "title": "AIGC Workflow",
+    "createNew": "Create Workflow",
+    "editWorkflow": "Edit Workflow",
+    "deleteWorkflow": "Delete Workflow",
+    "workflowName": "Workflow Name",
+    "workflowDesc": "Workflow Description",
+    "nodes": "Nodes",
+    "edges": "Edges",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "metadata": {
+    "siteTitle": "chenmuyu - iaxixi.com",
+    "siteDescription": "Chen Muyu's personal website, sharing front-end technology, project experience and personal thoughts",
+    "keywords": "Front-end Development,React,Next.js,TypeScript,Personal Blog"
+  },
+  "userInfo": {
+    "name": "Chen Muyu",
+    "position": "Front-End Development Engineer",
+    "location": "Changsha",
+    "timeline": "Since 2019",
+    "aboutTitle": "About Me",
+    "introduction": "Welcome to Chen Muyu's personal website! I'm a front-end development engineer focusing on modern front-end technologies. This site documents the tech stacks I use and learn, along with my personal insights. Hope you enjoy the content here!",
+    "tags": {
+      "webDeveloper": "Web Developer",
+      "fullStack": "Full Stack",
+      "openSource": "Open Source"
+    },
+    "stats": {
+      "title": "Statistics",
+      "projectExperience": "Project Experience",
+      "techArticles": "Tech Articles",
+      "openSource": "Open Source",
+      "codeLines": "Code Lines",
+      "projectsValue": "5+ Years",
+      "articlesValue": "50+ Posts",
+      "openSourceValue": "20+ Contributions",
+      "codeLinesValue": "100k+"
+    },
+    "quickAccess": {
+      "title": "Quick Access",
+      "blog": "Tech Blog",
+      "projects": "Projects"
+    },
+    "techStack": {
+      "title": "Tech Stack",
+      "frontend": "Frontend Frameworks",
+      "styling": "Styling Solutions",
+      "tools": "Development Tools",
+      "others": "Other Skills",
+      "learning": "Currently Learning"
+    }
+  },
+  "footer": {
+    "blog": "Blog",
+    "projects": "Projects",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "aigc": {
+    "title": "My Workflows",
+    "subtitle": "Create and manage your AI workflows",
+    "createWorkflow": "Create Workflow",
+    "emptyTitle": "No workflows yet",
+    "emptyDescription": "Click the button above to create your first workflow",
+    "noDescription": "No description",
+    "nodeCount": "{count} nodes",
+    "deleteWorkflow": "Delete workflow",
+    "backToList": "Back to workflow list",
+    "editWorkflowInfo": "Edit workflow info",
+    "edit": "Edit",
+    "save": "Save",
+    "saveWorkflow": "Save workflow",
+    "defaultTriggerLabel": "Select trigger condition",
+    "untitledWorkflow": "Untitled Workflow",
+    "addNextNode": "Add next node",
+    "deleteNode": "Delete node",
+    "workflowEditorError": "Workflow Editor Error",
+    "workflowEditorErrorMessage": "Sorry, the workflow editor encountered an error. Please try reloading.",
+    "reloadEditor": "Reload Editor",
+    "runWorkflow": "Run Workflow",
+    "running": "Running..."
+  }
+}

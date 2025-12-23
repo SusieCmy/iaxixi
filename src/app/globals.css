@@ -1,0 +1,142 @@
+/*
+ * @Date: 2025-07-07 10:29:58
+ * @LastEditors: cmy && 1732728869@qq.com
+ * @LastEditTime: 2025-07-25 09:00:01
+ * @FilePath: \susie-cmy\src\app\globals.css
+ * @Description: 强者都是孤独的
+ */
+@import "@xyflow/react/dist/style.css";
+@import "tailwindcss";
+@plugin "daisyui" {
+  prefix: "cmy-";
+  /* biome-ignore lint/correctness/noUnknownProperty: Tailwind CSS 4 syntax */
+  themes:
+    light --default,
+    dark --prefersdark;
+}
+
+[data-theme="light"] {
+  --color-neutral-cmy: var(--color-neutral-content);
+  scrollbar-color: #6366f1 #e5e7eb;
+}
+
+[data-theme="dark"] {
+  --color-neutral-cmy: var(--color-neutral);
+  scrollbar-color: #8b5cf6 #374151;
+}
+
+:root {
+  .cmy-header-border {
+    border-color: var(--color-neutral-cmy);
+  }
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* 添加行截断支持 */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 平滑滚动 */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 自定义滚动条样式 - 优化版 */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--p) / 0.3) transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 100px;
+  margin: 8px 0;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, hsl(var(--p) / 0.4), hsl(var(--p) / 0.3));
+  border-radius: 100px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: all 0.2s ease;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, hsl(var(--p) / 0.6), hsl(var(--p) / 0.5));
+  border-width: 1px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(180deg, hsl(var(--p) / 0.8), hsl(var(--p) / 0.7));
+}
+
+/* 自定义动画 */
+@keyframes slideInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-up {
+  animation: slideInUp 0.2s ease-out forwards;
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 3s linear infinite;
+}
+
+/* 径向渐变背景 */
+.bg-gradient-radial {
+  background: radial-gradient(circle, currentColor 0%, transparent 70%);
+}
+
+/* ReactFlow Customization */
+.react-flow__node:focus,
+.react-flow__node.selected {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.react-flow__node {
+  border: none !important;
+  width: auto !important; /* 让节点宽度由内容决定 */
+  padding: 0 !important; /* 移除默认内边距 */
+  background: transparent !important; /* 移除默认背景 */
+}

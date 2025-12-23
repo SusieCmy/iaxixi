@@ -1,0 +1,64 @@
+{
+  "name": "chenmuyu",
+  "version": "0.1.1",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "rimraf .next && next build",
+    "start": "next start",
+    "lint": "bunx biome check --write --unsafe  .",
+    "lint:check": "bunx biome check --unsafe  .",
+    "format": "bunx biome format --write  .",
+    "format:check": "bunx biome format .",
+    "type-check": "tsc --noEmit",
+    "clean": "rimraf .next node_modules/.cache",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,css,md}": [
+      "bunx biome check --write --files-ignore-unknown=true --no-errors-on-unmatched"
+    ]
+  },
+  "overrides": {
+    "next": "^16.0.9",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2"
+  },
+  "dependencies": {
+    "@next/third-parties": "^16.0.1",
+    "@tanstack/react-query": "^5.90.12",
+    "@xyflow/react": "^12.9.3",
+    "animejs": "^4.2.2",
+    "clsx": "^2.1.1",
+    "daisyui": "^5.0.46",
+    "gray-matter": "^4.0.3",
+    "lucide-react": "^0.554.0",
+    "next": "^16.0.10",
+    "next-intl": "^4.6.1",
+    "openai": "^6.9.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-is": "^19.2.0",
+    "react-markdown": "^10.1.0",
+    "react-syntax-highlighter": "^15.6.1",
+    "recharts": "^3.4.1",
+    "tailwind-merge": "^3.4.0",
+    "zustand": "^5.0.6"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.0.0-beta.5",
+    "@tailwindcss/postcss": "^4",
+    "@tanstack/react-query-devtools": "^5.91.1",
+    "@types/node": "^20",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@types/react-syntax-highlighter": "^15.5.13",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "rimraf": "^6.0.1",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

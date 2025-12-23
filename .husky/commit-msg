@@ -1,0 +1,19 @@
+# Commit message 格式验证
+commit_msg=$(cat "$1")
+
+# 允许的格式：feat: / fix: / docs: / style: / refactor: / test: / chore:
+if ! echo "$commit_msg" | grep -qE "^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\(.+\))?: .{1,}$"; then
+  echo "❌ Commit 消息格式错误！"
+  echo ""
+  echo "正确格式："
+  echo "  feat: 添加新功能"
+  echo "  fix: 修复 bug"
+  echo "  docs: 更新文档"
+  echo "  style: 代码格式调整"
+  echo "  refactor: 重构代码"
+  echo "  test: 添加测试"
+  echo "  chore: 其他改动"
+  echo ""
+  echo "你的消息: $commit_msg"
+  exit 1
+fi
