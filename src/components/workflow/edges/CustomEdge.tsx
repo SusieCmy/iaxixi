@@ -48,7 +48,7 @@ function CustomEdge({
         className="cursor-pointer"
       />
 
-      {/* 主路径 - 浅灰色底色 */}
+      {/* 主路径 - 静态实线 (执行时淡出) */}
       <BaseEdge
         path={edgePath}
         markerEnd={markerEnd}
@@ -56,6 +56,8 @@ function CustomEdge({
           ...style,
           strokeWidth: 2,
           stroke: '#cbd5e1', // slate-300
+          opacity: data?.isExecuting ? 0 : 1, // 执行时隐藏
+          transition: 'opacity 0.5s ease',
         }}
       />
 
@@ -73,7 +75,7 @@ function CustomEdge({
         `}
       </style>
 
-      {/* 动画路径 - 虚线流动效果 */}
+      {/* 动画路径 - 动态虚线 (执行时淡入) */}
       <BaseEdge
         path={edgePath}
         style={{
@@ -82,8 +84,8 @@ function CustomEdge({
           stroke: '#8b5cf6', // violet-500
           strokeDasharray: '5 5',
           animation: data?.isExecuting ? 'flowAnimation 1s linear infinite' : 'none',
-          opacity: data?.isExecuting ? 1 : 0, // 只有执行时才显示紫色虚线
-          transition: 'opacity 0.3s ease',
+          opacity: data?.isExecuting ? 1 : 0, // 执行时显示
+          transition: 'opacity 0.8s ease',
           fill: 'none',
         }}
       />

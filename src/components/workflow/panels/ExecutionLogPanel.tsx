@@ -90,9 +90,8 @@ function ExecutionLogPanel({ isOpen, onClose, logs, isRunning }: ExecutionLogPan
               >
                 <div className="flex items-start gap-2">
                   <Icon
-                    className={`mt-0.5 h-4 w-4 ${config.color} ${
-                      log.status === 'running' ? 'animate-spin' : ''
-                    }`}
+                    className={`mt-0.5 h-4 w-4 ${config.color} ${log.status === 'running' ? 'animate-spin' : ''
+                      }`}
                   />
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center justify-between gap-2">

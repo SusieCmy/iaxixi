@@ -6,6 +6,7 @@
 import { Handle, Position } from '@xyflow/react'
 import { Box, MoreHorizontal, Play, Plus, Trash2 } from 'lucide-react'
 import { memo } from 'react'
+import { cn } from '@/utils/cn'
 
 interface DefaultNodeProps {
   data: {
@@ -48,18 +49,24 @@ function DefaultNode({ data, selected }: DefaultNodeProps) {
     <div className="group relative">
       {/* 节点主体 */}
       <div
-        className={`relative min-w-[240px] overflow-hidden rounded-xl border-2 transition-all duration-200 ${statusStyles.border} ${statusStyles.bg}`}
+        className={cn(
+          'relative min-w-[240px] overflow-hidden rounded-xl border-2 transition-all duration-200',
+          statusStyles.border,
+          statusStyles.bg
+        )}
       >
         {/* 标题栏 */}
         <div
-          className={`flex items-center gap-2 border-base-200 border-b px-3 py-2.5 ${
+          className={cn(
+            'flex items-center gap-2 border-base-200 border-b px-3 py-2.5',
             data.status === 'error' ? 'bg-error/5' : 'bg-base-50/50'
-          }`}
+          )}
         >
           <div
-            className={`flex h-8 w-8 items-center justify-center rounded-lg ${
+            className={cn(
+              'flex h-8 w-8 items-center justify-center rounded-lg',
               data.status === 'error' ? 'bg-error/20 text-error' : 'bg-primary/10 text-primary'
-            }`}
+            )}
           >
             <Box className="h-4 w-4" />
           </div>
@@ -82,23 +89,31 @@ function DefaultNode({ data, selected }: DefaultNodeProps) {
         </div>
 
         {/* 底部状态栏 */}
-        {data.status === 'running' && (
-          <div className="flex items-center gap-1.5 border-base-200 border-t bg-base-50/30 px-3 py-1.5 text-primary text-xs">
-            <Play className="h-3 w-3 animate-spin" />
-            <span>运行中...</span>
-          </div>
-        )}
-        {data.status === 'error' && (
-          <div className="flex items-center gap-1.5 border-error/20 border-t bg-error/10 px-3 py-1.5 text-error text-xs">
-            <span>❌ 执行失败</span>
-          </div>
-        )}
-        {data.status === 'success' && (
-          <div className="flex items-center gap-1.5 border-success/20 border-t bg-success/10 px-3 py-1.5 text-success text-xs">
-            <span>✓ 执行成功</span>
-          </div>
-        )}
+        {/* 底部状态栏 - 绝对定位在左下角 */}
       </div>
+
+      {/* 底部状态栏 - 绝对定位在左下角 */}
+      {data.status && data.status !== 'idle' && (
+        <div
+          className={cn(
+            'absolute -bottom-2 -left-2 flex items-center gap-1.5 rounded-lg border px-2 py-1 text-xs font-medium shadow-sm backdrop-blur-md transition-all',
+            data.status === 'running'
+              ? 'border-primary/20 bg-primary/5 text-primary'
+              : data.status === 'success'
+                ? 'border-success/20 bg-success/5 text-success'
+                : 'border-error/20 bg-error/5 text-error'
+          )}
+        >
+          {data.status === 'running' && <Play className="h-3 w-3 animate-spin" />}
+          <span>
+            {data.status === 'running'
+              ? '运行中...'
+              : data.status === 'success'
+                ? '执行成功'
+                : '执行失败'}
+          </span>
+        </div>
+      )}
 
       {/* 左侧 - 输入 */}
       <Handle
