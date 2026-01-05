@@ -127,8 +127,10 @@ export default function WorkflowEditor() {
             return
           }
         } else {
-          // 未开启异常处理，保持原有逻辑（只能有一个输出）
-          const hasOutput = edges.some((edge) => edge.source === params.source)
+          // 未开启异常处理，检查 source-default Handle 是否已有连接
+          const hasOutput = edges.some(
+            (edge) => edge.source === params.source && (edge.sourceHandle === 'source-default' || !edge.sourceHandle)
+          )
           if (hasOutput) {
             toast.error(tToast('singleOutputLimit'))
             return
@@ -156,11 +158,43 @@ export default function WorkflowEditor() {
   // 保存节点配置
   const handleNodeSave = (nodeData: { label: string; description: string; enableErrorHandling?: boolean }) => {
     if (!selectedNode) return
+
+    const wasErrorHandlingEnabled = selectedNode.data?.enableErrorHandling
+    const isErrorHandlingEnabled = nodeData.enableErrorHandling
+
+    // 更新节点数据
     setNodes((nds) =>
       nds.map((node) =>
         node.id === selectedNode.id ? { ...node, data: { ...node.data, ...nodeData } } : node
       )
     )
+
+    // 如果异常处理状态发生变化，更新相关边的 sourceHandle
+    if (wasErrorHandlingEnabled !== isErrorHandlingEnabled) {
+      setEdges((eds) =>
+        eds.map((edge) => {
+          if (edge.source !== selectedNode.id) return edge
+
+          if (isErrorHandlingEnabled) {
+            // 开启异常处理：将默认 Handle 的边迁移到 source-success
+            if (!edge.sourceHandle || edge.sourceHandle === 'source-default') {
+              return { ...edge, sourceHandle: 'source-success' }
+            }
+          } else {
+            // 关闭异常处理：将 source-success 的边迁移回默认 Handle
+            if (edge.sourceHandle === 'source-success') {
+              return { ...edge, sourceHandle: 'source-default' }
+            }
+            // 删除 source-failure 的边（因为关闭异常处理后不再有失败分支）
+            if (edge.sourceHandle === 'source-failure') {
+              return null
+            }
+          }
+          return edge
+        }).filter((edge): edge is Edge => edge !== null)
+      )
+    }
+
     setSelectedNode(null)
   }
 
@@ -215,7 +249,10 @@ export default function WorkflowEditor() {
       }
       // 如果没有指定 handleId，且是普通节点（未开启异常处理的情况）
       else if (sourceNode?.type === 'default' && !sourceNode.data.enableErrorHandling) {
-        const hasOutput = edges.some((edge) => edge.source === nodeId)
+        // 检查 source-default Handle 是否已有连接
+        const hasOutput = edges.some(
+          (edge) => edge.source === nodeId && (edge.sourceHandle === 'source-default' || !edge.sourceHandle)
+        )
         if (hasOutput) {
           toast.error(tToast('singleOutputLimit'))
           return
@@ -247,11 +284,21 @@ export default function WorkflowEditor() {
 
       // 如果有源节点，自动创建连接
       if (sourceNodeId) {
+        // 确定 sourceHandle：
+        // - 如果已指定 handleId，使用它
+        // - 如果源节点是 default 类型且未开启异常处理，使用 source-default
+        // - 否则保持为 null（trigger 节点等）
+        const sourceNode = nodes.find((n) => n.id === sourceNodeId)
+        let finalSourceHandle = sourceHandleId
+        if (!sourceHandleId && sourceNode?.type === 'default' && !sourceNode.data.enableErrorHandling) {
+          finalSourceHandle = 'source-default'
+        }
+
         const newEdge: Edge = {
           id: `edge-${sourceNodeId}-${newNodeId}`,
           source: sourceNodeId,
           target: newNodeId,
-          sourceHandle: sourceHandleId,
+          sourceHandle: finalSourceHandle,
         }
         setEdges((eds) => [...eds, newEdge])
       }
@@ -260,7 +307,7 @@ export default function WorkflowEditor() {
       setSourceNodeId(null) // 重置源节点
       setSourceHandleId(null)
     },
-    [toast, sourceNodeId, sourceHandleId, tToast]
+    [toast, sourceNodeId, sourceHandleId, nodes, tToast]
   )
 
   // 删除节点

@@ -157,31 +157,37 @@ function DefaultNode({ data, selected }: DefaultNodeProps) {
         className="h-3.5! w-3.5! -left-2! border-2! border-primary! bg-base-100! transition-all hover:scale-125"
       />
 
-      {/* 右侧 - 输出 */}
-      {data.enableErrorHandling ? (
-        <>
-          {/* 成功分支 - 对应第一个标签的位置 */}
-          <Handle
-            type="source"
-            position={Position.Right}
-            id="source-success"
-            className="top-[auto]! bottom-[52px]! h-3.5! w-3.5! -right-2! border-2! border-success! bg-base-100! transition-all hover:scale-125"
-          />
-          {/* 失败分支 - 对应第二个标签的位置 */}
-          <Handle
-            type="source"
-            position={Position.Right}
-            id="source-failure"
-            className="top-[auto]! bottom-[20px]! h-3.5! w-3.5! -right-2! border-2! border-error! bg-base-100! transition-all hover:scale-125"
-          />
-        </>
-      ) : (
-        <Handle
-          type="source"
-          position={Position.Right}
-          className="h-3.5! w-3.5! -right-2! border-2! border-primary! bg-base-100! transition-all hover:scale-125"
-        />
-      )}
+      {/* 右侧 - 输出（始终渲染所有 Handle，通过 CSS 控制可见性） */}
+      {/* 默认输出 Handle（无 id）- 仅在非异常处理模式下可见 */}
+      <Handle
+        type="source"
+        position={Position.Right}
+        id="source-default"
+        className={cn(
+          'h-3.5! w-3.5! -right-2! border-2! border-primary! bg-base-100! transition-all hover:scale-125',
+          data.enableErrorHandling && 'opacity-0! pointer-events-none!'
+        )}
+      />
+      {/* 成功分支 Handle - 仅在异常处理模式下可见 */}
+      <Handle
+        type="source"
+        position={Position.Right}
+        id="source-success"
+        className={cn(
+          'top-[40%]! h-3.5! w-3.5! -right-2! border-2! border-success! bg-base-100! transition-all hover:scale-125',
+          !data.enableErrorHandling && 'opacity-0! pointer-events-none!'
+        )}
+      />
+      {/* 失败分支 Handle - 仅在异常处理模式下可见 */}
+      <Handle
+        type="source"
+        position={Position.Right}
+        id="source-failure"
+        className={cn(
+          'top-[70%]! h-3.5! w-3.5! -right-2! border-2! border-error! bg-base-100! transition-all hover:scale-125',
+          !data.enableErrorHandling && 'opacity-0! pointer-events-none!'
+        )}
+      />
 
       {/* 快捷添加按钮 - 悬停显示 */}
       <div
