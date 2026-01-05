@@ -49,7 +49,9 @@
     "nodeAdded": "Node added: {name}",
     "nodeDeleted": "Node deleted",
     "createFailed": "Create failed, please try again",
-    "workflowStarted": "Workflow started"
+    "workflowStarted": "Workflow started",
+    "singleInputLimit": "Each node can only have one input connection",
+    "singleOutputLimit": "Ordinary nodes can only have one output connection"
   },
   "home": {
     "name": "Chen Muyu",
@@ -136,7 +138,7 @@
       "codeLines": "Code Lines",
       "projectsValue": "5+ Years",
       "articlesValue": "50+ Posts",
-      "openSourceValue": "20+ Contributions",
+      "openSourceValue": "0 Contributions",
       "codeLinesValue": "100k+"
     },
     "quickAccess": {

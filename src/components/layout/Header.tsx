@@ -77,7 +77,7 @@ export default function Header() {
   //   setThemeType(themeType === 'light' ? 'dark' : 'light')
   // }
   return (
-    <div className="cmy-header-border relative mx-auto flex min-h-16 max-w-screen-2xl items-center justify-between gap-4 rounded-full border-2 border-solid p-2 px-4 shadow-sm backdrop-blur-md">
+    <div className="relative mx-auto flex min-h-16 max-w-screen-2xl items-center justify-between gap-4 rounded-full p-2 px-4 shadow-sm backdrop-blur-md">
       <div className="flex h-full shrink-0 items-center">
         <Link href={'/'} title="chenmuyu">
           <div className="absolute top-3 left-0 w-48">

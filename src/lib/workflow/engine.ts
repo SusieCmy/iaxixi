@@ -61,11 +61,22 @@ export class WorkflowEngine {
           this.options.onProgress?.(nodeId, 'completed', result)
 
           // 查找并加入下一个节点
-          const nextNodes = this.findNextNodes(nodeId)
+          const nextNodes = this.findNextNodes(nodeId, 'success')
           queue.push(...nextNodes)
         } catch (error) {
           console.error(`Error executing node ${nodeId}:`, error)
           this.options.onProgress?.(nodeId, 'failed', error)
+          
+          // 检查是否开启了异常处理
+          if (node.data?.enableErrorHandling) {
+            const failureNodes = this.findNextNodes(nodeId, 'error')
+            if (failureNodes.length > 0) {
+              // 如果有失败分支，继续执行
+              queue.push(...failureNodes)
+              continue
+            }
+          }
+          
           throw error
         }
       }
@@ -77,7 +88,28 @@ export class WorkflowEngine {
     return context
   }
 
-  private findNextNodes(nodeId: string): string[] {
-    return this.edges.filter((edge) => edge.source === nodeId).map((edge) => edge.target)
+  private findNextNodes(nodeId: string, status: 'success' | 'error'): string[] {
+    const node = this.nodes.get(nodeId)
+    if (!node) return []
+
+    return this.edges
+      .filter((edge) => {
+        if (edge.source !== nodeId) return false
+
+        // 如果开启了异常处理
+        if (node.data?.enableErrorHandling) {
+          if (status === 'success') {
+            // 成功状态：只走 source-success 或默认（无 handleId）
+            return edge.sourceHandle === 'source-success' || !edge.sourceHandle
+          } else {
+            // 失败状态：只走 source-failure
+            return edge.sourceHandle === 'source-failure'
+          }
+        }
+
+        // 未开启异常处理：只在成功时走默认路径
+        return status === 'success'
+      })
+      .map((edge) => edge.target)
   }
 }

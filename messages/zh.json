@@ -49,7 +49,9 @@
     "nodeAdded": "已添加节点：{name}",
     "nodeDeleted": "已删除节点",
     "createFailed": "创建失败，请重试",
-    "workflowStarted": "工作流已开始运行"
+    "workflowStarted": "工作流已开始运行",
+    "singleInputLimit": "每个节点只能有一个输入连接",
+    "singleOutputLimit": "普通节点只能有一个输出连接"
   },
   "home": {
     "name": "陈慕宇",
@@ -136,7 +138,7 @@
       "codeLines": "代码行数",
       "projectsValue": "5+年",
       "articlesValue": "50+篇",
-      "openSourceValue": "20+次",
+      "openSourceValue": "0次",
       "codeLinesValue": "100k+"
     },
     "quickAccess": {

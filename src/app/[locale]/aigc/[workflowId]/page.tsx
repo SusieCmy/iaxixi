@@ -29,6 +29,7 @@ import TriggerTypeDrawer from '@/components/workflow/drawers/TriggerTypeDrawer'
 import WorkflowDrawer from '@/components/workflow/drawers/WorkflowDrawer'
 import CustomEdge from '@/components/workflow/edges/CustomEdge'
 import DefaultNode from '@/components/workflow/nodes/DefaultNode'
+import SwitchNode from '@/components/workflow/nodes/SwitchNode'
 import TriggerNode from '@/components/workflow/nodes/TriggerNode'
 import ExecutionLogPanel from '@/components/workflow/panels/ExecutionLogPanel'
 import { useWorkflowExecution } from '@/hooks/useWorkflowExecution'
@@ -61,6 +62,7 @@ export default function WorkflowEditor() {
   const [selectedNode, setSelectedNode] = useState<Node | null>(null)
   const [showNodeLibrary, setShowNodeLibrary] = useState(false)
   const [sourceNodeId, setSourceNodeId] = useState<string | null>(null)
+  const [sourceHandleId, setSourceHandleId] = useState<string | null>(null)
   const [showTriggerTypeDrawer, setShowTriggerTypeDrawer] = useState(false)
   const { isRunning, runWorkflow, executionLogs, showLogPanel, setShowLogPanel } =
     useWorkflowExecution(nodes, edges, setNodes, setEdges)
@@ -104,8 +106,39 @@ export default function WorkflowEditor() {
   )
 
   const onConnect = useCallback(
-    (params: Connection) => setEdges((edgesSnapshot) => addEdge(params, edgesSnapshot)),
-    []
+    (params: Connection) => {
+      // 检查目标节点是否已经有输入连接
+      const hasInput = edges.some((edge) => edge.target === params.target)
+      if (hasInput) {
+        toast.error(tToast('singleInputLimit'))
+        return
+      }
+
+      // 检查源节点（普通节点）是否已经有输出连接
+      const sourceNode = nodes.find((n) => n.id === params.source)
+      if (sourceNode?.type === 'default') {
+        // 如果开启了异常处理，检查特定 Handle 是否已有连接
+        if (sourceNode.data.enableErrorHandling) {
+          const hasHandleOutput = edges.some(
+            (edge) => edge.source === params.source && edge.sourceHandle === params.sourceHandle
+          )
+          if (hasHandleOutput) {
+            toast.error(tToast('singleOutputLimit'))
+            return
+          }
+        } else {
+          // 未开启异常处理，保持原有逻辑（只能有一个输出）
+          const hasOutput = edges.some((edge) => edge.source === params.source)
+          if (hasOutput) {
+            toast.error(tToast('singleOutputLimit'))
+            return
+          }
+        }
+      }
+
+      setEdges((edgesSnapshot) => addEdge(params, edgesSnapshot))
+    },
+    [edges, nodes, toast, tToast]
   )
 
   // 节点点击事件
@@ -121,7 +154,7 @@ export default function WorkflowEditor() {
   }, [])
 
   // 保存节点配置
-  const handleNodeSave = (nodeData: { label: string; description: string }) => {
+  const handleNodeSave = (nodeData: { label: string; description: string; enableErrorHandling?: boolean }) => {
     if (!selectedNode) return
     setNodes((nds) =>
       nds.map((node) =>
@@ -165,10 +198,36 @@ export default function WorkflowEditor() {
   )
 
   // 打开节点库（记录来源节点）
-  const handleNodeLibraryOpen = useCallback((nodeId: string) => {
-    setSourceNodeId(nodeId)
-    setShowNodeLibrary(true)
-  }, [])
+  const handleNodeLibraryOpen = useCallback(
+    (nodeId: string, handleId?: string) => {
+      // 检查源节点是否已经有输出连接
+      const sourceNode = nodes.find((n) => n.id === nodeId)
+
+      // 如果指定了 handleId (适用于 SwitchNode 和开启异常处理的 DefaultNode)
+      if (handleId) {
+        const hasHandleOutput = edges.some(
+          (edge) => edge.source === nodeId && edge.sourceHandle === handleId
+        )
+        if (hasHandleOutput) {
+          toast.error(tToast('singleOutputLimit'))
+          return
+        }
+      }
+      // 如果没有指定 handleId，且是普通节点（未开启异常处理的情况）
+      else if (sourceNode?.type === 'default' && !sourceNode.data.enableErrorHandling) {
+        const hasOutput = edges.some((edge) => edge.source === nodeId)
+        if (hasOutput) {
+          toast.error(tToast('singleOutputLimit'))
+          return
+        }
+      }
+
+      setSourceNodeId(nodeId)
+      setSourceHandleId(handleId || null)
+      setShowNodeLibrary(true)
+    },
+    [nodes, edges, toast, tToast]
+  )
 
   // 添加新节点
   const handleAddNode = useCallback(
@@ -182,7 +241,7 @@ export default function WorkflowEditor() {
           description: nodeType.description,
           nodeType: nodeType.id,
         },
-        type: 'default',
+        type: nodeType.id === 'switch' ? 'switch' : 'default',
       }
       setNodes((nds) => [...nds, newNode])
 
@@ -192,14 +251,16 @@ export default function WorkflowEditor() {
           id: `edge-${sourceNodeId}-${newNodeId}`,
           source: sourceNodeId,
           target: newNodeId,
+          sourceHandle: sourceHandleId,
         }
         setEdges((eds) => [...eds, newEdge])
       }
 
       toast.success(tToast('nodeAdded', { name: nodeType.name }))
       setSourceNodeId(null) // 重置源节点
+      setSourceHandleId(null)
     },
-    [toast, sourceNodeId, tToast]
+    [toast, sourceNodeId, sourceHandleId, tToast]
   )
 
   // 删除节点
@@ -236,10 +297,22 @@ export default function WorkflowEditor() {
           {...props}
           data={{
             ...props.data,
-            onAddNode: () => handleNodeLibraryOpen(props.id),
+            onAddNode: (handleId?: string) => handleNodeLibraryOpen(props.id, handleId),
             onDelete: () => handleDeleteNode(props.id),
             addNodeTooltip: t('addNextNode'),
             deleteNodeTooltip: t('deleteNode'),
+          }}
+        />
+      ),
+      switch: (props: any) => (
+        <SwitchNode
+          {...props}
+          data={{
+            ...props.data,
+            onDelete: () => handleDeleteNode(props.id),
+            onAddNode: (handleId?: string) => handleNodeLibraryOpen(props.id, handleId),
+            deleteNodeTooltip: t('deleteNode'),
+            addNodeTooltip: t('addNextNode'),
           }}
         />
       ),

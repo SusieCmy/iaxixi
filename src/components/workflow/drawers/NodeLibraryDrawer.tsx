@@ -60,9 +60,9 @@ const NODE_LIBRARY: NodeType[] = [
 
   // 逻辑控制节点
   {
-    id: 'condition',
-    name: '条件判断',
-    description: '根据条件执行不同的分支',
+    id: 'switch',
+    name: '分支判断',
+    description: '根据不同条件执行不同分支（1进3出）',
     icon: GitBranch,
     category: 'logic',
   },
@@ -206,9 +206,8 @@ export default function NodeLibraryDrawer({
                           onSelectNode(node)
                           onClose()
                         }}
-                        className={`w-full rounded-lg border p-4 text-left transition-all hover:shadow-md ${
-                          CATEGORY_COLORS[node.category]
-                        }`}
+                        className={`w-full rounded-lg border p-4 text-left transition-all hover:shadow-md ${CATEGORY_COLORS[node.category]
+                          }`}
                       >
                         <div className="flex items-start gap-3">
                           <div className="mt-0.5 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-base-100">

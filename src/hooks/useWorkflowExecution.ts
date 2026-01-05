@@ -117,10 +117,13 @@ export function useWorkflowExecution(
             setEdges((eds) =>
               eds.map((edge) => {
                 if (edge.source === nodeId) {
-                  return {
-                    ...edge,
-                    data: { ...edge.data, isExecuting: true },
-                    animated: true,
+                  // 只激活成功分支或默认分支
+                  if (edge.sourceHandle === 'source-success' || !edge.sourceHandle) {
+                    return {
+                      ...edge,
+                      data: { ...edge.data, isExecuting: true },
+                      animated: true,
+                    }
                   }
                 }
                 return edge
@@ -129,8 +132,28 @@ export function useWorkflowExecution(
           } else if (status === 'failed') {
             updateNodeStatus(nodeId, 'error')
             const errorMsg = result?.error?.message || '执行失败'
-            addLog(nodeId, nodeName, 'error', errorMsg)
-            toast.error(`节点运行失败: ${nodeName}`)
+            
+            // 检查是否开启了异常处理
+            const node = nodes.find((n) => n.id === nodeId)
+            if (node?.data?.enableErrorHandling) {
+              addLog(nodeId, nodeName, 'error', `${errorMsg} (已捕获)`)
+              // 激活失败分支
+              setEdges((eds) =>
+                eds.map((edge) => {
+                  if (edge.source === nodeId && edge.sourceHandle === 'source-failure') {
+                    return {
+                      ...edge,
+                      data: { ...edge.data, isExecuting: true },
+                      animated: true,
+                    }
+                  }
+                  return edge
+                })
+              )
+            } else {
+              addLog(nodeId, nodeName, 'error', errorMsg)
+              toast.error(`节点运行失败: ${nodeName}`)
+            }
           }
         },
       })

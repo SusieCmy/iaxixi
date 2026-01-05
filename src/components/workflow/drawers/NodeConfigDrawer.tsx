@@ -12,18 +12,20 @@ interface NodeConfigDrawerProps {
   isOpen: boolean
   node: Node | null
   onClose: () => void
-  onSave: (nodeData: { label: string; description: string }) => void
+  onSave: (nodeData: { label: string; description: string; enableErrorHandling?: boolean }) => void
 }
 
 export default function NodeConfigDrawer({ isOpen, node, onClose, onSave }: NodeConfigDrawerProps) {
   const [label, setLabel] = useState('')
   const [description, setDescription] = useState('')
+  const [enableErrorHandling, setEnableErrorHandling] = useState(false)
 
   // 当节点变化时更新表单
   useEffect(() => {
     if (node) {
       setLabel((node.data?.label as string) || '')
       setDescription((node.data?.description as string) || '')
+      setEnableErrorHandling((node.data?.enableErrorHandling as boolean) || false)
     }
   }, [node])
 
@@ -43,7 +45,11 @@ export default function NodeConfigDrawer({ isOpen, node, onClose, onSave }: Node
     if (!label.trim()) {
       return
     }
-    onSave({ label: label.trim(), description: description.trim() })
+    onSave({
+      label: label.trim(),
+      description: description.trim(),
+      enableErrorHandling,
+    })
     onClose()
   }
 
@@ -122,6 +128,7 @@ export default function NodeConfigDrawer({ isOpen, node, onClose, onSave }: Node
                 <select
                   className="w-full rounded-lg border border-base-300 bg-base-100 px-4 py-3 transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
                   defaultValue="default"
+                  disabled
                 >
                   <option value="default">默认节点</option>
                   <option value="input">输入节点</option>
@@ -129,6 +136,22 @@ export default function NodeConfigDrawer({ isOpen, node, onClose, onSave }: Node
                   <option value="ai">AI 处理节点</option>
                 </select>
               </div>
+
+              {/* 异常处理开关 - 仅对普通节点显示 */}
+              {node.type === 'default' && (
+                <div className="flex items-center justify-between rounded-lg border border-base-300 p-4">
+                  <div>
+                    <div className="font-medium text-sm">异常处理</div>
+                    <div className="text-base-content/60 text-xs">开启后可配置成功和失败的不同执行路径</div>
+                  </div>
+                  <input
+                    type="checkbox"
+                    className="toggle toggle-primary"
+                    checked={enableErrorHandling}
+                    onChange={(e) => setEnableErrorHandling(e.target.checked)}
+                  />
+                </div>
+              )}
 
               {/* 提示信息 */}
               <div className="rounded-lg bg-info/10 p-4">
