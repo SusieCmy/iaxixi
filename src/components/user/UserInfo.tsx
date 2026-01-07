@@ -21,10 +21,12 @@ import {
 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useEffect, useRef } from 'react'
 import UserTextClone from '@/components/animations/UserTextClone'
 import TextType from '@/components/ui/TextType'
+import WeatherCard from '@/components/weather/WeatherCard'
 import { EXTERNAL_LINKS, ROUTES } from '@/constants/routes'
 import analytics from '@/lib/analytics'
 import { animateElements, staggerDelay } from '@/lib/animations'
@@ -55,6 +57,10 @@ const socialLinks = [
 const UserInfoPage = () => {
   const t = useTranslations('userInfo')
   const containerRef = useRef<HTMLDivElement>(null)
+  const pathname = usePathname()
+
+  // 判断是否在首页（支持中英文路径）
+  const isHomePage = pathname === '/' || pathname === '/zh' || pathname === '/en'
 
   // 统计数据
   const stats = [
@@ -137,7 +143,7 @@ const UserInfoPage = () => {
   }, [])
 
   return (
-    <div ref={containerRef} className="mx-auto max-w-screen-2xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+    <div ref={containerRef} className="mx-auto max-w-screen-2xl py-8 sm:py-12">
       {/* 主要信息区域 */}
       <div className="mb-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* 左侧：个人介绍卡片 */}
@@ -239,70 +245,78 @@ const UserInfoPage = () => {
           </div>
         </div>
 
-        {/* 右侧：统计数据卡片 */}
+        {/* 右侧：天气卡片（首页）或 统计数据卡片（其他页面） */}
         <div className="lg:col-span-1">
-          <div className="info-card flex h-full flex-col rounded-2xl border border-base-300 bg-base-100 p-6 opacity-0 shadow-lg transition-all duration-300 hover:shadow-xl">
-            <h2
-              className="mb-6 flex items-center gap-2 font-semibold text-xl"
-              onClick={() => analytics.viewStats()}
-            >
-              <Award className="h-5 w-5 text-primary" />
-              <UserTextClone propsText={t('stats.title')} />
-            </h2>
-
-            <div className="grid flex-1 grid-cols-2 gap-3">
-              {stats.map((stat) => {
-                const Icon = stat.icon
-                return (
-                  <div
-                    key={stat.label}
-                    className="stat-item group rounded-xl bg-gradient-to-br from-base-200/50 to-base-200/30 p-4 opacity-0 transition-all duration-200 hover:from-base-200 hover:to-base-200/70"
-                  >
-                    <Icon
-                      className={`mb-2 h-5 w-5 ${stat.iconColor} transition-transform group-hover:scale-110`}
-                    />
-                    <div className="mb-1 font-bold text-base-content text-xl sm:text-2xl">
-                      {stat.value}
-                    </div>
-                    <div className="text-base-content/60 text-xs">{stat.label}</div>
-                  </div>
-                )
-              })}
+          {isHomePage ? (
+            /* 首页展示天气卡片 */
+            <div className="flex">
+              <WeatherCard />
             </div>
+          ) : (
+            /* 其他页面展示统计数据卡片 */
+            <div className="info-card flex h-full flex-col rounded-2xl border border-base-300 bg-base-100 p-6 opacity-0 shadow-lg transition-all duration-300 hover:shadow-xl">
+              <h2
+                className="mb-6 flex items-center gap-2 font-semibold text-xl"
+                onClick={() => analytics.viewStats()}
+              >
+                <Award className="h-5 w-5 text-primary" />
+                <UserTextClone propsText={t('stats.title')} />
+              </h2>
 
-            {/* 快速链接 */}
-            <div className="mt-6 border-base-300 border-t pt-6">
-              <h3 className="mb-3 flex items-center gap-2 font-semibold text-base-content/70 text-sm">
-                <ExternalLink className="h-4 w-4" />
-                {t('quickAccess.title')}
-              </h3>
-              <div className="space-y-2">
-                <Link
-                  href={ROUTES.BLOG}
-                  className="group/link flex items-center justify-between rounded-lg border border-transparent bg-base-200/50 p-3 transition-all duration-200 hover:border-primary/20 hover:bg-primary/10"
-                  onClick={() => analytics.navigateToBlog()}
-                >
-                  <div className="flex items-center gap-2">
-                    <BookOpen className="h-4 w-4 text-primary" />
-                    <span className="font-medium text-sm">{t('quickAccess.blog')}</span>
-                  </div>
-                  <ExternalLink className="h-4 w-4 text-primary opacity-0 transition-opacity group-hover/link:opacity-100" />
-                </Link>
+              <div className="grid flex-1 grid-cols-2 gap-3">
+                {stats.map((stat) => {
+                  const Icon = stat.icon
+                  return (
+                    <div
+                      key={stat.label}
+                      className="stat-item group rounded-xl bg-linear-to-br from-base-200/50 to-base-200/30 p-4 opacity-0 transition-all duration-200 hover:from-base-200 hover:to-base-200/70"
+                    >
+                      <Icon
+                        className={`mb-2 h-5 w-5 ${stat.iconColor} transition-transform group-hover:scale-110`}
+                      />
+                      <div className="mb-1 font-bold text-base-content text-xl sm:text-2xl">
+                        {stat.value}
+                      </div>
+                      <div className="text-base-content/60 text-xs">{stat.label}</div>
+                    </div>
+                  )
+                })}
+              </div>
 
-                <Link
-                  href={ROUTES.PROJECTS}
-                  className="group/link flex items-center justify-between rounded-lg border border-transparent bg-base-200/50 p-3 transition-all duration-200 hover:border-secondary/20 hover:bg-secondary/10"
-                  onClick={() => analytics.navigateToProjects()}
-                >
-                  <div className="flex items-center gap-2">
-                    <Briefcase className="h-4 w-4 text-secondary" />
-                    <span className="font-medium text-sm">{t('quickAccess.projects')}</span>
-                  </div>
-                  <ExternalLink className="h-4 w-4 text-secondary opacity-0 transition-opacity group-hover/link:opacity-100" />
-                </Link>
+              {/* 快速链接 */}
+              <div className="mt-6 border-base-300 border-t pt-6">
+                <h3 className="mb-3 flex items-center gap-2 font-semibold text-base-content/70 text-sm">
+                  <ExternalLink className="h-4 w-4" />
+                  {t('quickAccess.title')}
+                </h3>
+                <div className="space-y-2">
+                  <Link
+                    href={ROUTES.BLOG}
+                    className="group/link flex items-center justify-between rounded-lg border border-transparent bg-base-200/50 p-3 transition-all duration-200 hover:border-primary/20 hover:bg-primary/10"
+                    onClick={() => analytics.navigateToBlog()}
+                  >
+                    <div className="flex items-center gap-2">
+                      <BookOpen className="h-4 w-4 text-primary" />
+                      <span className="font-medium text-sm">{t('quickAccess.blog')}</span>
+                    </div>
+                    <ExternalLink className="h-4 w-4 text-primary opacity-0 transition-opacity group-hover/link:opacity-100" />
+                  </Link>
+
+                  <Link
+                    href={ROUTES.PROJECTS}
+                    className="group/link flex items-center justify-between rounded-lg border border-transparent bg-base-200/50 p-3 transition-all duration-200 hover:border-secondary/20 hover:bg-secondary/10"
+                    onClick={() => analytics.navigateToProjects()}
+                  >
+                    <div className="flex items-center gap-2">
+                      <Briefcase className="h-4 w-4 text-secondary" />
+                      <span className="font-medium text-sm">{t('quickAccess.projects')}</span>
+                    </div>
+                    <ExternalLink className="h-4 w-4 text-secondary opacity-0 transition-opacity group-hover/link:opacity-100" />
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
 

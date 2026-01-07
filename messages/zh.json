@@ -184,5 +184,13 @@
     "reloadEditor": "重新加载编辑器",
     "runWorkflow": "运行工作流",
     "running": "运行中..."
+  },
+  "weather": {
+    "today": "今天",
+    "humidity": "湿度",
+    "noData": "暂无数据",
+    "refreshData": "刷新数据",
+    "highLow": "最高 {high}° / 最低 {low}°",
+    "loading": "加载天气数据中..."
   }
 }

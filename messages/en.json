@@ -184,5 +184,13 @@
     "reloadEditor": "Reload Editor",
     "runWorkflow": "Run Workflow",
     "running": "Running..."
+  },
+  "weather": {
+    "today": "Today",
+    "humidity": "Humidity",
+    "noData": "No Data",
+    "refreshData": "Refresh",
+    "highLow": "H: {high}° L: {low}°",
+    "loading": "Loading weather data..."
   }
 }
