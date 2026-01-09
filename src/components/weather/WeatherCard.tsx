@@ -1,9 +1,8 @@
 /*
  * @Date: 2025-01-07
- * @Description: 天气卡片组件 - 简洁主题适配设计 + 国际化
+ * @Description: 天气卡片组件 - Open-Meteo 适配版
  */
 'use client'
-import { useQuery } from '@tanstack/react-query'
 import {
   Cloud,
   CloudRain,
@@ -12,54 +11,35 @@ import {
   Loader2,
   MapPin,
   Moon,
+  Navigation,
   RefreshCw,
   Sun,
   Wind,
 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import { memo } from 'react'
+import { useEffect } from 'react'
+import { useWeather } from '@/hooks/useWeather'
+import { animateElements, staggerDelay } from '@/lib/animations'
+import type { WeatherCondition } from '@/types/weather'
 import { cn } from '@/utils/cn'
-
-interface WeatherData {
-  temp: number
-  condition: 'sunny' | 'cloudy' | 'rainy' | 'night'
-  conditionText: string
-  location: string
-  humidity: number
-  windSpeed: number
-  windDir: string
-  high: number
-  low: number
-  updateTime: string
-  forecast: Array<{
-    day: string
-    temp: number
-    condition: 'sunny' | 'cloudy' | 'rainy'
-    conditionText: string
-  }>
-}
-
-async function fetchWeather(): Promise<WeatherData> {
-  const res = await fetch('/api/weather')
-  if (!res.ok) {
-    throw new Error('Failed to fetch weather data')
-  }
-  return res.json()
-}
 
 function WeatherCard() {
   const t = useTranslations('weather')
   const tCommon = useTranslations('common')
 
-  const { data, isLoading, error, refetch, isRefetching } = useQuery({
-    queryKey: ['weather'],
-    queryFn: fetchWeather,
-    staleTime: 1000 * 60 * 10,
-    gcTime: 1000 * 60 * 30,
-    retry: 2,
-  })
+  const { data, isLoading, error, refetch, isRefetching, useBrowser, handleLocateMe } = useWeather()
 
-  const getWeatherIcon = (condition: string) => {
+  useEffect(() => {
+    // 信息卡片
+    animateElements('.cmy-card', {
+      translateY: [40, 0],
+      delay: staggerDelay(0, 100),
+      duration: 800,
+      ease: 'outExpo',
+    })
+  }, [])
+
+  const getWeatherIcon = (condition: WeatherCondition) => {
     switch (condition) {
       case 'sunny':
         return Sun
@@ -73,7 +53,7 @@ function WeatherCard() {
     }
   }
 
-  const getWeatherColor = (condition: string) => {
+  const getWeatherColor = (condition: WeatherCondition) => {
     switch (condition) {
       case 'sunny':
         return 'text-warning'
@@ -89,7 +69,7 @@ function WeatherCard() {
 
   if (isLoading) {
     return (
-      <div className="cmy-card w-full bg-base-200 shadow-lg rounded-2xl">
+      <div className="cmy-card w-full border border-base-300 bg-base-100 opacity-0 shadow-lg rounded-2xl transition-all duration-300">
         <div className="cmy-card-body items-center justify-center">
           <Loader2 className="size-10 animate-spin text-primary" />
           <p className="text-sm text-base-content/60">{t('loading')}</p>
@@ -100,7 +80,7 @@ function WeatherCard() {
 
   if (error || !data) {
     return (
-      <div className="cmy-card w-full bg-base-200 shadow-lg rounded-2xl">
+      <div className="cmy-card w-full border border-base-300 bg-base-100 opacity-0 shadow-lg rounded-2xl transition-all duration-300">
         <div className="cmy-card-body items-center gap-4">
           <div className="rounded-full bg-error/10 p-4">
             <Cloud className="size-10 text-error" />
@@ -125,26 +105,41 @@ function WeatherCard() {
   const iconColor = getWeatherColor(data.condition)
 
   return (
-    <div className="cmy-card rounded-2xl border border-base-300 w-full bg-base-100 shadow-lg hover:shadow-xl">
+    <div
+      className="cmy-card rounded-2xl
+    border border-base-300 bg-base-100 opacity-0 shadow-lg transition-all duration-300
+     w-full hover:shadow-xl"
+    >
       <div className="cmy-card-body gap-4 p-5">
-        {/* 顶部栏：地点 + 刷新 */}
+        {/* 顶部栏：地点 + 操作 */}
         <div className="flex items-center justify-between">
           <div className="cmy-badge cmy-badge-ghost gap-1.5">
             <MapPin className="size-3.5" />
             <span className="text-xs font-medium">{data.location}</span>
           </div>
-          <button
-            type="button"
-            onClick={() => refetch()}
-            disabled={isRefetching}
-            className={cn(
-              'cmy-btn cmy-btn-ghost cmy-btn-circle cmy-btn-sm',
-              isRefetching && 'cmy-loading'
-            )}
-            aria-label={t('refreshData')}
-          >
-            <RefreshCw className={cn('size-4', isRefetching && 'animate-spin')} />
-          </button>
+          <div className="flex gap-1">
+            <button
+              type="button"
+              onClick={handleLocateMe}
+              disabled={isRefetching}
+              className="cmy-btn cmy-btn-ghost cmy-btn-circle cmy-btn-sm"
+              title="Locate Me"
+            >
+              <Navigation className={cn('size-4', useBrowser && 'text-primary')} />
+            </button>
+            <button
+              type="button"
+              onClick={() => refetch()}
+              disabled={isRefetching}
+              className={cn(
+                'cmy-btn cmy-btn-ghost cmy-btn-circle cmy-btn-sm',
+                isRefetching && 'cmy-loading'
+              )}
+              aria-label={t('refreshData')}
+            >
+              <RefreshCw className={cn('size-4', isRefetching && 'animate-spin')} />
+            </button>
+          </div>
         </div>
 
         {/* 主要天气信息 */}
@@ -175,7 +170,7 @@ function WeatherCard() {
             <Wind className="size-5 text-accent" />
             <div>
               <p className="text-xs text-base-content/60">{data.windDir}</p>
-              <p className="text-lg font-semibold text-base-content">{data.windSpeed}</p>
+              <p className="text-lg font-semibold text-base-content">{data.windSpeed} km/h</p>
             </div>
           </div>
         </div>
@@ -184,4 +179,4 @@ function WeatherCard() {
   )
 }
 
-export default memo(WeatherCard)
+export default WeatherCard
