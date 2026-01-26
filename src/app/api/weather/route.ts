@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server'
 import type { WeatherCondition, WeatherData } from '@/types/weather'
 
+// 缓存配置
+const CACHE_DURATION = 5 * 60 * 1000 // 5分钟
+const locationCache = new Map<string, { data: any; timestamp: number }>()
+const weatherCache = new Map<string, { data: WeatherData; timestamp: number }>()
+
 function getWeatherCondition(
   code: number,
   isDay: number
@@ -41,21 +46,57 @@ const DEFAULT_LOCATION = {
 async function getIpLocation(
   ip: string
 ): Promise<{ lat: number; lon: number; city: string } | null> {
-  try {
-    // Using a public IP geolocation API (same as before, but server-side)
-    // In production, you might want to use a more robust service or database
-    const res = await fetch(`https://get.geojs.io/v1/ip/geo/${ip}.json`)
-    if (!res.ok) return null
-    const data = await res.json()
-    console.log('data', data)
+  // 检查缓存
+  const cached = locationCache.get(ip)
+  if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
+    console.log('Using cached IP location for:', ip)
+    return cached.data
+  }
 
-    return {
+  try {
+    // 添加超时控制
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 5000) // 5秒超时
+
+    const res = await fetch(`https://get.geojs.io/v1/ip/geo/${ip}.json`, {
+      signal: controller.signal,
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (compatible; WeatherApp/1.0)',
+      },
+    })
+
+    clearTimeout(timeoutId)
+
+    if (!res.ok) {
+      console.warn(`IP Location API returned ${res.status}`)
+      return null
+    }
+
+    const data = await res.json()
+
+    const result = {
       lat: Number.parseFloat(data.latitude),
       lon: Number.parseFloat(data.longitude),
       city: data.city || data.region || 'Unknown Location',
     }
+
+    // 验证数据有效性
+    if (Number.isNaN(result.lat) || Number.isNaN(result.lon)) {
+      console.warn('Invalid coordinates from IP location')
+      return null
+    }
+
+    // 缓存结果
+    locationCache.set(ip, { data: result, timestamp: Date.now() })
+    console.log('IP Location success:', result)
+
+    return result
   } catch (e) {
-    console.warn('Server IP Location failed', e)
+    if (e instanceof Error && e.name === 'AbortError') {
+      console.warn('IP Location request timeout')
+    } else {
+      console.warn('IP Location failed:', e)
+    }
     return null
   }
 }
@@ -72,11 +113,12 @@ export async function GET(request: Request) {
     // Try to get IP from headers (x-forwarded-for is standard for proxies)
     const forwardedFor = headers.get('x-forwarded-for')
     const realIp = headers.get('x-real-ip')
-    const ip = forwardedFor ? forwardedFor.split(',')[0] : realIp || ''
+    const ip = forwardedFor ? forwardedFor.split(',')[0].trim() : realIp || ''
 
     console.log('Weather API: Detecting location for IP:', ip || 'unknown')
 
-    if (ip) {
+    // 只对有效的公网 IP 进行定位
+    if (ip && !ip.startsWith('127.') && !ip.startsWith('192.168.') && !ip.startsWith('10.')) {
       const ipLoc = await getIpLocation(ip)
       if (ipLoc) {
         lat = ipLoc.lat.toString()
@@ -84,6 +126,8 @@ export async function GET(request: Request) {
         city = ipLoc.city
         console.log('Weather API: Using IP Location', { lat, lon, city })
       }
+    } else {
+      console.log('Weather API: Skipping IP location (local/invalid IP)')
     }
   }
 
@@ -96,6 +140,14 @@ export async function GET(request: Request) {
   }
 
   const locationName = city || 'Unknown Location'
+  const cacheKey = `${lat},${lon}`
+
+  // 检查天气数据缓存
+  const cachedWeather = weatherCache.get(cacheKey)
+  if (cachedWeather && Date.now() - cachedWeather.timestamp < CACHE_DURATION) {
+    console.log('Using cached weather data for:', cacheKey)
+    return NextResponse.json(cachedWeather.data)
+  }
 
   try {
     const params = new URLSearchParams({
@@ -108,10 +160,18 @@ export async function GET(request: Request) {
       forecast_days: '3',
     })
 
-    const res = await fetch(`https://api.open-meteo.com/v1/forecast?${params.toString()}`)
+    // 添加超时控制
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 10000) // 10秒超时
+
+    const res = await fetch(`https://api.open-meteo.com/v1/forecast?${params.toString()}`, {
+      signal: controller.signal,
+    })
+
+    clearTimeout(timeoutId)
 
     if (!res.ok) {
-      throw new Error('Failed to fetch weather data from Open-Meteo')
+      throw new Error(`Open-Meteo API returned ${res.status}`)
     }
 
     const data = await res.json()
@@ -144,9 +204,29 @@ export async function GET(request: Request) {
       forecast,
     }
 
+    // 缓存天气数据
+    weatherCache.set(cacheKey, { data: weatherData, timestamp: Date.now() })
+    console.log('Weather data cached for:', cacheKey)
+
     return NextResponse.json(weatherData)
   } catch (error) {
     console.error('Weather API Error:', error)
-    return NextResponse.json({ error: 'Failed to fetch weather data' }, { status: 500 })
+
+    // 区分不同类型的错误
+    if (error instanceof Error) {
+      if (error.name === 'AbortError') {
+        return NextResponse.json(
+          { error: 'Weather service timeout. Please try again.' },
+          { status: 504 }
+        )
+      }
+
+      return NextResponse.json(
+        { error: `Failed to fetch weather data: ${error.message}` },
+        { status: 500 }
+      )
+    }
+
+    return NextResponse.json({ error: 'Unknown error occurred' }, { status: 500 })
   }
 }

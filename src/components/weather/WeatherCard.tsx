@@ -4,11 +4,9 @@
  */
 'use client'
 import {
-  Cloud,
   CloudRain,
   CloudSun,
   Droplets,
-  Loader2,
   MapPin,
   Moon,
   Navigation,
@@ -25,7 +23,6 @@ import { cn } from '@/utils/cn'
 
 function WeatherCard() {
   const t = useTranslations('weather')
-  const tCommon = useTranslations('common')
 
   const { data, isLoading, error, refetch, isRefetching, useBrowser, handleLocateMe } = useWeather()
 
@@ -65,35 +62,62 @@ function WeatherCard() {
     }
   }
 
-  if (isLoading) {
+  if (isLoading || error || !data) {
     return (
       <div className="cmy-card w-full rounded-2xl border border-base-300 bg-base-100 opacity-0 shadow-lg transition-all duration-300">
-        <div className="cmy-card-body items-center justify-center">
-          <Loader2 className="size-10 animate-spin text-primary" />
-          <p className="text-base-content/60 text-sm">{t('loading')}</p>
-        </div>
-      </div>
-    )
-  }
-
-  if (error || !data) {
-    return (
-      <div className="cmy-card w-full rounded-2xl border border-base-300 bg-base-100 opacity-0 shadow-lg transition-all duration-300">
-        <div className="cmy-card-body items-center gap-4">
-          <div className="rounded-full bg-error/10 p-4">
-            <Cloud className="size-10 text-error" />
+        <div className="cmy-card-body gap-4 p-5">
+          {/* 顶部栏骨架 */}
+          <div className="flex items-center justify-between">
+            <div className="h-6 w-24 animate-pulse rounded-full bg-base-300" />
+            <div className="flex gap-1">
+              <div className="h-8 w-8 animate-pulse rounded-full bg-base-300" />
+              {/* 刷新按钮 - 错误时可用 */}
+              {(error || !data) && !isLoading ? (
+                <button
+                  type="button"
+                  onClick={() => refetch()}
+                  disabled={isRefetching}
+                  className={cn(
+                    'cmy-btn cmy-btn-ghost cmy-btn-circle cmy-btn-sm',
+                    isRefetching && 'cmy-loading'
+                  )}
+                  aria-label={t('refreshData')}
+                >
+                  <RefreshCw className={cn('size-4', isRefetching && 'animate-spin')} />
+                </button>
+              ) : (
+                <div className="h-8 w-8 animate-pulse rounded-full bg-base-300" />
+              )}
+            </div>
           </div>
-          <p className="text-center font-medium text-base-content text-sm">
-            {error instanceof Error ? error.message : t('noData')}
-          </p>
-          <button
-            type="button"
-            onClick={() => refetch()}
-            className="cmy-btn cmy-btn-primary cmy-btn-sm gap-2"
-          >
-            <RefreshCw className="size-4" />
-            {tCommon('retry')}
-          </button>
+
+          {/* 主要天气信息骨架 */}
+          <div className="flex items-center gap-4">
+            <div className="size-16 shrink-0 animate-pulse rounded-full bg-base-300" />
+            <div className="flex flex-col gap-2">
+              <div className="h-12 w-32 animate-pulse rounded-lg bg-base-300" />
+              <div className="h-4 w-24 animate-pulse rounded bg-base-300" />
+              <div className="h-3 w-20 animate-pulse rounded bg-base-300" />
+            </div>
+          </div>
+
+          {/* 湿度和风速骨架 */}
+          <div className="grid grid-cols-2 gap-2">
+            <div className="flex items-center gap-2 rounded-lg bg-base-200 p-3">
+              <div className="size-5 animate-pulse rounded-full bg-base-300" />
+              <div className="flex flex-col gap-1.5">
+                <div className="h-3 w-12 animate-pulse rounded bg-base-300" />
+                <div className="h-5 w-16 animate-pulse rounded bg-base-300" />
+              </div>
+            </div>
+            <div className="flex items-center gap-2 rounded-lg bg-base-200 p-3">
+              <div className="size-5 animate-pulse rounded-full bg-base-300" />
+              <div className="flex flex-col gap-1.5">
+                <div className="h-3 w-12 animate-pulse rounded bg-base-300" />
+                <div className="h-5 w-16 animate-pulse rounded bg-base-300" />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     )
