@@ -132,7 +132,7 @@ export function useWorkflowExecution(
           } else if (status === 'failed') {
             updateNodeStatus(nodeId, 'error')
             const errorMsg = result?.error?.message || '执行失败'
-            
+
             // 检查是否开启了异常处理
             const node = nodes.find((n) => n.id === nodeId)
             if (node?.data?.enableErrorHandling) {

@@ -47,7 +47,6 @@ function WeatherCard() {
         return Moon
       case 'rainy':
         return CloudRain
-      case 'cloudy':
       default:
         return CloudSun
     }
@@ -61,7 +60,6 @@ function WeatherCard() {
         return 'text-info'
       case 'rainy':
         return 'text-primary'
-      case 'cloudy':
       default:
         return 'text-accent'
     }
@@ -69,10 +67,10 @@ function WeatherCard() {
 
   if (isLoading) {
     return (
-      <div className="cmy-card w-full border border-base-300 bg-base-100 opacity-0 shadow-lg rounded-2xl transition-all duration-300">
+      <div className="cmy-card w-full rounded-2xl border border-base-300 bg-base-100 opacity-0 shadow-lg transition-all duration-300">
         <div className="cmy-card-body items-center justify-center">
           <Loader2 className="size-10 animate-spin text-primary" />
-          <p className="text-sm text-base-content/60">{t('loading')}</p>
+          <p className="text-base-content/60 text-sm">{t('loading')}</p>
         </div>
       </div>
     )
@@ -80,12 +78,12 @@ function WeatherCard() {
 
   if (error || !data) {
     return (
-      <div className="cmy-card w-full border border-base-300 bg-base-100 opacity-0 shadow-lg rounded-2xl transition-all duration-300">
+      <div className="cmy-card w-full rounded-2xl border border-base-300 bg-base-100 opacity-0 shadow-lg transition-all duration-300">
         <div className="cmy-card-body items-center gap-4">
           <div className="rounded-full bg-error/10 p-4">
             <Cloud className="size-10 text-error" />
           </div>
-          <p className="text-center text-sm font-medium text-base-content">
+          <p className="text-center font-medium text-base-content text-sm">
             {error instanceof Error ? error.message : t('noData')}
           </p>
           <button
@@ -105,17 +103,13 @@ function WeatherCard() {
   const iconColor = getWeatherColor(data.condition)
 
   return (
-    <div
-      className="cmy-card rounded-2xl
-    border border-base-300 bg-base-100 opacity-0 shadow-lg transition-all duration-300
-     w-full hover:shadow-xl"
-    >
+    <div className="cmy-card w-full rounded-2xl border border-base-300 bg-base-100 opacity-0 shadow-lg transition-all duration-300 hover:shadow-xl">
       <div className="cmy-card-body gap-4 p-5">
         {/* 顶部栏：地点 + 操作 */}
         <div className="flex items-center justify-between">
           <div className="cmy-badge cmy-badge-ghost gap-1.5">
             <MapPin className="size-3.5" />
-            <span className="text-xs font-medium">{data.location}</span>
+            <span className="font-medium text-xs">{data.location}</span>
           </div>
           <div className="flex gap-1">
             <button
@@ -147,11 +141,11 @@ function WeatherCard() {
           <MainIcon className={cn('size-16 shrink-0', iconColor)} />
           <div className="flex flex-col">
             <div className="flex items-baseline gap-1">
-              <span className="text-5xl font-bold text-base-content">{data.temp}</span>
+              <span className="font-bold text-5xl text-base-content">{data.temp}</span>
               <span className="text-2xl text-base-content/60">°C</span>
             </div>
-            <p className="text-sm font-medium text-base-content/80">{data.conditionText}</p>
-            <p className="text-xs text-base-content/50">
+            <p className="font-medium text-base-content/80 text-sm">{data.conditionText}</p>
+            <p className="text-base-content/50 text-xs">
               {data.high}° / {data.low}°
             </p>
           </div>
@@ -162,15 +156,15 @@ function WeatherCard() {
           <div className="flex items-center gap-2 rounded-lg bg-base-200 p-3">
             <Droplets className="size-5 text-primary" />
             <div>
-              <p className="text-xs text-base-content/60">{t('humidity')}</p>
-              <p className="text-lg font-semibold text-base-content">{data.humidity}%</p>
+              <p className="text-base-content/60 text-xs">{t('humidity')}</p>
+              <p className="font-semibold text-base-content text-lg">{data.humidity}%</p>
             </div>
           </div>
           <div className="flex items-center gap-2 rounded-lg bg-base-200 p-3">
             <Wind className="size-5 text-accent" />
             <div>
-              <p className="text-xs text-base-content/60">{data.windDir}</p>
-              <p className="text-lg font-semibold text-base-content">{data.windSpeed} km/h</p>
+              <p className="text-base-content/60 text-xs">{data.windDir}</p>
+              <p className="font-semibold text-base-content text-lg">{data.windSpeed} km/h</p>
             </div>
           </div>
         </div>

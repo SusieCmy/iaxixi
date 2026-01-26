@@ -199,7 +199,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <ReactMarkdown
             components={
               {
-                code: ({ className, children, ...props }) => {
+                code: ({ className, children, ref, ...props }) => {
                   const match = /language-(\w+)/.exec(className || '')
                   return match ? (
                     <SyntaxHighlighter

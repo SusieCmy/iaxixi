@@ -206,8 +206,9 @@ export default function NodeLibraryDrawer({
                           onSelectNode(node)
                           onClose()
                         }}
-                        className={`w-full rounded-lg border p-4 text-left transition-all hover:shadow-md ${CATEGORY_COLORS[node.category]
-                          }`}
+                        className={`w-full rounded-lg border p-4 text-left transition-all hover:shadow-md ${
+                          CATEGORY_COLORS[node.category]
+                        }`}
                       >
                         <div className="flex items-start gap-3">
                           <div className="mt-0.5 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-base-100">

@@ -142,7 +142,9 @@ export default function NodeConfigDrawer({ isOpen, node, onClose, onSave }: Node
                 <div className="flex items-center justify-between rounded-lg border border-base-300 p-4">
                   <div>
                     <div className="font-medium text-sm">异常处理</div>
-                    <div className="text-base-content/60 text-xs">开启后可配置成功和失败的不同执行路径</div>
+                    <div className="text-base-content/60 text-xs">
+                      开启后可配置成功和失败的不同执行路径
+                    </div>
                   </div>
                   <input
                     type="checkbox"

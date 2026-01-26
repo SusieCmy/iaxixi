@@ -66,7 +66,7 @@ export class WorkflowEngine {
         } catch (error) {
           console.error(`Error executing node ${nodeId}:`, error)
           this.options.onProgress?.(nodeId, 'failed', error)
-          
+
           // 检查是否开启了异常处理
           if (node.data?.enableErrorHandling) {
             const failureNodes = this.findNextNodes(nodeId, 'error')
@@ -76,7 +76,7 @@ export class WorkflowEngine {
               continue
             }
           }
-          
+
           throw error
         }
       }
@@ -100,11 +100,14 @@ export class WorkflowEngine {
         if (node.data?.enableErrorHandling) {
           if (status === 'success') {
             // 成功状态：只走 source-success 或默认（无 handleId 或 source-default）
-            return edge.sourceHandle === 'source-success' || !edge.sourceHandle || edge.sourceHandle === 'source-default'
-          } else {
-            // 失败状态：只走 source-failure
-            return edge.sourceHandle === 'source-failure'
+            return (
+              edge.sourceHandle === 'source-success' ||
+              !edge.sourceHandle ||
+              edge.sourceHandle === 'source-default'
+            )
           }
+          // 失败状态：只走 source-failure
+          return edge.sourceHandle === 'source-failure'
         }
 
         // 未开启异常处理：只在成功时走默认路径（包括 source-default）

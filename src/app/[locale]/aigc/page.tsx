@@ -129,7 +129,7 @@ export default function AIGCPage() {
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {workflows.map((workflow) => (
               <Link key={workflow.id} href={`/aigc/${workflow.id}`} className="group block">
-                <div className="h-full rounded-xl shadow-sm p-6 transition-all duration-200 hover:shadow-lg">
+                <div className="h-full rounded-xl p-6 shadow-sm transition-all duration-200 hover:shadow-lg">
                   {/* 卡片头部 */}
                   <div className="mb-4 flex items-start justify-between">
                     <div className="min-w-0 flex-1">
