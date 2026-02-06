@@ -34,15 +34,9 @@ export const MessageItem = memo(
             }`}
           >
             {message.role === 'user' ? (
-              <User
-                className="h-4 w-4 text-[var(--jp-vermilion)]-content sm:h-5 sm:w-5"
-                strokeWidth={2.5}
-              />
+              <User className="h-4 w-4 text-white sm:h-5 sm:w-5" strokeWidth={2.5} />
             ) : (
-              <Bot
-                className="h-4 w-4 text-[var(--jp-indigo)]-content sm:h-5 sm:w-5"
-                strokeWidth={2.5}
-              />
+              <Bot className="h-4 w-4 text-white sm:h-5 sm:w-5" strokeWidth={2.5} />
             )}
           </div>
         </div>
@@ -67,7 +61,7 @@ export const MessageItem = memo(
           <div
             className={`rounded-xl px-3 py-2.5 sm:rounded-2xl sm:px-4 sm:py-3 md:px-5 md:py-3.5 ${
               message.role === 'user'
-                ? 'rounded-tr-sm bg-[var(--jp-vermilion)] text-[var(--jp-vermilion)]-content'
+                ? 'rounded-tr-sm bg-[var(--jp-vermilion)] text-white'
                 : 'rounded-tl-sm bg-[var(--jp-paper)] text-[var(--jp-ink)]'
             }`}
           >

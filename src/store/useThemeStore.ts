@@ -8,9 +8,11 @@ import { persist } from 'zustand/middleware'
 
 type ColorScheme = 'fuji' | 'matcha' | 'latte'
 
+type ThemeType = 'light' | 'dark'
+
 type ThemeStore = {
-  themeType: string
-  setThemeType: (themeType: string) => void
+  themeType: ThemeType
+  setThemeType: (themeType: ThemeType) => void
   colorScheme: ColorScheme
   setColorScheme: (colorScheme: ColorScheme) => void
 }
@@ -27,6 +29,6 @@ const useThemeStore = create<ThemeStore>()(
   )
 )
 
-export type { ColorScheme }
+export type { ColorScheme, ThemeType }
 
 export default useThemeStore

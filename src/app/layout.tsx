@@ -71,6 +71,11 @@ export default function RootLayout({
   return (
     <html lang="zh" suppressHydrationWarning>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var s=JSON.parse(localStorage.getItem('themeType-storage')||'{}').state||{};document.documentElement.setAttribute('data-theme',s.themeType||'dark');document.documentElement.setAttribute('data-color',s.colorScheme||'fuji')}catch(e){}})()`,
+          }}
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
