@@ -1,99 +1,203 @@
 /*
  * @Date: 2025-07-07 10:29:58
- * @LastEditors: cmy && 1732728869@qq.com
- * @LastEditTime: 2025-07-25 09:00:01
- * @FilePath: \susie-cmy\src\app\globals.css
- * @Description: 强者都是孤独的
+ * @Description: 日系简约风格主题
  */
 @import "@xyflow/react/dist/style.css";
 @import "tailwindcss";
-@plugin "daisyui" {
-  prefix: "cmy-";
-  /* biome-ignore lint/correctness/noUnknownProperty: Tailwind CSS 4 syntax */
-  themes:
-    light --default,
-    dark --prefersdark;
-}
 
-[data-theme="light"] {
-  --color-neutral-cmy: var(--color-neutral-content);
-  scrollbar-color: #6366f1 #e5e7eb;
-}
+/* 日系简约主题变量 */
+@layer base {
+  :root {
+    /* 字体 */
+    --font-jp: "Noto Serif JP", "Hiragino Mincho ProN", serif;
+    --font-jp-sans: "Noto Sans JP", "Hiragino Sans", sans-serif;
+    --font-mono: "JetBrains Mono", monospace;
+  }
 
-[data-theme="dark"] {
-  --color-neutral-cmy: var(--color-neutral);
-  scrollbar-color: #8b5cf6 #374151;
-}
+  /* ========== 藤花雨 ========== */
+  [data-color="fuji"],
+  :root {
+    --jp-ink: #2e2b33;
+    --jp-stone: #6b6572;
+    --jp-ash: #9a94a0;
+    --jp-mist: #ddd8e0;
+    --jp-snow: #f5f3f6;
+    --jp-paper: #efedf2;
+    --jp-cream: #faf8fc;
+    --jp-vermilion: #9b8bb4;
+    --jp-indigo: #8a9eaa;
+    --jp-moss: #8ea892;
+    --jp-gold: #baa88c;
+    --jp-sakura: #c4949e;
+    --jp-success: #8ea892;
+    --jp-error: #b88a8a;
+    --jp-warning: #baa88c;
+  }
 
-:root {
-  .cmy-header-border {
-    border-color: var(--color-neutral-cmy);
+  [data-color="fuji"][data-theme="dark"],
+  :root[data-theme="dark"] {
+    --jp-ink: #e0dce4;
+    --jp-stone: #a8a2ae;
+    --jp-ash: #78727e;
+    --jp-mist: #3a3540;
+    --jp-snow: #1c1a20;
+    --jp-paper: #262330;
+    --jp-cream: #1e1b24;
+    --jp-vermilion: #b4a4cc;
+    --jp-indigo: #a0b4be;
+    --jp-moss: #a4bea8;
+    --jp-gold: #d0bea2;
+    --jp-sakura: #d4a8b2;
+    --jp-success: #a4bea8;
+    --jp-error: #cca0a0;
+    --jp-warning: #d0bea2;
+  }
+
+  /* ========== 京都抹茶 ========== */
+  [data-color="matcha"] {
+    --jp-ink: #33302b;
+    --jp-stone: #6b6660;
+    --jp-ash: #9a9590;
+    --jp-mist: #ddd8d0;
+    --jp-snow: #f5f3ee;
+    --jp-paper: #edeae4;
+    --jp-cream: #faf8f4;
+    --jp-vermilion: #7d8c6c;
+    --jp-indigo: #7e96a3;
+    --jp-moss: #8ea882;
+    --jp-gold: #c4a96a;
+    --jp-sakura: #c9a0a0;
+    --jp-success: #8ea882;
+    --jp-error: #b88a7a;
+    --jp-warning: #c4a96a;
+  }
+
+  [data-color="matcha"][data-theme="dark"] {
+    --jp-ink: #e0ddd8;
+    --jp-stone: #a8a49e;
+    --jp-ash: #787470;
+    --jp-mist: #3a3830;
+    --jp-snow: #1c1b18;
+    --jp-paper: #26251e;
+    --jp-cream: #1e1d18;
+    --jp-vermilion: #9aaa88;
+    --jp-indigo: #9ab0bc;
+    --jp-moss: #a4be9a;
+    --jp-gold: #d8c488;
+    --jp-sakura: #d4b4b4;
+    --jp-success: #a4be9a;
+    --jp-error: #cca090;
+    --jp-warning: #d8c488;
+  }
+
+  /* ========== 焦糖拿铁 ========== */
+  [data-color="latte"] {
+    --jp-ink: #362f28;
+    --jp-stone: #7a6e62;
+    --jp-ash: #a89e93;
+    --jp-mist: #e2d9cf;
+    --jp-snow: #f5f0ea;
+    --jp-paper: #efe8e0;
+    --jp-cream: #fdf9f4;
+    --jp-vermilion: #b58563;
+    --jp-indigo: #8da3ad;
+    --jp-moss: #8ea88a;
+    --jp-gold: #c9a87a;
+    --jp-sakura: #d4a0a0;
+    --jp-success: #8ea88a;
+    --jp-error: #c48a7a;
+    --jp-warning: #c9a87a;
+  }
+
+  [data-color="latte"][data-theme="dark"] {
+    --jp-ink: #e8e0d8;
+    --jp-stone: #b0a89e;
+    --jp-ash: #807870;
+    --jp-mist: #403830;
+    --jp-snow: #201c18;
+    --jp-paper: #2a2520;
+    --jp-cream: #1e1a16;
+    --jp-vermilion: #d4a48a;
+    --jp-indigo: #a0b4be;
+    --jp-moss: #aebea2;
+    --jp-gold: #d8be96;
+    --jp-sakura: #e0b4b4;
+    --jp-success: #aebea2;
+    --jp-error: #d4a090;
+    --jp-warning: #d8be96;
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
 }
 
-@keyframes gradientMove {
-  0% {
-    background-position: 0% 50%;
+@layer utilities {
+  /* 日式细线边框 */
+  .jp-border {
+    border: 1px solid var(--jp-mist);
   }
 
-  50% {
-    background-position: 100% 50%;
+  .jp-border-dark {
+    border: 1px solid var(--jp-ash);
   }
 
-  100% {
-    background-position: 0% 50%;
+  /* 和纸质感背景 */
+  .jp-paper {
+    background: var(--jp-paper);
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  }
+
+  /* 墨迹效果 */
+  .jp-ink-shadow {
+    box-shadow: 2px 2px 0 var(--jp-ink);
+  }
+
+  /* 简约滚动条 */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--jp-mist) transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: var(--jp-mist);
+    border-radius: 3px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: var(--jp-ash);
+  }
+
+  /* 淡入动画 */
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.5s ease-out forwards;
   }
 }
 
-/* 添加行截断支持 */
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+/* 动画定义 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-/* 平滑滚动 */
-html {
-  scroll-behavior: smooth;
-}
-
-/* 自定义滚动条样式 - 优化版 */
-.scrollbar-thin {
-  scrollbar-width: thin;
-  scrollbar-color: hsl(var(--p) / 0.3) transparent;
-}
-
-.scrollbar-thin::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-.scrollbar-thin::-webkit-scrollbar-track {
-  background: transparent;
-  border-radius: 100px;
-  margin: 8px 0;
-}
-
-.scrollbar-thin::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, hsl(var(--p) / 0.4), hsl(var(--p) / 0.3));
-  border-radius: 100px;
-  border: 2px solid transparent;
-  background-clip: padding-box;
-  transition: all 0.2s ease;
-}
-
-.scrollbar-thin::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, hsl(var(--p) / 0.6), hsl(var(--p) / 0.5));
-  border-width: 1px;
-}
-
-.scrollbar-thin::-webkit-scrollbar-thumb:active {
-  background: linear-gradient(180deg, hsl(var(--p) / 0.8), hsl(var(--p) / 0.7));
-}
-
-/* 自定义动画 */
-@keyframes slideInUp {
+@keyframes slideUp {
   from {
     transform: translateY(20px);
     opacity: 0;
@@ -102,28 +206,6 @@ html {
     transform: translateY(0);
     opacity: 1;
   }
-}
-
-.animate-slide-in-up {
-  animation: slideInUp 0.2s ease-out forwards;
-}
-
-@keyframes spin-slow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.animate-spin-slow {
-  animation: spin-slow 3s linear infinite;
-}
-
-/* 径向渐变背景 */
-.bg-gradient-radial {
-  background: radial-gradient(circle, currentColor 0%, transparent 70%);
 }
 
 /* ReactFlow Customization */
@@ -136,7 +218,7 @@ html {
 
 .react-flow__node {
   border: none !important;
-  width: auto !important; /* 让节点宽度由内容决定 */
-  padding: 0 !important; /* 移除默认内边距 */
-  background: transparent !important; /* 移除默认背景 */
+  width: auto !important;
+  padding: 0 !important;
+  background: transparent !important;
 }

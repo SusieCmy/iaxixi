@@ -14,15 +14,15 @@ export default function ReadingProgress() {
     }
 
     window.addEventListener('scroll', updateProgress, { passive: true })
-    updateProgress() // 初始计算
+    updateProgress()
 
     return () => window.removeEventListener('scroll', updateProgress)
   }, [])
 
   return (
-    <div className="fixed top-0 left-0 z-50 h-1 w-full bg-base-300">
+    <div className="fixed top-0 left-0 z-50 h-0.5 w-full bg-[var(--jp-mist)]">
       <div
-        className="h-full bg-gradient-to-r from-primary to-secondary transition-all duration-150 ease-out"
+        className="h-full bg-[var(--jp-vermilion)] transition-all duration-150 ease-out"
         style={{ width: `${progress}%` }}
       />
     </div>

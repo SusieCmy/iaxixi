@@ -68,21 +68,21 @@ export default function NodeConfigDrawer({ isOpen, node, onClose, onSave }: Node
       >
         {/* 弹窗主体 - 阻止点击事件冒泡 */}
         <div
-          className="relative w-full max-w-lg rounded-2xl border border-base-300/50 bg-base-100 shadow-2xl transition-all"
+          className="relative w-full max-w-lg rounded-2xl border border-[var(--jp-mist)]/50 bg-[var(--jp-cream)] shadow-2xl transition-all"
           onClick={(e) => e.stopPropagation()}
           onKeyDown={(e) => e.stopPropagation()}
           role="dialog"
           tabIndex={-1}
         >
           {/* 头部 */}
-          <div className="flex items-center justify-between border-base-300 border-b p-6">
+          <div className="flex items-center justify-between border-[var(--jp-mist)] border-b p-6">
             <div>
               <h2 className="font-bold text-xl">配置节点</h2>
-              <p className="text-base-content/60 text-sm">ID: {node.id}</p>
+              <p className="text-[var(--jp-ink)]/60 text-sm">ID: {node.id}</p>
             </div>
             <button
               onClick={onClose}
-              className="flex h-8 w-8 items-center justify-center rounded-lg transition-colors hover:bg-base-200"
+              className="flex h-8 w-8 items-center justify-center rounded-lg transition-colors hover:bg-[var(--jp-paper)]"
               aria-label="关闭"
             >
               <X className="h-5 w-5" />
@@ -102,7 +102,7 @@ export default function NodeConfigDrawer({ isOpen, node, onClose, onSave }: Node
                   type="text"
                   value={label}
                   onChange={(e) => setLabel(e.target.value)}
-                  className="w-full rounded-lg border border-base-300 bg-base-100 px-4 py-3 transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  className="w-full rounded-lg border border-[var(--jp-mist)] bg-[var(--jp-cream)] px-4 py-3 transition-all focus:border-[var(--jp-vermilion)] focus:outline-none focus:ring-2 focus:ring-primary/20"
                   placeholder="请输入节点名称"
                 />
               </div>
@@ -117,7 +117,7 @@ export default function NodeConfigDrawer({ isOpen, node, onClose, onSave }: Node
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   rows={4}
-                  className="w-full resize-none rounded-lg border border-base-300 bg-base-100 px-4 py-3 transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  className="w-full resize-none rounded-lg border border-[var(--jp-mist)] bg-[var(--jp-cream)] px-4 py-3 transition-all focus:border-[var(--jp-vermilion)] focus:outline-none focus:ring-2 focus:ring-primary/20"
                   placeholder="描述这个节点的功能（可选）"
                 />
               </div>
@@ -126,7 +126,7 @@ export default function NodeConfigDrawer({ isOpen, node, onClose, onSave }: Node
               <div>
                 <label className="mb-2 block font-medium text-sm">节点类型</label>
                 <select
-                  className="w-full rounded-lg border border-base-300 bg-base-100 px-4 py-3 transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  className="w-full rounded-lg border border-[var(--jp-mist)] bg-[var(--jp-cream)] px-4 py-3 transition-all focus:border-[var(--jp-vermilion)] focus:outline-none focus:ring-2 focus:ring-primary/20"
                   defaultValue="default"
                   disabled
                 >
@@ -139,10 +139,10 @@ export default function NodeConfigDrawer({ isOpen, node, onClose, onSave }: Node
 
               {/* 异常处理开关 - 仅对普通节点显示 */}
               {node.type === 'default' && (
-                <div className="flex items-center justify-between rounded-lg border border-base-300 p-4">
+                <div className="flex items-center justify-between rounded-lg border border-[var(--jp-mist)] p-4">
                   <div>
                     <div className="font-medium text-sm">异常处理</div>
-                    <div className="text-base-content/60 text-xs">
+                    <div className="text-[var(--jp-ink)]/60 text-xs">
                       开启后可配置成功和失败的不同执行路径
                     </div>
                   </div>
@@ -165,16 +165,16 @@ export default function NodeConfigDrawer({ isOpen, node, onClose, onSave }: Node
           </div>
 
           {/* 底部操作栏 */}
-          <div className="flex items-center gap-3 border-base-300 border-t p-6">
+          <div className="flex items-center gap-3 border-[var(--jp-mist)] border-t p-6">
             <button
               onClick={onClose}
-              className="flex-1 rounded-lg border border-base-300 px-4 py-3 transition-all hover:bg-base-200"
+              className="flex-1 rounded-lg border border-[var(--jp-mist)] px-4 py-3 transition-all hover:bg-[var(--jp-paper)]"
             >
               取消
             </button>
             <button
               onClick={handleSave}
-              className="flex-1 rounded-lg bg-primary px-4 py-3 font-medium text-primary-content transition-all hover:bg-primary/90"
+              className="flex-1 rounded-lg bg-[var(--jp-vermilion)] px-4 py-3 font-medium text-[var(--jp-vermilion)]-content transition-all hover:bg-[var(--jp-vermilion)]/90"
             >
               保存配置
             </button>

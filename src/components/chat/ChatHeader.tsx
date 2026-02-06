@@ -9,6 +9,15 @@ import { ArrowLeft, Sparkles, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
+import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import { ROUTES } from '@/constants/routes'
 
 interface ChatHeaderProps {
@@ -36,67 +45,58 @@ export function ChatHeader({ hasMessages, onClear }: ChatHeaderProps) {
 
   return (
     <>
-      <div className="flex-none border-base-300 border-b bg-base-100">
+      <div className="flex-none border-[var(--jp-mist)] border-b bg-[var(--jp-cream)]">
         <div className="mx-auto flex max-w-screen-2xl items-center justify-between px-3 py-3 sm:px-4 sm:py-4 md:px-6">
           <div className="flex items-center gap-2 sm:gap-3">
             {/* 返回首页按钮 */}
             <Link
               href={ROUTES.INDEX}
-              className="cmy-btn cmy-btn-ghost cmy-btn-sm cmy-btn-circle"
+              className="flex h-8 w-8 items-center justify-center rounded-full text-[var(--jp-ash)] transition-colors hover:bg-[var(--jp-paper)] hover:text-[var(--jp-ink)]"
               aria-label={tCommon('backToHome')}
             >
               <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5" />
             </Link>
 
-            <div className="rounded-lg bg-primary p-2 shadow-sm">
-              <Sparkles className="h-4 w-4 text-primary-content sm:h-5 sm:w-5" strokeWidth={2} />
+            <div className="rounded-lg bg-[var(--jp-vermilion)] p-2 shadow-sm">
+              <Sparkles className="h-4 w-4 text-white sm:h-5 sm:w-5" strokeWidth={2} />
             </div>
             <div>
-              <h1 className="font-bold text-base text-base-content sm:text-lg md:text-xl">
+              <h1 className="font-bold text-[var(--jp-ink)] text-base sm:text-lg md:text-xl">
                 {t('title')}
               </h1>
-              <p className="text-[10px] text-base-content/60 sm:text-xs">{t('subtitle')}</p>
+              <p className="text-[10px] text-[var(--jp-ash)] sm:text-xs">{t('subtitle')}</p>
             </div>
           </div>
           {hasMessages && (
-            <button
-              type="button"
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={handleClearClick}
-              className="cmy-btn cmy-btn-ghost cmy-btn-sm gap-1 text-xs transition-all hover:scale-105 sm:gap-2 sm:text-sm"
+              className="gap-1 text-[var(--jp-ash)] hover:text-[var(--jp-ink)] sm:gap-2"
               aria-label={t('clearChat')}
             >
               <Trash2 className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
               <span className="hidden sm:inline">{t('clearChat')}</span>
-            </button>
+            </Button>
           )}
         </div>
       </div>
 
       {/* 清空确认对话框 */}
-      {showConfirmDialog && (
-        <div className="cmy-modal cmy-modal-open">
-          <div className="cmy-modal-box max-w-sm">
-            <h3 className="font-bold text-lg">{tCommon('confirm')}</h3>
-            <p className="py-4 text-base-content/80">{t('clearChatConfirm')}</p>
-            <div className="cmy-modal-action">
-              <button type="button" onClick={handleCancelClear} className="cmy-btn cmy-btn-ghost">
-                {tCommon('cancel')}
-              </button>
-              <button type="button" onClick={handleConfirmClear} className="cmy-btn cmy-btn-error">
-                {tCommon('delete')}
-              </button>
-            </div>
-          </div>
-          <div
-            className="cmy-modal-backdrop"
-            onClick={handleCancelClear}
-            onKeyDown={(e) => e.key === 'Escape' && handleCancelClear()}
-            role="button"
-            tabIndex={0}
-            aria-label={tCommon('cancel')}
-          />
-        </div>
-      )}
+      <Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>{tCommon('confirm')}</DialogTitle>
+            <DialogDescription>{t('clearChatConfirm')}</DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={handleCancelClear}>
+              {tCommon('cancel')}
+            </Button>
+            <Button onClick={handleConfirmClear}>{tCommon('delete')}</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   )
 }

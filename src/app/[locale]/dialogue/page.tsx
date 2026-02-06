@@ -129,7 +129,7 @@ export default function DialoguePage() {
   }, [clearMessages])
 
   return (
-    <div className="flex h-screen flex-col bg-base-100">
+    <div className="flex h-screen flex-col bg-[var(--jp-cream)]">
       <ChatHeader hasMessages={messages.length > 0} onClear={handleClear} />
 
       {/* 聊天区域 */}

@@ -1,13 +1,8 @@
 /*
- * @Author: Susie 1732728869@qq.com
- * @Date: 2025-08-18 20:46:03
- * @LastEditors: Susie 1732728869@qq.com
- * @LastEditTime: 2025-11-19 21:42:32
- * @FilePath: \susie-cmy\src\app\blog\[slug]\page.tsx
- * @Description: 强者都是孤独的
- *
- * Copyright (c) 2025 by 1732728869@qq.com, All Rights Reserved.
+ * @Date: 2025-08-18
+ * @Description: 博客文章详情页 - 日系简约风格
  */
+import { ArrowLeft, Calendar, Clock } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -19,7 +14,6 @@ import MobileTOC from '@/components/blog/MobileTOC'
 import ReadingProgress from '@/components/blog/ReadingProgress'
 import ScrollToTop from '@/components/ui/ScrollToTop'
 import { getAllPosts, getPostBySlug } from '@/lib/blog'
-import { getTagStyle } from '@/lib/tagStyles'
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -111,7 +105,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   return (
-    <div className="mx-auto min-h-screen max-w-screen-2xl bg-base-100">
+    <div className="mx-auto min-h-screen max-w-screen-2xl bg-[var(--jp-cream)]">
       <ReadingProgress />
       <MobileTOC />
       <ScrollToTop />
@@ -120,47 +114,30 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       <main className="mx-auto px-6 py-8">
+        {/* 返回链接 */}
         <nav className="mb-8">
           <Link
             href="/blog"
-            className="group inline-flex items-center text-primary transition-colors duration-200 hover:text-primary-focus"
+            className="group inline-flex items-center font-[family-name:var(--font-jp-sans)] text-[var(--jp-ash)] text-sm transition-colors hover:text-[var(--jp-ink)]"
           >
-            <svg
-              className="group-hover:-translate-x-1 mr-2 h-4 w-4 transition-transform"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
+            <ArrowLeft className="group-hover:-translate-x-1 mr-1.5 h-4 w-4 transition-transform" />
             返回博客列表
           </Link>
         </nav>
 
         {/* 文章头部 */}
-        <header className="mb-12">
-          <div className="mb-6">
-            <h1 className="mb-4 font-bold text-4xl text-base-content leading-tight">
-              {post.title}
-            </h1>
-            <p className="text-base-content/70 text-xl leading-relaxed">{post.description}</p>
-          </div>
+        <header className="mb-10 border-[var(--jp-mist)] border-b pb-8">
+          <h1 className="mb-3 font-[family-name:var(--font-jp)] font-medium text-3xl text-[var(--jp-ink)]">
+            {post.title}
+          </h1>
+          <p className="mb-6 font-[family-name:var(--font-jp-sans)] text-[var(--jp-stone)] text-base leading-relaxed">
+            {post.description}
+          </p>
 
           {/* 文章元数据 */}
-          <div className="mb-6 flex flex-wrap items-center gap-4 text-base-content/60 text-sm">
-            <div className="flex items-center gap-2">
-              <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fillRule="evenodd"
-                  d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                  clipRule="evenodd"
-                />
-              </svg>
+          <div className="mb-5 flex flex-wrap items-center gap-4 font-[family-name:var(--font-jp-sans)] text-[var(--jp-ash)] text-sm">
+            <div className="flex items-center gap-1.5">
+              <Calendar className="h-4 w-4" />
               <time dateTime={post.date}>
                 {new Date(post.date).toLocaleDateString('zh-CN', {
                   year: 'numeric',
@@ -169,14 +146,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 })}
               </time>
             </div>
-            <div className="flex items-center gap-2">
-              <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fillRule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-                  clipRule="evenodd"
-                />
-              </svg>
+            <div className="flex items-center gap-1.5">
+              <Clock className="h-4 w-4" />
               <span>约 {post.readingTime} 分钟阅读</span>
             </div>
           </div>
@@ -186,7 +157,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             {post.tags.map((tag) => (
               <span
                 key={tag}
-                className={`rounded-full px-3 py-1 font-semibold text-sm transition-transform duration-200 hover:scale-105 ${getTagStyle(tag)}`}
+                className="rounded-md border border-[var(--jp-mist)] bg-[var(--jp-paper)] px-2.5 py-1 font-[family-name:var(--font-jp-sans)] text-[var(--jp-stone)] text-xs"
               >
                 {tag}
               </span>
@@ -195,7 +166,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </header>
 
         {/* 文章内容 */}
-        <article className="prose prose-lg max-w-none prose-blockquote:border-primary prose-pre:bg-base-200 prose-blockquote:text-base-content prose-code:text-base-content prose-headings:text-base-content prose-p:text-base-content prose-strong:text-base-content">
+        <article className="prose prose-lg max-w-none prose-blockquote:border-[var(--jp-vermilion)] prose-pre:bg-[var(--jp-paper)] prose-headings:font-[family-name:var(--font-jp)] prose-p:font-[family-name:var(--font-jp-sans)] prose-blockquote:text-[var(--jp-stone)] prose-code:text-[var(--jp-ink)] prose-headings:text-[var(--jp-ink)] prose-p:text-[var(--jp-stone)] prose-strong:text-[var(--jp-ink)]">
           <ReactMarkdown
             components={
               {
@@ -206,36 +177,38 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                       style={oneDark}
                       language={match[1]}
                       PreTag="div"
-                      className="rounded-lg"
+                      className="rounded-md"
                     >
                       {String(children).replace(/\n$/, '')}
                     </SyntaxHighlighter>
                   ) : (
-                    <code className="rounded bg-base-200 px-1.5 py-0.5 text-sm" {...props}>
+                    <code className="rounded bg-[var(--jp-paper)] px-1.5 py-0.5 text-sm" {...props}>
                       {children}
                     </code>
                   )
                 },
                 h1: ({ children }) => (
-                  <h1 className="mt-12 mb-6 border-base-300 border-b pb-4 font-bold text-3xl text-base-content">
+                  <h1 className="mt-12 mb-6 border-[var(--jp-mist)] border-b pb-4 font-medium text-2xl text-[var(--jp-ink)]">
                     {children}
                   </h1>
                 ),
                 h2: ({ children }) => (
-                  <h2 className="mt-10 mb-4 font-bold text-2xl text-base-content">{children}</h2>
+                  <h2 className="mt-10 mb-4 font-medium text-[var(--jp-ink)] text-xl">
+                    {children}
+                  </h2>
                 ),
                 h3: ({ children }) => (
-                  <h3 className="mt-8 mb-3 font-bold text-base-content text-xl">{children}</h3>
+                  <h3 className="mt-8 mb-3 font-medium text-[var(--jp-ink)] text-lg">{children}</h3>
                 ),
                 blockquote: ({ children }) => (
-                  <blockquote className="my-6 rounded-r-lg border-primary border-l-4 bg-base-200/50 py-2 pl-6">
+                  <blockquote className="my-6 rounded-r-md border-[var(--jp-vermilion)] border-l-2 bg-[var(--jp-paper)] py-2 pl-4">
                     {children}
                   </blockquote>
                 ),
                 a: ({ href, children }) => (
                   <a
                     href={href}
-                    className="text-primary underline transition-colors hover:text-primary-focus"
+                    className="text-[var(--jp-indigo)] underline transition-colors hover:text-[var(--jp-vermilion)]"
                   >
                     {children}
                   </a>

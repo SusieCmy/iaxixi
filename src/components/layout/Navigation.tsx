@@ -10,11 +10,13 @@ import {
   BarChart3,
   BookOpen,
   Briefcase,
+  Check,
   Home,
   Mail,
   Menu,
   MessageCircle,
   Moon,
+  Palette,
   Sparkles,
   Sun,
   User,
@@ -25,6 +27,14 @@ import { usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
 import LanguageSwitcher from '@/components/i18n/LanguageSwitcher'
+import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import { animateElements, staggerDelay } from '@/lib/animations'
 import useThemeStore from '@/store/useThemeStore'
 
@@ -88,11 +98,18 @@ const menuConfig: MenuConfig[] = [
   },
 ]
 
+// 配色方案配置
+const colorSchemes = [
+  { value: 'fuji' as const, label: '藤花雨', color: '#9b8bb4' },
+  { value: 'matcha' as const, label: '京都抹茶', color: '#7d8c6c' },
+  { value: 'latte' as const, label: '焦糖拿铁', color: '#b58563' },
+]
+
 export default function Navigation() {
   const t = useTranslations('nav')
   const pathname = usePathname()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const { setThemeType, themeType } = useThemeStore()
+  const { setThemeType, themeType, colorScheme, setColorScheme } = useThemeStore()
 
   // 生成国际化菜单项
   const menuItems = menuConfig.map((item) => ({
@@ -129,9 +146,9 @@ export default function Navigation() {
   useEffect(() => {
     animateElements('.nav-menu-item', {
       opacity: [0, 1],
-      delay: staggerDelay(0, 60),
-      duration: 700,
-      ease: 'easeOutCubic',
+      delay: staggerDelay(0, 0.06),
+      duration: 0.7,
+      ease: 'easeOut',
     })
   }, [])
 
@@ -140,9 +157,9 @@ export default function Navigation() {
     if (isMobileMenuOpen) {
       animateElements('.mobile-nav-item', {
         opacity: [0, 1],
-        delay: staggerDelay(0, 50),
-        duration: 600,
-        ease: 'easeOutCubic',
+        delay: staggerDelay(0, 0.05),
+        duration: 0.6,
+        ease: 'easeOut',
       })
     }
   }, [isMobileMenuOpen])
@@ -150,45 +167,72 @@ export default function Navigation() {
   return (
     <>
       {/* 桌面端导航 */}
-      <nav className="hidden items-center gap-2 md:flex lg:gap-3">
+      <nav className="hidden items-center gap-6 md:flex">
         {menuItems.map((item) => {
-          const Icon = item.icon
           const active = isActive(item.path)
 
           return (
             <Link
               key={item.path}
               href={item.path}
-              className={`nav-menu-item group relative flex cursor-target items-center gap-2 rounded-lg px-3 py-2 transition-all duration-300 ${
+              className={`nav-menu-item relative px-1 py-2 font-[family-name:var(--font-jp-sans)] text-sm transition-colors duration-300 ${
                 active
-                  ? 'bg-primary/10 font-medium text-primary'
-                  : 'text-base-content/70 hover:bg-base-200 hover:text-base-content'
-              } `}
+                  ? 'font-medium text-[var(--jp-ink)]'
+                  : 'text-[var(--jp-ash)] hover:text-[var(--jp-ink)]'
+              }`}
               title={item.description}
             >
-              <Icon className="h-4 w-4" />
-              <span className="text-sm">{item.label}</span>
-
-              {/* 激活指示器 */}
+              <span>{item.label}</span>
               {active && (
-                <span className="-translate-x-1/2 absolute bottom-0 left-1/2 h-0.5 w-1/2 rounded-full bg-primary" />
+                <span className="absolute bottom-0 left-0 h-px w-full bg-[var(--jp-vermilion)]" />
               )}
             </Link>
           )
         })}
 
-        {/* 主题切换按钮 */}
-        <button
-          onClick={handleThemeToggle}
-          className="nav-menu-item ml-2 cursor-target rounded-lg p-2 transition-all duration-300 hover:bg-base-200"
-          title={t(themeType === 'light' ? 'toggleToDark' : 'toggleToLight')}
-        >
-          {themeType === 'light' ? (
-            <Moon className="h-4 w-4 text-base-content/70 hover:text-base-content" />
-          ) : (
-            <Sun className="h-4 w-4 text-base-content/70 hover:text-base-content" />
-          )}
-        </button>
+        {/* 主题配色切换 */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="nav-menu-item ml-4 h-8 w-8 text-[var(--jp-ash)] hover:text-[var(--jp-ink)]"
+              aria-label={t('toggleTheme')}
+            >
+              <Palette className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-40">
+            {colorSchemes.map((scheme) => (
+              <DropdownMenuItem
+                key={scheme.value}
+                onClick={() => setColorScheme(scheme.value)}
+                className="cursor-pointer gap-2 font-[family-name:var(--font-jp-sans)]"
+              >
+                <span
+                  className="h-3 w-3 shrink-0 rounded-full"
+                  style={{ backgroundColor: scheme.color }}
+                />
+                <span className="flex-1">{scheme.label}</span>
+                {colorScheme === scheme.value && (
+                  <Check className="h-3.5 w-3.5 text-[var(--jp-vermilion)]" />
+                )}
+              </DropdownMenuItem>
+            ))}
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={handleThemeToggle}
+              className="cursor-pointer gap-2 font-[family-name:var(--font-jp-sans)]"
+            >
+              {themeType === 'light' ? (
+                <Moon className="h-3.5 w-3.5" />
+              ) : (
+                <Sun className="h-3.5 w-3.5" />
+              )}
+              <span>{t(themeType === 'light' ? 'toggleToDark' : 'toggleToLight')}</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
         {/* 语言切换器 */}
         <LanguageSwitcher />
@@ -199,31 +243,67 @@ export default function Navigation() {
         {/* 语言切换 */}
         <LanguageSwitcher />
 
-        {/* 主题切换 */}
-        <button
-          onClick={handleThemeToggle}
-          className="rounded-lg p-2 transition-all duration-300 hover:bg-base-200"
-          title={t(themeType === 'light' ? 'toggleToDark' : 'toggleToLight')}
-        >
-          {themeType === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
-        </button>
+        {/* 主题配色切换 */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-9 w-9 text-[var(--jp-ash)] hover:text-[var(--jp-ink)]"
+              aria-label={t('toggleTheme')}
+            >
+              <Palette className="h-5 w-5" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-40">
+            {colorSchemes.map((scheme) => (
+              <DropdownMenuItem
+                key={scheme.value}
+                onClick={() => setColorScheme(scheme.value)}
+                className="cursor-pointer gap-2 font-[family-name:var(--font-jp-sans)]"
+              >
+                <span
+                  className="h-3 w-3 shrink-0 rounded-full"
+                  style={{ backgroundColor: scheme.color }}
+                />
+                <span className="flex-1">{scheme.label}</span>
+                {colorScheme === scheme.value && (
+                  <Check className="h-3.5 w-3.5 text-[var(--jp-vermilion)]" />
+                )}
+              </DropdownMenuItem>
+            ))}
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={handleThemeToggle}
+              className="cursor-pointer gap-2 font-[family-name:var(--font-jp-sans)]"
+            >
+              {themeType === 'light' ? (
+                <Moon className="h-3.5 w-3.5" />
+              ) : (
+                <Sun className="h-3.5 w-3.5" />
+              )}
+              <span>{t(themeType === 'light' ? 'toggleToDark' : 'toggleToLight')}</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
         {/* 汉堡菜单 */}
-        <button
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={toggleMobileMenu}
-          className="rounded-lg p-2 transition-all duration-300 hover:bg-base-200"
+          className="h-9 w-9 text-[var(--jp-ash)] hover:text-[var(--jp-ink)]"
           aria-label={t('toggleMenu')}
         >
           {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
+        </Button>
       </div>
 
       {/* 移动端下拉菜单 */}
       {isMobileMenuOpen && (
-        <div className="absolute top-full right-0 left-0 mt-2 overflow-hidden rounded-2xl border-2 border-base-300 bg-base-100 shadow-xl backdrop-blur-md md:hidden">
-          <nav className="space-y-2 p-4">
+        <div className="absolute top-full right-0 left-0 z-50 mt-2 border-[var(--jp-mist)] border-b bg-[var(--jp-cream)] shadow-sm md:hidden">
+          <nav className="space-y-1 p-4">
             {menuItems.map((item) => {
-              const Icon = item.icon
               const active = isActive(item.path)
 
               return (
@@ -231,19 +311,15 @@ export default function Navigation() {
                   key={item.path}
                   href={item.path}
                   onClick={closeMobileMenu}
-                  className={`mobile-nav-item flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-300 ${
+                  className={`mobile-nav-item block px-4 py-3 font-[family-name:var(--font-jp-sans)] transition-colors ${
                     active
-                      ? 'bg-primary/10 font-medium text-primary'
-                      : 'text-base-content/70 hover:bg-base-200 hover:text-base-content'
-                  } `}
+                      ? 'border-[var(--jp-vermilion)] border-l-2 bg-[var(--jp-paper)] font-medium text-[var(--jp-ink)]'
+                      : 'text-[var(--jp-ash)] hover:bg-[var(--jp-paper)] hover:text-[var(--jp-ink)]'
+                  }`}
                   style={{ opacity: 0 }}
                 >
-                  <Icon className="h-5 w-5" />
-                  <div className="flex-1">
-                    <div className="font-medium">{item.label}</div>
-                    <div className="text-xs opacity-60">{item.description}</div>
-                  </div>
-                  {active && <div className="h-2 w-2 rounded-full bg-primary" />}
+                  <div className="font-medium">{item.label}</div>
+                  <div className="text-xs opacity-60">{item.description}</div>
                 </Link>
               )
             })}
@@ -253,12 +329,16 @@ export default function Navigation() {
 
       {/* 移动端遮罩层 */}
       {isMobileMenuOpen && (
-        <div
-          className="fixed inset-0 z-[-1] bg-black/20 backdrop-blur-sm md:hidden"
+        <button
+          type="button"
+          className="fixed inset-0 top-14 z-40 bg-black/20 backdrop-blur-sm md:hidden"
           onClick={closeMobileMenu}
-          onKeyDown={(e) => e.key === 'Escape' && closeMobileMenu()}
-          role="button"
-          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') {
+              e.preventDefault()
+              closeMobileMenu()
+            }
+          }}
           aria-label={t('closeMenu')}
         />
       )}

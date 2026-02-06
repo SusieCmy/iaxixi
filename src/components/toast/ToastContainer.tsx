@@ -1,6 +1,6 @@
 /*
  * @Date: 2025-12-18
- * @Description: Toast 通知组件 - 基于 DaisyUI
+ * @Description: Toast 通知组件 - 日系简约风格
  */
 'use client'
 
@@ -38,7 +38,7 @@ export default function ToastContainer() {
   const { toasts, removeToast } = useToastStore()
 
   return (
-    <div className="cmy-toast cmy-toast-bottom cmy-toast-end z-[9999]">
+    <div className="fixed right-4 bottom-4 z-[9999] flex flex-col gap-2">
       {toasts.map((toast) => {
         const Icon = toastIcons[toast.type]
         const bgClass = toastStyles[toast.type]

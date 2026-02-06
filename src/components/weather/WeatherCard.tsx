@@ -1,6 +1,6 @@
 /*
  * @Date: 2025-01-07
- * @Description: 天气卡片组件 - Open-Meteo 适配版
+ * @Description: 天气卡片组件 - 日系简约风格
  */
 'use client'
 import {
@@ -16,10 +16,11 @@ import {
 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useEffect } from 'react'
+import { Button } from '@/components/ui/button'
 import { useWeather } from '@/hooks/useWeather'
 import { animateElements, staggerDelay } from '@/lib/animations'
+import { cn } from '@/lib/utils'
 import type { WeatherCondition } from '@/types/weather'
-import { cn } from '@/utils/cn'
 
 function WeatherCard() {
   const t = useTranslations('weather')
@@ -28,11 +29,11 @@ function WeatherCard() {
 
   useEffect(() => {
     // 信息卡片
-    animateElements('.cmy-card', {
+    animateElements('.weather-card', {
       translateY: [40, 0],
-      delay: staggerDelay(0, 100),
-      duration: 800,
-      ease: 'outExpo',
+      delay: staggerDelay(0, 0.1),
+      duration: 0.8,
+      ease: 'easeOut',
     })
   }, [])
 
@@ -52,71 +53,54 @@ function WeatherCard() {
   const getWeatherColor = (condition: WeatherCondition) => {
     switch (condition) {
       case 'sunny':
-        return 'text-warning'
+        return 'text-[var(--jp-vermilion)]'
       case 'night':
-        return 'text-info'
+        return 'text-[var(--jp-indigo)]'
       case 'rainy':
-        return 'text-primary'
+        return 'text-[var(--jp-indigo)]'
       default:
-        return 'text-accent'
+        return 'text-[var(--jp-stone)]'
     }
+  }
+
+  const getWeatherGlow = (_condition: WeatherCondition) => {
+    return ''
   }
 
   if (isLoading || error || !data) {
     return (
-      <div className="cmy-card w-full rounded-2xl border border-base-300 bg-base-100 opacity-0 shadow-lg transition-all duration-300">
-        <div className="cmy-card-body gap-4 p-5">
-          {/* 顶部栏骨架 */}
+      <div className="weather-card relative w-full overflow-hidden border border-[var(--jp-mist)] bg-[var(--jp-cream)] opacity-0">
+        <div className="flex flex-col gap-4 p-5">
           <div className="flex items-center justify-between">
-            <div className="h-6 w-24 animate-pulse rounded-full bg-base-300" />
-            <div className="flex gap-1">
-              <div className="h-8 w-8 animate-pulse rounded-full bg-base-300" />
-              {/* 刷新按钮 - 错误时可用 */}
+            <div className="h-5 w-20 animate-pulse rounded bg-[var(--jp-mist)]" />
+            <div className="flex gap-2">
+              <div className="h-8 w-8 animate-pulse rounded-full bg-[var(--jp-mist)]" />
               {(error || !data) && !isLoading ? (
-                <button
-                  type="button"
+                <Button
+                  variant="outline"
+                  size="icon"
                   onClick={() => refetch()}
                   disabled={isRefetching}
-                  className={cn(
-                    'cmy-btn cmy-btn-ghost cmy-btn-circle cmy-btn-sm',
-                    isRefetching && 'cmy-loading'
-                  )}
+                  className={cn('h-8 w-8 rounded-full', isRefetching && 'animate-spin')}
                   aria-label={t('refreshData')}
                 >
-                  <RefreshCw className={cn('size-4', isRefetching && 'animate-spin')} />
-                </button>
+                  <RefreshCw className="size-4" />
+                </Button>
               ) : (
-                <div className="h-8 w-8 animate-pulse rounded-full bg-base-300" />
+                <div className="h-8 w-8 animate-pulse rounded-full bg-[var(--jp-mist)]" />
               )}
             </div>
           </div>
-
-          {/* 主要天气信息骨架 */}
           <div className="flex items-center gap-4">
-            <div className="size-16 shrink-0 animate-pulse rounded-full bg-base-300" />
+            <div className="size-14 animate-pulse rounded-full bg-[var(--jp-mist)]" />
             <div className="flex flex-col gap-2">
-              <div className="h-12 w-32 animate-pulse rounded-lg bg-base-300" />
-              <div className="h-4 w-24 animate-pulse rounded bg-base-300" />
-              <div className="h-3 w-20 animate-pulse rounded bg-base-300" />
+              <div className="h-10 w-24 animate-pulse rounded bg-[var(--jp-mist)]" />
+              <div className="h-4 w-16 animate-pulse rounded bg-[var(--jp-mist)]" />
             </div>
           </div>
-
-          {/* 湿度和风速骨架 */}
-          <div className="grid grid-cols-2 gap-2">
-            <div className="flex items-center gap-2 rounded-lg bg-base-200 p-3">
-              <div className="size-5 animate-pulse rounded-full bg-base-300" />
-              <div className="flex flex-col gap-1.5">
-                <div className="h-3 w-12 animate-pulse rounded bg-base-300" />
-                <div className="h-5 w-16 animate-pulse rounded bg-base-300" />
-              </div>
-            </div>
-            <div className="flex items-center gap-2 rounded-lg bg-base-200 p-3">
-              <div className="size-5 animate-pulse rounded-full bg-base-300" />
-              <div className="flex flex-col gap-1.5">
-                <div className="h-3 w-12 animate-pulse rounded bg-base-300" />
-                <div className="h-5 w-16 animate-pulse rounded bg-base-300" />
-              </div>
-            </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="h-16 animate-pulse rounded-lg bg-[var(--jp-mist)]" />
+            <div className="h-16 animate-pulse rounded-lg bg-[var(--jp-mist)]" />
           </div>
         </div>
       </div>
@@ -125,70 +109,88 @@ function WeatherCard() {
 
   const MainIcon = getWeatherIcon(data.condition)
   const iconColor = getWeatherColor(data.condition)
+  const iconGlow = getWeatherGlow(data.condition)
 
   return (
-    <div className="cmy-card w-full rounded-2xl border border-base-300 bg-base-100 opacity-0 shadow-lg transition-all duration-300 hover:shadow-xl">
-      <div className="cmy-card-body gap-4 p-5">
+    <div className="weather-card group relative w-full overflow-hidden border border-[var(--jp-mist)] bg-[var(--jp-cream)] opacity-0 transition-colors hover:border-[var(--jp-stone)]">
+      <div className="flex flex-col gap-4 p-5">
         {/* 顶部栏：地点 + 操作 */}
         <div className="flex items-center justify-between">
-          <div className="cmy-badge cmy-badge-ghost gap-1.5">
-            <MapPin className="size-3.5" />
-            <span className="font-medium text-xs">{data.location}</span>
+          <div className="flex items-center gap-1.5">
+            <MapPin className="size-3.5 text-[var(--jp-ash)]" />
+            <span className="font-[family-name:var(--font-jp-sans)] font-medium text-[var(--jp-ink)] text-xs">
+              {data.location}
+            </span>
           </div>
-          <div className="flex gap-1">
-            <button
-              type="button"
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              size="icon"
               onClick={handleLocateMe}
               disabled={isRefetching}
-              className="cmy-btn cmy-btn-ghost cmy-btn-circle cmy-btn-sm"
+              className={cn(
+                'h-8 w-8 rounded-full',
+                useBrowser && 'border-[var(--jp-vermilion)] text-[var(--jp-vermilion)]'
+              )}
               title="Locate Me"
+              aria-label="Locate Me"
             >
-              <Navigation className={cn('size-4', useBrowser && 'text-primary')} />
-            </button>
-            <button
-              type="button"
+              <Navigation className="size-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
               onClick={() => refetch()}
               disabled={isRefetching}
-              className={cn(
-                'cmy-btn cmy-btn-ghost cmy-btn-circle cmy-btn-sm',
-                isRefetching && 'cmy-loading'
-              )}
+              className="h-8 w-8 rounded-full"
               aria-label={t('refreshData')}
             >
               <RefreshCw className={cn('size-4', isRefetching && 'animate-spin')} />
-            </button>
+            </Button>
           </div>
         </div>
 
         {/* 主要天气信息 */}
         <div className="flex items-center gap-4">
-          <MainIcon className={cn('size-16 shrink-0', iconColor)} />
+          <MainIcon className={cn('size-14 shrink-0', iconColor, iconGlow)} />
           <div className="flex flex-col">
             <div className="flex items-baseline gap-1">
-              <span className="font-bold text-5xl text-base-content">{data.temp}</span>
-              <span className="text-2xl text-base-content/60">°C</span>
+              <span className="font-[family-name:var(--font-jp)] font-semibold text-4xl text-[var(--jp-ink)]">
+                {data.temp}
+              </span>
+              <span className="text-[var(--jp-ash)] text-xl">°C</span>
             </div>
-            <p className="font-medium text-base-content/80 text-sm">{data.conditionText}</p>
-            <p className="text-base-content/50 text-xs">
+            <p className="font-[family-name:var(--font-jp-sans)] text-[var(--jp-stone)] text-sm">
+              {data.conditionText}
+            </p>
+            <p className="font-[family-name:var(--font-jp-sans)] text-[var(--jp-ash)] text-xs">
               {data.high}° / {data.low}°
             </p>
           </div>
         </div>
 
         {/* 湿度和风速 */}
-        <div className="grid grid-cols-2 gap-2">
-          <div className="flex items-center gap-2 rounded-lg bg-base-200 p-3">
-            <Droplets className="size-5 text-primary" />
+        <div className="grid grid-cols-2 gap-3">
+          <div className="flex items-center gap-2 rounded-lg border border-[var(--jp-mist)] bg-[var(--jp-paper)] p-3">
+            <Droplets className="size-5 text-[var(--jp-indigo)]" />
             <div>
-              <p className="text-base-content/60 text-xs">{t('humidity')}</p>
-              <p className="font-semibold text-base-content text-lg">{data.humidity}%</p>
+              <p className="font-[family-name:var(--font-jp-sans)] text-[var(--jp-ash)] text-xs">
+                {t('humidity')}
+              </p>
+              <p className="font-[family-name:var(--font-jp)] font-medium text-[var(--jp-ink)] text-lg">
+                {data.humidity}%
+              </p>
             </div>
           </div>
-          <div className="flex items-center gap-2 rounded-lg bg-base-200 p-3">
-            <Wind className="size-5 text-accent" />
+          <div className="flex items-center gap-2 rounded-lg border border-[var(--jp-mist)] bg-[var(--jp-paper)] p-3">
+            <Wind className="size-5 text-[var(--jp-moss)]" />
             <div>
-              <p className="text-base-content/60 text-xs">{data.windDir}</p>
-              <p className="font-semibold text-base-content text-lg">{data.windSpeed} km/h</p>
+              <p className="font-[family-name:var(--font-jp-sans)] text-[var(--jp-ash)] text-xs">
+                {data.windDir}
+              </p>
+              <p className="font-[family-name:var(--font-jp)] font-medium text-[var(--jp-ink)] text-lg">
+                {data.windSpeed} km/h
+              </p>
             </div>
           </div>
         </div>

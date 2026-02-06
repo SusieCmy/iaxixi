@@ -1,16 +1,7 @@
 'use client'
 
-import type { animate as AnimateType } from 'animejs'
-import { animate } from 'animejs'
-import {
-  createElement,
-  type ElementType,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
+import { motion } from 'motion/react'
+import { type ElementType, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 interface TextTypeProps {
   className?: string
@@ -61,7 +52,6 @@ const TextType = ({
   const [isVisible, setIsVisible] = useState(!startOnVisible)
   const cursorRef = useRef<HTMLSpanElement>(null)
   const containerRef = useRef<HTMLElement>(null)
-  const cursorAnimationRef = useRef<ReturnType<typeof AnimateType> | null>(null)
 
   const textArray = useMemo(() => (Array.isArray(text) ? text : [text]), [text])
 
@@ -94,31 +84,6 @@ const TextType = ({
     observer.observe(containerRef.current)
     return () => observer.disconnect()
   }, [startOnVisible])
-
-  // Cursor blink animation using Anime.js v4
-  useEffect(() => {
-    if (!showCursor || !cursorRef.current) return
-
-    // Kill previous animation
-    if (cursorAnimationRef.current) {
-      cursorAnimationRef.current.pause()
-    }
-
-    // Create new blink animation following v4 API
-    cursorAnimationRef.current = animate(cursorRef.current, {
-      opacity: { to: 0 },
-      duration: cursorBlinkDuration * 1000,
-      ease: 'inOutQuad',
-      alternate: true,
-      loop: true,
-    })
-
-    return () => {
-      if (cursorAnimationRef.current) {
-        cursorAnimationRef.current.pause()
-      }
-    }
-  }, [showCursor, cursorBlinkDuration])
 
   // Typing animation logic
   useEffect(() => {
@@ -197,24 +162,32 @@ const TextType = ({
   // biome-ignore lint/correctness/useExhaustiveDependencies: Dependencies are intentionally managed for performance
   const memoizedElement = useMemo(() => {
     const textColor = getCurrentTextColor()
-    return createElement(
-      Component,
-      {
-        ref: containerRef,
-        className: `inline-block whitespace-pre-wrap tracking-tight ${className}`,
-        ...props,
-      },
-      <span className="inline" style={{ color: textColor || 'inherit' }}>
-        {displayedText}
-      </span>,
-      showCursor && (
-        <span
-          ref={cursorRef}
-          className={`ml-1 inline-block opacity-100 ${shouldHideCursor ? 'hidden' : ''} ${cursorClassName}`}
-        >
-          {cursorCharacter}
+    return (
+      <Component
+        ref={containerRef}
+        className={`inline-block whitespace-pre-wrap tracking-tight ${className}`}
+        {...props}
+      >
+        <span className="inline" style={{ color: textColor || 'inherit' }}>
+          {displayedText}
         </span>
-      )
+        {showCursor && (
+          <motion.span
+            ref={cursorRef}
+            className={`ml-1 inline-block ${shouldHideCursor ? 'hidden' : ''} ${cursorClassName}`}
+            animate={{
+              opacity: [1, 0, 1],
+            }}
+            transition={{
+              duration: cursorBlinkDuration * 2,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: 'linear',
+            }}
+          >
+            {cursorCharacter}
+          </motion.span>
+        )}
+      </Component>
     )
   }, [
     Component,

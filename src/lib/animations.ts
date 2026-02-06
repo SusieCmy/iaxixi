@@ -1,12 +1,12 @@
 /*
- * @Date: 2025-12-15
- * @Description: 全局动画工具库 - 基于 Anime.js
+ * @Date: 2026-02-05
+ * @Description: 全局动画工具库 - 基于 Framer Motion
  */
 
-import { animate, utils } from 'animejs'
+import { animate } from 'motion'
 
 /**
- * Anime.js 动画配置类型
+ * Motion 动画配置类型
  * 支持常用的动画属性和配置
  */
 export interface AnimationConfig {
@@ -14,45 +14,36 @@ export interface AnimationConfig {
   opacity?: [number, number]
 
   /** Y轴位移动画 [起始值, 结束值] */
-  translateY?: [number, number]
+  translateY?: [number | string, number | string]
 
   /** X轴位移动画 [起始值, 结束值] */
-  translateX?: [number, number]
+  translateX?: [number | string, number | string]
 
   /** 缩放动画 [起始值, 结束值] */
   scale?: [number, number]
 
   /** 旋转动画 [起始值, 结束值]，单位：度 */
-  rotate?: [number, number]
+  rotate?: [number | string, number | string]
 
   /**
-   * 延迟时间（毫秒）
+   * 延迟时间（秒）
    * 可以是固定值或基于索引的函数
    */
-  delay?: number | ((target: any, index: number) => number)
+  delay?: number | ((target: Element, index: number) => number)
 
-  /** 动画持续时间（毫秒） */
+  /** 动画持续时间（秒） */
   duration?: number
 
   /**
    * 缓动函数
-   * 可选值：'linear', 'easeInQuad', 'easeOutQuad', 'easeInOutQuad',
-   *        'easeInCubic', 'easeOutCubic', 'easeInOutCubic',
-   *        'easeInQuart', 'easeOutQuart', 'easeInOutQuart',
-   *        'easeInQuint', 'easeOutQuint', 'easeInOutQuint',
-   *        'easeInExpo', 'easeOutExpo', 'easeInOutExpo',
-   *        'easeInCirc', 'easeOutCirc', 'easeInOutCirc',
-   *        'easeInBack', 'easeOutBack', 'easeInOutBack',
-   *        'easeInElastic', 'easeOutElastic', 'easeInOutElastic',
-   *        'easeInBounce', 'easeOutBounce', 'easeInOutBounce',
-   *        'spring(mass, stiffness, damping, velocity)'
+   * Motion 支持的缓动函数或自定义贝塞尔曲线
    */
-  ease?: string
+  ease?: string | number[]
 
   /** 循环次数 */
   loop?: number | boolean
 
-  /** 动画方向：'normal' | 'reverse' | 'alternate' */
+  /** 动画方向 */
   direction?: 'normal' | 'reverse' | 'alternate'
 
   /** 自动播放 */
@@ -60,7 +51,7 @@ export interface AnimationConfig {
 }
 
 /**
- * 通用元素动画函数
+ * 通用元素动画函数 - 使用 Motion
  *
  * @param selector - CSS选择器字符串
  * @param config - 动画配置对象
@@ -70,28 +61,20 @@ export interface AnimationConfig {
  * // 基础用法
  * animateElements('.card', {
  *   translateY: [20, 0],
- *   duration: 600,
- *   ease: 'outExpo'
+ *   duration: 0.6,
+ *   ease: 'easeOut'
  * })
  *
  * // 使用索引延迟
  * animateElements('.item', {
  *   scale: [0.8, 1],
- *   delay: (_, i) => i * 100,
- *   duration: 500,
- *   ease: 'outBack'
- * })
- *
- * // 弹簧动画
- * animateElements('.menu-item', {
- *   translateY: [20, 0],
- *   ease: 'spring(1, 80, 10, 0)',
- *   duration: 700
+ *   delay: (_, i) => i * 0.1,
+ *   duration: 0.5
  * })
  * ```
  */
 export const animateElements = (selector: string, config: AnimationConfig): void => {
-  const elements = utils.$(selector)
+  const elements = document.querySelectorAll(selector)
 
   if (!elements || elements.length === 0) {
     if (process.env.NODE_ENV === 'development') {
@@ -101,8 +84,10 @@ export const animateElements = (selector: string, config: AnimationConfig): void
   }
 
   // 默认配置
-  const defaultConfig = {
-    opacity: [0, 1] as [number, number],
+  const defaultConfig: AnimationConfig = {
+    opacity: [0, 1],
+    duration: 0.6,
+    ease: 'easeOut',
   }
 
   // 合并配置
@@ -111,8 +96,51 @@ export const animateElements = (selector: string, config: AnimationConfig): void
     ...config,
   }
 
-  // 执行动画
-  animate(elements, finalConfig as any)
+  // 为每个元素执行动画
+  elements.forEach((element, index) => {
+    const animationProps: Record<string, any> = {}
+
+    // 处理各种动画属性
+    if (finalConfig.opacity) {
+      animationProps.opacity = finalConfig.opacity
+    }
+    if (finalConfig.translateY) {
+      animationProps.y = finalConfig.translateY
+    }
+    if (finalConfig.translateX) {
+      animationProps.x = finalConfig.translateX
+    }
+    if (finalConfig.scale) {
+      animationProps.scale = finalConfig.scale
+    }
+    if (finalConfig.rotate) {
+      animationProps.rotate = finalConfig.rotate
+    }
+
+    // 计算延迟
+    const delay =
+      typeof finalConfig.delay === 'function'
+        ? finalConfig.delay(element, index)
+        : finalConfig.delay || 0
+
+    // 执行动画
+    const options: any = {
+      duration: finalConfig.duration || 0.6,
+      delay,
+      repeat:
+        finalConfig.loop === true
+          ? Number.POSITIVE_INFINITY
+          : typeof finalConfig.loop === 'number'
+            ? finalConfig.loop
+            : 0,
+    }
+
+    if (finalConfig.ease) {
+      options.easing = finalConfig.ease
+    }
+
+    animate(element, animationProps, options)
+  })
 }
 
 /**
@@ -124,56 +152,56 @@ export const AnimationPresets = {
   fadeInUp: (delay = 0): AnimationConfig => ({
     translateY: [40, 0],
     delay,
-    duration: 800,
-    ease: 'outExpo',
+    duration: 0.8,
+    ease: 'easeOut',
   }),
 
   /** 淡入 + 下滑 */
   fadeInDown: (delay = 0): AnimationConfig => ({
     translateY: [-40, 0],
     delay,
-    duration: 800,
-    ease: 'outExpo',
+    duration: 0.8,
+    ease: 'easeOut',
   }),
 
   /** 淡入 + 左滑 */
   fadeInLeft: (delay = 0): AnimationConfig => ({
     translateX: [-40, 0],
     delay,
-    duration: 800,
-    ease: 'outExpo',
+    duration: 0.8,
+    ease: 'easeOut',
   }),
 
   /** 淡入 + 右滑 */
   fadeInRight: (delay = 0): AnimationConfig => ({
     translateX: [40, 0],
     delay,
-    duration: 800,
-    ease: 'outExpo',
+    duration: 0.8,
+    ease: 'easeOut',
   }),
 
   /** 淡入 + 缩放 */
   fadeInScale: (delay = 0): AnimationConfig => ({
     scale: [0.8, 1],
     delay,
-    duration: 600,
-    ease: 'outBack',
+    duration: 0.6,
+    ease: [0.34, 1.56, 0.64, 1], // easeOutBack
   }),
 
   /** 弹跳进入 */
   bounceIn: (delay = 0): AnimationConfig => ({
     translateY: [20, 0],
     delay,
-    duration: 700,
-    ease: 'spring(1, 80, 10, 0)',
+    duration: 0.7,
+    ease: [0.68, -0.55, 0.265, 1.55], // spring-like
   }),
 
   /** 弹性缩放 */
   elasticScale: (delay = 0): AnimationConfig => ({
     scale: [0, 1],
     delay,
-    duration: 800,
-    ease: 'easeOutElastic',
+    duration: 0.8,
+    ease: [0.68, -0.55, 0.265, 1.55],
   }),
 
   /** 旋转淡入 */
@@ -181,23 +209,23 @@ export const AnimationPresets = {
     rotate: [-180, 0],
     scale: [0.5, 1],
     delay,
-    duration: 600,
-    ease: 'outBack',
+    duration: 0.6,
+    ease: [0.34, 1.56, 0.64, 1],
   }),
 }
 
 /**
  * 批量延迟动画辅助函数
  *
- * @param baseDelay - 基础延迟时间（毫秒）
- * @param step - 每个元素递增的延迟时间（毫秒）
+ * @param baseDelay - 基础延迟时间（秒）
+ * @param step - 每个元素递增的延迟时间（秒）
  * @returns 延迟函数
  *
  * @example
  * ```tsx
  * animateElements('.item', {
  *   ...AnimationPresets.fadeInUp(),
- *   delay: staggerDelay(0, 100) // 0ms, 100ms, 200ms, 300ms...
+ *   delay: staggerDelay(0, 0.1) // 0s, 0.1s, 0.2s, 0.3s...
  * })
  * ```
  */
@@ -215,8 +243,8 @@ export const staggerDelay = (baseDelay: number, step: number) => {
  * ```tsx
  * createSequence([
  *   { selector: '.header', config: AnimationPresets.fadeInDown() },
- *   { selector: '.content', config: AnimationPresets.fadeInUp(200) },
- *   { selector: '.footer', config: AnimationPresets.fadeInScale(400) },
+ *   { selector: '.content', config: AnimationPresets.fadeInUp(0.2) },
+ *   { selector: '.footer', config: AnimationPresets.fadeInScale(0.4) },
  * ])
  * ```
  */

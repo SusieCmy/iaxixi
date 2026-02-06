@@ -85,8 +85,8 @@ class WorkflowErrorBoundary extends Component<Props, State> {
       } = this.props
 
       return (
-        <div className="flex h-screen w-screen items-center justify-center bg-base-100">
-          <div className="max-w-md rounded-xl border border-error/20 bg-base-200/50 p-8 text-center shadow-lg">
+        <div className="flex h-screen w-screen items-center justify-center bg-[var(--jp-cream)]">
+          <div className="max-w-md rounded-xl border border-error/20 bg-[var(--jp-paper)]/50 p-8 text-center shadow-lg">
             {/* 错误图标 */}
             <div className="mb-4 flex justify-center">
               <div className="flex h-16 w-16 items-center justify-center rounded-full bg-error/10">
@@ -95,18 +95,18 @@ class WorkflowErrorBoundary extends Component<Props, State> {
             </div>
 
             {/* 错误标题 */}
-            <h2 className="mb-2 font-bold text-2xl text-base-content">{fallbackTitle}</h2>
+            <h2 className="mb-2 font-bold text-2xl text-[var(--jp-ink)]">{fallbackTitle}</h2>
 
             {/* 错误描述 */}
-            <p className="mb-6 text-base-content/70">{fallbackMessage}</p>
+            <p className="mb-6 text-[var(--jp-ink)]/70">{fallbackMessage}</p>
 
             {/* 开发环境：显示错误详情 */}
             {process.env.NODE_ENV === 'development' && this.state.error && (
-              <div className="mb-6 max-h-40 overflow-auto rounded-lg bg-base-300 p-4 text-left">
+              <div className="mb-6 max-h-40 overflow-auto rounded-lg bg-[var(--jp-mist)] p-4 text-left">
                 <p className="mb-2 font-mono text-error text-sm">
                   <strong>Error:</strong> {this.state.error.message}
                 </p>
-                <pre className="overflow-x-auto font-mono text-base-content/60 text-xs">
+                <pre className="overflow-x-auto font-mono text-[var(--jp-ink)]/60 text-xs">
                   {this.state.error.stack}
                 </pre>
               </div>
@@ -116,7 +116,7 @@ class WorkflowErrorBoundary extends Component<Props, State> {
             <button
               type="button"
               onClick={this.handleReset}
-              className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 font-medium text-primary-content transition-all hover:scale-105 hover:bg-primary/90"
+              className="inline-flex items-center gap-2 rounded-lg bg-[var(--jp-vermilion)] px-6 py-3 font-medium text-[var(--jp-vermilion)]-content transition-all hover:scale-105 hover:bg-[var(--jp-vermilion)]/90"
             >
               <RefreshCw className="h-4 w-4" />
               <span>{fallbackRetry}</span>

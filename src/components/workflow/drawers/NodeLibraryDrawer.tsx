@@ -162,27 +162,31 @@ export default function NodeLibraryDrawer({
   return (
     <>
       {/* 遮罩层 */}
-      <div
+      <button
+        type="button"
         className="fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm transition-opacity"
         onClick={onClose}
-        onKeyDown={(e) => e.key === 'Escape' && onClose()}
-        role="button"
-        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') {
+            e.preventDefault()
+            onClose()
+          }
+        }}
         aria-label="关闭抽屉"
       />
 
       {/* 抽屉 */}
-      <div className="fixed top-0 right-0 z-[101] h-full w-full max-w-md transform bg-base-100 shadow-2xl transition-transform sm:max-w-lg">
+      <div className="fixed top-0 right-0 z-[101] h-full w-full max-w-md transform bg-[var(--jp-cream)] shadow-2xl transition-transform sm:max-w-lg">
         {/* 头部 */}
-        <div className="flex items-center justify-between border-base-300 border-b p-6">
+        <div className="flex items-center justify-between border-[var(--jp-mist)] border-b p-6">
           <div>
             <h2 className="font-bold text-xl">选择节点</h2>
-            <p className="text-base-content/60 text-sm">从节点库中选择要添加的节点</p>
+            <p className="text-[var(--jp-ink)]/60 text-sm">从节点库中选择要添加的节点</p>
           </div>
           <button
             onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-lg transition-colors hover:bg-base-200"
-            aria-label="关闭"
+            className="flex h-8 w-8 items-center justify-center rounded-lg transition-colors hover:bg-[var(--jp-paper)]"
+            aria-label="关闭节点库"
           >
             <X className="h-5 w-5" />
           </button>
@@ -193,7 +197,7 @@ export default function NodeLibraryDrawer({
           <div className="space-y-8">
             {Object.entries(groupedNodes).map(([category, nodes]) => (
               <div key={category}>
-                <h3 className="mb-3 font-semibold text-base-content text-sm uppercase tracking-wider">
+                <h3 className="mb-3 font-semibold text-[var(--jp-ink)] text-sm uppercase tracking-wider">
                   {CATEGORY_NAMES[category as keyof typeof CATEGORY_NAMES]}
                 </h3>
                 <div className="space-y-2">
@@ -211,14 +215,14 @@ export default function NodeLibraryDrawer({
                         }`}
                       >
                         <div className="flex items-start gap-3">
-                          <div className="mt-0.5 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-base-100">
-                            <Icon className="h-5 w-5 text-base-content" />
+                          <div className="mt-0.5 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--jp-cream)]">
+                            <Icon className="h-5 w-5 text-[var(--jp-ink)]" />
                           </div>
                           <div className="min-w-0 flex-1">
-                            <h4 className="mb-1 font-semibold text-base-content text-sm">
+                            <h4 className="mb-1 font-semibold text-[var(--jp-ink)] text-sm">
                               {node.name}
                             </h4>
-                            <p className="text-base-content/60 text-xs leading-relaxed">
+                            <p className="text-[var(--jp-ink)]/60 text-xs leading-relaxed">
                               {node.description}
                             </p>
                           </div>

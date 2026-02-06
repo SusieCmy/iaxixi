@@ -70,9 +70,17 @@ export default function RootLayout({
 
   return (
     <html lang="zh" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <GoogleTagManager gtmId={ENV.GTM_ID} />
       <Script id="baidu-analytics" dangerouslySetInnerHTML={getBdAnalyticsTag()} />
-      <body className="font-sans antialiased">
+      <body className="bg-[var(--jp-cream)] font-sans text-[var(--jp-ink)] antialiased">
         <ThemeProvider>
           <QueryProvider>{children}</QueryProvider>
         </ThemeProvider>

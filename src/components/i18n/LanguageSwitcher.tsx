@@ -1,6 +1,6 @@
 /*
  * @Date: 2025-12-17
- * @Description: 语言切换器组件 - 使用 DaisyUI Dropdown
+ * @Description: 语言切换器组件 - 日系简约风格
  */
 
 'use client'
@@ -9,6 +9,13 @@ import { Check, Globe, Loader2 } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import { useLocale } from 'next-intl'
 import { useTransition } from 'react'
+import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 
 export default function LanguageSwitcher() {
   const locale = useLocale()
@@ -16,58 +23,54 @@ export default function LanguageSwitcher() {
   const pathname = usePathname()
   const [isPending, startTransition] = useTransition()
 
-  // 切换语言
   const handleLanguageChange = (newLocale: string) => {
     if (newLocale === locale) return
 
     startTransition(() => {
-      // 移除路径中的当前 locale
       const pathnameWithoutLocale = pathname.replace(`/${locale}`, '')
-      // 构建新的路径
       const newPath = `/${newLocale}${pathnameWithoutLocale || ''}`
       router.push(newPath)
     })
   }
 
   const languages = [
-    { code: 'zh', name: '中文', flag: '🇨🇳', desc: 'Chinese' },
-    { code: 'en', name: 'English', flag: '🇬🇧', desc: '英语' },
+    { code: 'zh', name: '中文', desc: 'Chinese' },
+    { code: 'en', name: 'English', desc: '英语' },
   ]
 
   return (
-    <div className="cmy-dropdown cmy-dropdown-end">
-      {/* 触发按钮 */}
-      <div
-        tabIndex={0}
-        role="button"
-        className="cmy-btn cmy-btn-ghost cmy-btn-sm gap-1.5 rounded-lg"
-        aria-label="切换语言 / Switch Language"
-      >
-        {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Globe className="h-4 w-4" />}
-        <span className="hidden font-medium text-xs uppercase sm:inline">{locale}</span>
-      </div>
-
-      {/* 下拉菜单 */}
-      <ul className="cmy-menu cmy-dropdown-content z-[1] mt-3 w-52 rounded-box border border-base-300 bg-base-100 p-2 shadow-lg">
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="outline"
+          size="sm"
+          className="gap-1.5 font-[family-name:var(--font-jp-sans)]"
+          aria-label="切换语言 / Switch Language"
+        >
+          {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Globe className="h-4 w-4" />}
+          <span className="hidden uppercase sm:inline">{locale}</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-44">
         {languages.map((lang) => (
-          <li key={lang.code}>
-            <button
-              onClick={() => handleLanguageChange(lang.code)}
-              disabled={isPending}
-              className={`flex items-center gap-3 ${
-                locale === lang.code ? 'active bg-primary/10 text-primary' : ''
-              }`}
-            >
-              <span className="text-xl">{lang.flag}</span>
+          <DropdownMenuItem
+            key={lang.code}
+            onClick={() => handleLanguageChange(lang.code)}
+            disabled={isPending}
+            className={`font-[family-name:var(--font-jp-sans)] ${
+              locale === lang.code ? 'bg-[var(--jp-paper)]' : ''
+            }`}
+          >
+            <div className="flex w-full items-center gap-3">
               <div className="flex-1">
                 <div className="font-medium">{lang.name}</div>
-                <div className="text-[10px] opacity-60">{lang.desc}</div>
+                <div className="text-xs opacity-60">{lang.desc}</div>
               </div>
-              {locale === lang.code && <Check className="h-4 w-4" />}
-            </button>
-          </li>
+              {locale === lang.code && <Check className="h-4 w-4 text-[var(--jp-vermilion)]" />}
+            </div>
+          </DropdownMenuItem>
         ))}
-      </ul>
-    </div>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }

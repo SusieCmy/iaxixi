@@ -88,19 +88,22 @@ export default function AIGCPage() {
   }
 
   return (
-    <div className="min-h-screen bg-base-100">
+    <div className="min-h-screen bg-[var(--jp-cream)]">
       <div className="mx-auto max-w-screen-2xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
         {/* 页面头部 */}
         <div className="mb-8 flex items-center justify-between">
           <div>
-            <h1 className="mb-2 font-bold text-3xl text-base-content sm:text-4xl">{t('title')}</h1>
-            <p className="text-base text-base-content/60">{t('subtitle')}</p>
+            <h1 className="mb-2 font-bold text-3xl text-[var(--jp-ink)] sm:text-4xl">
+              {t('title')}
+            </h1>
+            <p className="text-[var(--jp-ink)]/60 text-base">{t('subtitle')}</p>
           </div>
 
           {/* 创建按钮 */}
           <button
             onClick={() => setShowCreateModal(true)}
-            className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-primary-content transition-colors hover:bg-primary/90"
+            className="inline-flex items-center gap-2 rounded-lg bg-[var(--jp-vermilion)] px-4 py-2 text-[var(--jp-vermilion)]-content transition-colors hover:bg-[var(--jp-vermilion)]/90"
+            aria-label={t('createWorkflow')}
           >
             <Plus className="h-5 w-5" />
             <span>{t('createWorkflow')}</span>
@@ -111,14 +114,15 @@ export default function AIGCPage() {
         {workflows.length === 0 ? (
           // 空状态
           <div className="py-16 text-center">
-            <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-base-200">
-              <FileText className="h-8 w-8 text-base-content/40" />
+            <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-[var(--jp-paper)]">
+              <FileText className="h-8 w-8 text-[var(--jp-ink)]/40" />
             </div>
-            <h3 className="mb-2 font-semibold text-base-content text-lg">{t('emptyTitle')}</h3>
-            <p className="mb-6 text-base-content/60">{t('emptyDescription')}</p>
+            <h3 className="mb-2 font-semibold text-[var(--jp-ink)] text-lg">{t('emptyTitle')}</h3>
+            <p className="mb-6 text-[var(--jp-ink)]/60">{t('emptyDescription')}</p>
             <button
               onClick={() => setShowCreateModal(true)}
-              className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-primary-content transition-colors hover:bg-primary/90"
+              className="inline-flex items-center gap-2 rounded-lg bg-[var(--jp-vermilion)] px-6 py-3 text-[var(--jp-vermilion)]-content transition-colors hover:bg-[var(--jp-vermilion)]/90"
+              aria-label={t('createWorkflow')}
             >
               <Plus className="h-5 w-5" />
               <span>{t('createWorkflow')}</span>
@@ -133,10 +137,10 @@ export default function AIGCPage() {
                   {/* 卡片头部 */}
                   <div className="mb-4 flex items-start justify-between">
                     <div className="min-w-0 flex-1">
-                      <h3 className="mb-1 truncate font-semibold text-base-content text-lg transition-colors group-hover:text-primary">
+                      <h3 className="mb-1 truncate font-semibold text-[var(--jp-ink)] text-lg transition-colors group-hover:text-[var(--jp-vermilion)]">
                         {workflow.name}
                       </h3>
-                      <p className="line-clamp-2 text-base-content/60 text-sm">
+                      <p className="line-clamp-2 text-[var(--jp-ink)]/60 text-sm">
                         {workflow.description || t('noDescription')}
                       </p>
                     </div>
@@ -146,13 +150,14 @@ export default function AIGCPage() {
                       onClick={(e) => handleDelete(workflow.id, e)}
                       className="ml-2 rounded-lg p-2 transition-colors hover:bg-error/10 hover:text-error"
                       title={t('deleteWorkflow')}
+                      aria-label={t('deleteWorkflow')}
                     >
                       <Trash2 className="h-4 w-4" />
                     </button>
                   </div>
 
                   {/* 统计信息 */}
-                  <div className="flex items-center gap-4 text-base-content/50 text-xs">
+                  <div className="flex items-center gap-4 text-[var(--jp-ink)]/50 text-xs">
                     <div className="flex items-center gap-1">
                       <FileText className="h-3.5 w-3.5" />
                       <span>{t('nodeCount', { count: workflow.nodes?.length || 0 })}</span>

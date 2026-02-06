@@ -1,6 +1,8 @@
 'use client'
 
+import { List, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { Button } from '@/components/ui/button'
 
 interface TocItem {
   id: string
@@ -84,64 +86,60 @@ export default function MobileTOC() {
   return (
     <div className="fixed right-4 bottom-20 z-40 block xl:hidden">
       {/* 目录按钮 */}
-      <button
+      <Button
+        variant={isOpen ? 'default' : 'outline'}
+        size="icon"
         onClick={() => setIsOpen(!isOpen)}
-        className={`btn btn-circle shadow-lg transition-all duration-300 hover:scale-110 ${
-          isOpen ? 'btn-primary' : 'btn-neutral'
-        }`}
+        className="h-10 w-10 rounded-full shadow-sm"
         title="文章目录"
+        aria-label="打开文章目录"
+        aria-expanded={isOpen}
       >
-        <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-          <path
-            fillRule="evenodd"
-            d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-            clipRule="evenodd"
-          />
-        </svg>
-      </button>
+        <List className="h-5 w-5" />
+      </Button>
 
       {/* 目录面板 */}
       {isOpen && (
         <>
           {/* 背景遮罩 */}
-          <div
+          <button
             className="-z-10 fixed inset-0 bg-black/20 backdrop-blur-sm"
             onClick={() => setIsOpen(false)}
-            onKeyDown={(e) => e.key === 'Escape' && setIsOpen(false)}
-            role="button"
-            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault()
+                setIsOpen(false)
+              }
+            }}
             aria-label="关闭目录"
+            tabIndex={-1}
           />
           {/* 目录内容 */}
-          <div className="absolute right-0 bottom-16 max-h-[60vh] w-80 max-w-[90vw] animate-slide-in-up overflow-hidden rounded-2xl border border-base-300 bg-base-100 p-4 shadow-xl">
-            <div className="mb-3">
-              <h3 className="flex items-center justify-between font-bold text-base-content text-sm">
+          <div className="absolute right-0 bottom-14 max-h-[60vh] w-72 max-w-[90vw] overflow-hidden rounded-md border border-[var(--jp-mist)] bg-[var(--jp-cream)] p-4 shadow-sm">
+            <div className="mb-3 flex items-center justify-between">
+              <h3 className="font-[family-name:var(--font-jp-sans)] font-medium text-[var(--jp-ink)] text-sm">
                 文章目录
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="btn btn-ghost btn-xs btn-circle"
-                >
-                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
               </h3>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsOpen(false)}
+                className="h-6 w-6"
+                aria-label="关闭文章目录"
+              >
+                <X className="h-4 w-4" />
+              </Button>
             </div>
 
-            <nav className="scrollbar-thin max-h-96 space-y-1 overflow-y-auto">
+            <nav className="scrollbar-thin max-h-80 space-y-0.5 overflow-y-auto">
               {toc.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => scrollToHeading(item.id)}
-                  className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition-all duration-200 hover:bg-base-200 ${
+                  className={`block w-full rounded px-3 py-1.5 text-left font-[family-name:var(--font-jp-sans)] text-sm transition-colors ${
                     activeId === item.id
-                      ? 'border-primary border-l-2 bg-primary/10 font-medium text-primary'
-                      : 'text-base-content/70 hover:text-base-content'
+                      ? 'border-[var(--jp-vermilion)] border-l-2 bg-[var(--jp-paper)] text-[var(--jp-ink)]'
+                      : 'text-[var(--jp-ash)] hover:bg-[var(--jp-paper)] hover:text-[var(--jp-ink)]'
                   } ${item.level === 2 ? 'pl-5' : item.level === 3 ? 'pl-7' : 'pl-3'}`}
                 >
                   <span className="line-clamp-2 leading-relaxed">{item.text}</span>

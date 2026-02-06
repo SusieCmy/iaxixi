@@ -6,7 +6,6 @@
  * @Description: 强者都是孤独的
  */
 import type { Metadata } from 'next'
-import UserTimeline from '@/components/animations/UserTimeline'
 import UserInfoPage from '@/components/user/UserInfo'
 
 export const metadata: Metadata = {
@@ -57,7 +56,6 @@ export default function Index() {
   return (
     <div className="mx-auto max-w-screen-2xl font-[family-name:var(--font-geist-sans)]">
       <UserInfoPage />
-      <UserTimeline />
     </div>
   )
 }

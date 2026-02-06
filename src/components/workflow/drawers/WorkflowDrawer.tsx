@@ -55,19 +55,19 @@ export default function WorkflowDrawer({
       >
         {/* 弹窗主体 - 阻止点击事件冒泡 */}
         <div
-          className="relative w-full max-w-lg rounded-2xl border border-base-300/50 bg-base-100 shadow-2xl transition-all"
+          className="relative w-full max-w-lg rounded-2xl border border-[var(--jp-mist)]/50 bg-[var(--jp-cream)] shadow-2xl transition-all"
           onClick={(e) => e.stopPropagation()}
           onKeyDown={(e) => e.stopPropagation()}
           role="dialog"
           tabIndex={-1}
         >
           {/* 头部 */}
-          <div className="flex items-center justify-between border-base-300 border-b p-6">
+          <div className="flex items-center justify-between border-[var(--jp-mist)] border-b p-6">
             <h2 className="font-bold text-xl">{isNew ? '创建工作流' : '编辑工作流信息'}</h2>
             {onCancel && (
               <button
                 onClick={onCancel}
-                className="flex h-8 w-8 items-center justify-center rounded-lg transition-colors hover:bg-base-200"
+                className="flex h-8 w-8 items-center justify-center rounded-lg transition-colors hover:bg-[var(--jp-paper)]"
                 aria-label="关闭"
               >
                 <X className="h-5 w-5" />
@@ -87,7 +87,7 @@ export default function WorkflowDrawer({
                   type="text"
                   value={name}
                   onChange={(e) => onNameChange(e.target.value)}
-                  className="w-full rounded-lg border border-base-300 bg-base-100 px-4 py-3 transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  className="w-full rounded-lg border border-[var(--jp-mist)] bg-[var(--jp-cream)] px-4 py-3 transition-all focus:border-[var(--jp-vermilion)] focus:outline-none focus:ring-2 focus:ring-primary/20"
                   placeholder="请输入工作流名称"
                 />
               </div>
@@ -101,7 +101,7 @@ export default function WorkflowDrawer({
                   value={description}
                   onChange={(e) => onDescriptionChange(e.target.value)}
                   rows={4}
-                  className="w-full resize-none rounded-lg border border-base-300 bg-base-100 px-4 py-3 transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  className="w-full resize-none rounded-lg border border-[var(--jp-mist)] bg-[var(--jp-cream)] px-4 py-3 transition-all focus:border-[var(--jp-vermilion)] focus:outline-none focus:ring-2 focus:ring-primary/20"
                   placeholder="请输入工作流描述（可选）"
                 />
               </div>
@@ -117,18 +117,18 @@ export default function WorkflowDrawer({
           </div>
 
           {/* 底部操作栏 */}
-          <div className="flex items-center gap-3 border-base-300 border-t p-6">
+          <div className="flex items-center gap-3 border-[var(--jp-mist)] border-t p-6">
             {onCancel && (
               <button
                 onClick={onCancel}
-                className="flex-1 rounded-lg border border-base-300 px-4 py-3 transition-all hover:bg-base-200"
+                className="flex-1 rounded-lg border border-[var(--jp-mist)] px-4 py-3 transition-all hover:bg-[var(--jp-paper)]"
               >
                 取消
               </button>
             )}
             <button
               onClick={onConfirm}
-              className="flex-1 rounded-lg bg-primary px-4 py-3 font-medium text-primary-content transition-all hover:bg-primary/90"
+              className="flex-1 rounded-lg bg-[var(--jp-vermilion)] px-4 py-3 font-medium text-[var(--jp-vermilion)]-content transition-all hover:bg-[var(--jp-vermilion)]/90"
             >
               {isNew ? '开始创建' : '保存修改'}
             </button>
