@@ -9,6 +9,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, getTranslations } from 'next-intl/server'
+import ChatPopup from '@/components/chat/ChatPopup'
 import Header from '@/components/layout/Header'
 import HideInAigc from '@/components/layout/HideInAigc'
 import StructuredData from '@/components/seo/StructuredData'
@@ -125,11 +126,12 @@ export default async function LocaleLayout({
               >
                 湘ICP备2023003507号
               </a>
-              <span className="mx-2">·</span>© {new Date().getFullYear()} 陈沐雨
+              <span className="mx-2">·</span>© {new Date().getFullYear()} 陈慕宇
             </p>
           </div>
         </footer>
       </HideInAigc>
+      <ChatPopup />
     </NextIntlClientProvider>
   )
 }

@@ -47,7 +47,7 @@ export const ENV = {
   BAIDU_ANALYTICS_ID: process.env.NEXT_PUBLIC_BAIDU_ANALYTICS_ID || '',
   GOOGLE_SITE_VERIFICATION: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '',
   BAIDU_SITE_VERIFICATION: process.env.NEXT_PUBLIC_BAIDU_SITE_VERIFICATION || '',
-  DEEPSEEK_API_KEY: process.env.DEEPSEEK_API_KEY || '',
+  COZE_PAT: process.env.COZE_PAT || '',
 }
 
 /**
@@ -56,8 +56,8 @@ export const ENV = {
 export const API_CONFIG = {
   TIMEOUT: 30000, // 30 秒
   RETRY_TIMES: 3,
-  DEEPSEEK: {
-    MODEL: 'deepseek-chat',
-    MAX_TOKENS: 2000,
+  COZE: {
+    BASE_URL: 'https://api.coze.cn',
+    PAGE_SIZE: 20,
   },
 }

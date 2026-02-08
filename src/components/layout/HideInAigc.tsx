@@ -31,8 +31,8 @@ export default function HideInAigc({ children }: { children: React.ReactNode }) 
   // 隐藏规则：只隐藏子路由，保留主页
   const shouldHide =
     pathname.startsWith('/aigc/') || // /aigc/new, /aigc/{id}
-    pathname.startsWith('/dashboard') || // /dashboard/*
-    pathname.startsWith('/dialogue') // /dialogue/*
+    pathname.startsWith('/dashboard') // /dashboard/*
+  // pathname.startsWith('/dialogue') // /dialogue/*
 
   return shouldHide ? null : children
 }

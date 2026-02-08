@@ -14,13 +14,15 @@ import createNextIntlPlugin from 'next-intl/plugin'
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 
 const nextConfig: NextConfig = {
-  // // 静态导出配置
-  // output: 'export',
-
-  // // 图片优化配置（静态导出必需）
-  // images: {
-  //   unoptimized: true,
-  // },
+  // 图片优化配置
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.oceancloudapi.com',
+      },
+    ],
+  },
 
   // Turbopack 配置
   turbopack: {

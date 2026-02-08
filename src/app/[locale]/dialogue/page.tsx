@@ -1,175 +1,140 @@
-﻿/*
- * @Author: Susie 1732728869@qq.com
- * @Date: 2025-12-05
- * @Description: AI 对话页面 - 重构优化版本
+/*
+ * @Date: 2025-02-08
+ * @Description: 扣子智能体列表页面
  */
 'use client'
-import type React from 'react'
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { ChatHeader } from '@/components/chat/ChatHeader'
-import { EmptyState } from '@/components/chat/EmptyState'
-import { MessageInput } from '@/components/chat/MessageInput'
-import { MessageItem } from '@/components/chat/MessageItem'
-import { useSendMessage } from '@/hooks/use-chat'
-import { useChatStore } from '@/store/chat-store'
-import type { Message } from '@/types/chat'
 
-export default function DialoguePage() {
-  const { messages, addMessage, updateMessage, clearMessages } = useChatStore()
-  const [input, setInput] = useState('')
-  const [streamingMessageId, setStreamingMessageId] = useState<string | null>(null)
-  const messagesEndRef = useRef<HTMLDivElement>(null)
-  const inputRef = useRef<HTMLTextAreaElement>(null)
-  const currentAssistantMessageIdRef = useRef<string>('')
+import { Bot, RefreshCw, Sparkles } from 'lucide-react'
+import Image from 'next/image'
+import { useTranslations } from 'next-intl'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { type BotInfo, useBots } from '@/hooks/useBots'
+import useChatStore from '@/store/useChatStore'
 
-  // 使用 React Query mutation 发送消息
-  const sendMessageMutation = useSendMessage({
-    onStreamStart: (messageId) => setStreamingMessageId(messageId),
-    onStreamContent: (messageId, content) => updateMessage(messageId, content),
-    onStreamEnd: (messageId) => {
-      setStreamingMessageId(null)
-      console.log('消息接收完成:', messageId)
-    },
-    onError: (error) => {
-      setStreamingMessageId(null)
-      // 更新已存在的 assistant 消息为错误内容，而不是新增消息
-      if (currentAssistantMessageIdRef.current) {
-        updateMessage(
-          currentAssistantMessageIdRef.current,
-          `❌ 错误: ${error.message || '发送失败，请重试'}`
-        )
-      }
-    },
-  })
-
-  // 自动滚动到底部
-  const scrollToBottom = useCallback(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [])
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: messages dependency is intentional for scroll on new messages
-  useEffect(() => {
-    scrollToBottom()
-  }, [messages, scrollToBottom])
-
-  // 发送消息
-  const handleSend = useCallback(async () => {
-    if (!input.trim() || sendMessageMutation.isPending) return
-
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      role: 'user',
-      content: input.trim(),
-      timestamp: Date.now(),
-    }
-
-    const assistantMessage: Message = {
-      id: (Date.now() + 1).toString(),
-      role: 'assistant',
-      content: '',
-      timestamp: Date.now(),
-    }
-
-    // 保存 assistantMessageId 供 onError 使用
-    currentAssistantMessageIdRef.current = assistantMessage.id
-
-    addMessage(userMessage)
-    addMessage(assistantMessage)
-    setInput('')
-
-    sendMessageMutation.mutate({
-      messages: [...messages, userMessage],
-      assistantMessageId: assistantMessage.id,
-    })
-  }, [input, sendMessageMutation, messages, addMessage])
-
-  // 重新生成消息
-  const handleRegenerate = useCallback(
-    (messageIndex: number) => {
-      if (sendMessageMutation.isPending) return
-
-      const messagesToKeep = messages.slice(0, messageIndex)
-      const newAssistantMessage: Message = {
-        id: `regenerate-${Date.now()}`,
-        role: 'assistant',
-        content: '',
-        timestamp: Date.now(),
-      }
-
-      // 保存 assistantMessageId 供 onError 使用
-      currentAssistantMessageIdRef.current = newAssistantMessage.id
-
-      clearMessages()
-      messagesToKeep.forEach((msg) => addMessage(msg))
-      addMessage(newAssistantMessage)
-
-      sendMessageMutation.mutate({
-        messages: messagesToKeep,
-        assistantMessageId: newAssistantMessage.id,
-      })
-    },
-    [sendMessageMutation, messages, clearMessages, addMessage]
-  )
-
-  // 回车发送
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault()
-        handleSend()
-      }
-    },
-    [handleSend]
-  )
-
-  // 清空对话
-  const handleClear = useCallback(() => {
-    clearMessages()
-    inputRef.current?.focus()
-  }, [clearMessages])
+function BotCard({ bot }: { bot: BotInfo }) {
+  const openChat = useChatStore((s) => s.openChat)
 
   return (
-    <div className="flex h-screen flex-col bg-[var(--jp-cream)]">
-      <ChatHeader hasMessages={messages.length > 0} onClear={handleClear} />
-
-      {/* 聊天区域 */}
-      <div className="scrollbar-thin flex-1 overflow-y-auto">
-        <div className="mx-auto max-w-screen-2xl px-3 py-4 sm:px-4 sm:py-6 md:px-6">
-          {messages.length === 0 ? (
-            <EmptyState onSelectPrompt={setInput} />
-          ) : (
-            <div className="space-y-4 sm:space-y-6">
-              {messages.map((message, index) => (
-                <MessageItem
-                  key={message.id}
-                  message={message}
-                  isLoading={sendMessageMutation.isPending && index === messages.length - 1}
-                  isStreaming={message.id === streamingMessageId}
-                  onRegenerate={
-                    message.role === 'assistant' &&
-                    index === messages.length - 1 &&
-                    !sendMessageMutation.isPending &&
-                    message.content
-                      ? () => handleRegenerate(index)
-                      : undefined
-                  }
-                />
-              ))}
-              <div ref={messagesEndRef} />
-            </div>
+    <Card
+      className="group cursor-pointer overflow-hidden transition-colors hover:border-[var(--jp-stone)]"
+      onClick={() => openChat(bot.id, bot.name, bot.icon_url || '', bot.description || '')}
+    >
+      <div className="flex gap-4 p-5">
+        {bot.icon_url ? (
+          <Image
+            src={bot.icon_url}
+            alt={bot.name}
+            width={48}
+            height={48}
+            className="h-12 w-12 shrink-0 rounded-lg object-cover"
+          />
+        ) : (
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[var(--jp-paper)]">
+            <Sparkles className="h-6 w-6 text-[var(--jp-vermilion)]" />
+          </div>
+        )}
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center gap-2">
+            <h3 className="truncate font-[family-name:var(--font-jp-sans)] font-medium text-[var(--jp-ink)]">
+              {bot.name}
+            </h3>
+            {bot.is_published && (
+              <Badge variant="outline" className="shrink-0 text-[10px]">
+                已发布
+              </Badge>
+            )}
+          </div>
+          {bot.description && (
+            <p className="mt-1 line-clamp-2 text-[var(--jp-ash)] text-xs leading-relaxed">
+              {bot.description}
+            </p>
           )}
+          <p className="mt-2 text-[10px] text-[var(--jp-mist)]">
+            更新于 {new Date(bot.updated_at * 1000).toLocaleDateString('zh-CN')}
+          </p>
         </div>
       </div>
+    </Card>
+  )
+}
 
-      <MessageInput
-        ref={inputRef}
-        value={input}
-        onChange={setInput}
-        onSend={handleSend}
-        onKeyDown={handleKeyDown}
-        disabled={sendMessageMutation.isPending}
-        isLoading={sendMessageMutation.isPending}
-      />
+function SkeletonCard() {
+  return (
+    <Card>
+      <div className="flex gap-4 p-5">
+        <div className="h-12 w-12 shrink-0 animate-pulse rounded-lg bg-[var(--jp-mist)]" />
+        <div className="flex-1 space-y-2">
+          <div className="h-5 w-32 animate-pulse rounded bg-[var(--jp-mist)]" />
+          <div className="h-3.5 w-48 animate-pulse rounded bg-[var(--jp-mist)]" />
+          <div className="h-3 w-20 animate-pulse rounded bg-[var(--jp-mist)]" />
+        </div>
+      </div>
+    </Card>
+  )
+}
+
+export default function DialoguePage() {
+  const t = useTranslations('common')
+  const { data, isLoading, error, refetch, isRefetching } = useBots()
+
+  return (
+    <div className="mx-auto min-h-screen max-w-screen-2xl px-6 py-8">
+      <div className="mb-8 flex items-center justify-between">
+        <div>
+          <h1 className="font-[family-name:var(--font-jp)] font-medium text-2xl text-[var(--jp-ink)]">
+            智能体
+          </h1>
+          <p className="mt-1 font-[family-name:var(--font-jp-sans)] text-[var(--jp-ash)] text-sm">
+            我的扣子智能体列表
+          </p>
+        </div>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => refetch()}
+          disabled={isRefetching}
+          className="gap-1.5"
+        >
+          <RefreshCw className={`h-3.5 w-3.5 ${isRefetching ? 'animate-spin' : ''}`} />
+          {t('retry')}
+        </Button>
+      </div>
+
+      {error && (
+        <div className="rounded-lg border border-[var(--jp-error)]/30 bg-[var(--jp-error)]/5 p-4 text-center">
+          <p className="text-[var(--jp-error)] text-sm">{error.message || '加载失败'}</p>
+          <Button variant="outline" size="sm" onClick={() => refetch()} className="mt-3">
+            {t('retry')}
+          </Button>
+        </div>
+      )}
+
+      {isLoading && (
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, item) => (
+            <SkeletonCard key={`skeleton-${item}`} />
+          ))}
+        </div>
+      )}
+
+      {data && !error && (
+        <>
+          <p className="mb-4 text-[var(--jp-ash)] text-xs">共 {data.total} 个智能体</p>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {data.items.map((bot) => (
+              <BotCard key={bot.id} bot={bot} />
+            ))}
+          </div>
+          {data.items.length === 0 && (
+            <div className="py-20 text-center">
+              <Bot className="mx-auto h-12 w-12 text-[var(--jp-mist)]" />
+              <p className="mt-4 text-[var(--jp-ash)] text-sm">暂无智能体</p>
+            </div>
+          )}
+        </>
+      )}
     </div>
   )
 }

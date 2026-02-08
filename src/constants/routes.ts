@@ -18,7 +18,7 @@ export const ROUTES = {
   // 功能页面
   DASHBOARD: '/dashboard',
   DIALOGUE: '/dialogue',
-  DIALOGUE_WORKFLOW: (workflowId: string) => `/dialogue/${workflowId}`,
+  DIALOGUE_WORKFLOW: (botId: string) => `/dialogue/${botId}`,
 
   // AIGC 相关
   AIGC: '/aigc',
@@ -26,7 +26,8 @@ export const ROUTES = {
 
   // API 端点
   API: {
-    CHAT_DEEPSEEK: '/api/chat/deepseek',
+    COZE_BOTS: '/api/coze/bots',
+    COZE_CHAT: '/api/coze/chat',
     JUEJIN_QUERY: '/api/juejin/query_list',
   },
 }
