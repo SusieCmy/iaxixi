@@ -8,9 +8,48 @@ import { useMutation } from '@tanstack/react-query'
 import { Keyboard, Mic, Minus, Send, Sparkles, Square, Trash2, User, X } from 'lucide-react'
 import Image from 'next/image'
 import { type FormEvent, useCallback, useEffect, useRef, useState } from 'react'
+import type { Components } from 'react-markdown'
+import ReactMarkdown from 'react-markdown'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { Button } from '@/components/ui/button'
 import { type ChatMessage, useCozeChat } from '@/hooks/useCozeChat'
 import useChatStore from '@/store/useChatStore'
+
+const markdownComponents: Components = {
+  code: ({ className, children, ...props }) => {
+    const match = /language-(\w+)/.exec(className || '')
+    return match ? (
+      <SyntaxHighlighter
+        style={oneDark}
+        language={match[1]}
+        PreTag="div"
+        className="!my-2 !rounded-md !text-xs"
+      >
+        {String(children).replace(/\n$/, '')}
+      </SyntaxHighlighter>
+    ) : (
+      <code className="rounded bg-[var(--jp-cream)] px-1 py-0.5 text-xs" {...props}>
+        {children}
+      </code>
+    )
+  },
+  p: ({ children }) => <p className="mb-1.5 last:mb-0">{children}</p>,
+  h3: ({ children }) => <h3 className="mt-2 mb-1 font-medium text-sm">{children}</h3>,
+  ul: ({ children }) => <ul className="mb-1.5 list-disc pl-4">{children}</ul>,
+  ol: ({ children }) => <ol className="mb-1.5 list-decimal pl-4">{children}</ol>,
+  li: ({ children }) => <li className="mb-0.5">{children}</li>,
+  blockquote: ({ children }) => (
+    <blockquote className="my-1.5 border-[var(--jp-vermilion)] border-l-2 pl-2 text-[var(--jp-stone)]">
+      {children}
+    </blockquote>
+  ),
+  a: ({ href, children }) => (
+    <a href={href} className="text-[var(--jp-indigo)] underline" target="_blank" rel="noreferrer">
+      {children}
+    </a>
+  ),
+}
 
 function MessageBubble({ message, botIcon }: { message: ChatMessage; botIcon?: string }) {
   const isUser = message.role === 'user'
@@ -41,25 +80,25 @@ function MessageBubble({ message, botIcon }: { message: ChatMessage; botIcon?: s
             : 'bg-[var(--jp-paper)] text-[var(--jp-ink)]'
         }`}
       >
-        <p className="whitespace-pre-wrap break-words">
-          {message.isThinking ? (
-            <span className="inline-flex items-center gap-1 text-[var(--jp-ash)]">
-              <span className="animate-pulse">检索中</span>
-              <span className="inline-flex gap-0.5">
-                <span className="h-1 w-1 animate-bounce rounded-full bg-[var(--jp-ash)] [animation-delay:0ms]" />
-                <span className="h-1 w-1 animate-bounce rounded-full bg-[var(--jp-ash)] [animation-delay:150ms]" />
-                <span className="h-1 w-1 animate-bounce rounded-full bg-[var(--jp-ash)] [animation-delay:300ms]" />
-              </span>
+        {message.isThinking ? (
+          <span className="inline-flex items-center gap-1 text-[var(--jp-ash)]">
+            <span className="animate-pulse">检索中</span>
+            <span className="inline-flex gap-0.5">
+              <span className="h-1 w-1 animate-bounce rounded-full bg-[var(--jp-ash)] [animation-delay:0ms]" />
+              <span className="h-1 w-1 animate-bounce rounded-full bg-[var(--jp-ash)] [animation-delay:150ms]" />
+              <span className="h-1 w-1 animate-bounce rounded-full bg-[var(--jp-ash)] [animation-delay:300ms]" />
             </span>
-          ) : (
-            <>
-              {message.content}
-              {message.isStreaming && (
-                <span className="ml-0.5 inline-block h-3.5 w-0.5 animate-pulse bg-current align-middle" />
-              )}
-            </>
-          )}
-        </p>
+          </span>
+        ) : isUser ? (
+          <p className="whitespace-pre-wrap break-words">{message.content}</p>
+        ) : (
+          <div className="break-words [&>*:first-child]:mt-0">
+            <ReactMarkdown components={markdownComponents}>{message.content}</ReactMarkdown>
+            {message.isStreaming && (
+              <span className="ml-0.5 inline-block h-3.5 w-0.5 animate-pulse bg-current align-middle" />
+            )}
+          </div>
+        )}
       </div>
     </div>
   )
@@ -74,7 +113,10 @@ export default function ChatPopup() {
   const scrollRef = useRef<HTMLDivElement>(null)
   const mediaRecorderRef = useRef<MediaRecorder | null>(null)
   const chunksRef = useRef<Blob[]>([])
-
+  const [position, setPosition] = useState({ x: 0, y: 0 })
+  const dragRef = useRef<{ startX: number; startY: number; origX: number; origY: number } | null>(
+    null
+  )
   const { messages, isLoading, sendMessage, stopGeneration, clearMessages } = useCozeChat(botId)
 
   const transcribeMutation = useMutation({
@@ -156,11 +198,42 @@ export default function ChatPopup() {
     transcribeMutation.mutate(audioBlob)
   }, [isLoading, transcribeMutation])
 
+  const onDragStart = useCallback(
+    (e: React.MouseEvent) => {
+      dragRef.current = {
+        startX: e.clientX,
+        startY: e.clientY,
+        origX: position.x,
+        origY: position.y,
+      }
+
+      const onMouseMove = (ev: MouseEvent) => {
+        if (!dragRef.current) return
+        setPosition({
+          x: dragRef.current.origX + (ev.clientX - dragRef.current.startX),
+          y: dragRef.current.origY + (ev.clientY - dragRef.current.startY),
+        })
+      }
+
+      const onMouseUp = () => {
+        dragRef.current = null
+        window.removeEventListener('mousemove', onMouseMove)
+        window.removeEventListener('mouseup', onMouseUp)
+      }
+
+      window.addEventListener('mousemove', onMouseMove)
+      window.addEventListener('mouseup', onMouseUp)
+    },
+    [position]
+  )
+
+  const lastMessage = messages[messages.length - 1]
+  // biome-ignore lint/correctness/useExhaustiveDependencies: 需要在消息变化时滚动到底部
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight
     }
-  }, [])
+  }, [messages.length, lastMessage?.content, lastMessage?.isThinking])
 
   if (!isOpen) return null
 
@@ -186,9 +259,16 @@ export default function ChatPopup() {
   }
 
   return (
-    <div className="fixed right-6 bottom-6 z-50 flex h-[500px] w-[380px] flex-col overflow-hidden rounded-2xl border border-[var(--jp-mist)] bg-[var(--jp-cream)] shadow-xl">
-      {/* Header */}
-      <div className="flex items-center gap-2 border-[var(--jp-mist)] border-b px-4 py-2.5">
+    <div
+      className="fixed z-50 flex h-[500px] w-[380px] flex-col overflow-hidden rounded-2xl border border-[var(--jp-mist)] bg-[var(--jp-cream)] shadow-xl"
+      style={{ right: `${24 - position.x}px`, bottom: `${24 - position.y}px` }}
+    >
+      {/* Header - 可拖拽 */}
+      <div
+        role="toolbar"
+        onMouseDown={onDragStart}
+        className="flex cursor-grab items-center gap-2 border-[var(--jp-mist)] border-b px-4 py-2.5 select-none active:cursor-grabbing"
+      >
         {botIcon && (
           <Image
             src={botIcon}
