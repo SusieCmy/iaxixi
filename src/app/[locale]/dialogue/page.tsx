@@ -1,4 +1,4 @@
-/*
+﻿/*
  * @Date: 2025-02-08
  * @Description: 扣子智能体列表页面
  */
@@ -87,7 +87,7 @@ export default function DialoguePage() {
             智能体
           </h1>
           <p className="mt-1 font-[family-name:var(--font-jp-sans)] text-[var(--jp-ash)] text-sm">
-            我的扣子智能体列表
+            我的智能体列表
           </p>
         </div>
         <Button
@@ -114,6 +114,7 @@ export default function DialoguePage() {
       {isLoading && (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {Array.from({ length: 6 }).map((_, item) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: static skeleton list
             <SkeletonCard key={`skeleton-${item}`} />
           ))}
         </div>

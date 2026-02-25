@@ -208,6 +208,35 @@
   }
 }
 
+/* 主题切换 View Transition - 从左到右擦除 */
+::view-transition-old(root) {
+  animation: wipe-out 0.5s ease-in-out;
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  animation: wipe-in 0.5s ease-in-out;
+  z-index: 2;
+}
+
+@keyframes wipe-in {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes wipe-out {
+  from {
+    clip-path: inset(0 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 100%);
+  }
+}
+
 /* ReactFlow Customization */
 .react-flow__node:focus,
 .react-flow__node.selected {

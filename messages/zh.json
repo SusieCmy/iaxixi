@@ -8,6 +8,8 @@
     "aigcDesc": "AI 内容",
     "dialogue": "AI助手",
     "dialogueDesc": "AI 对话",
+    "news": "新闻",
+    "newsDesc": "热点资讯",
     "dashboard": "数据大屏",
     "dashboardDesc": "数据看板",
     "projects": "项目",
@@ -184,6 +186,12 @@
     "reloadEditor": "重新加载编辑器",
     "runWorkflow": "运行工作流",
     "running": "运行中..."
+  },
+  "news": {
+    "title": "热点资讯",
+    "refresh": "刷新",
+    "loadFailed": "加载失败",
+    "retry": "重试"
   },
   "weather": {
     "today": "今天",

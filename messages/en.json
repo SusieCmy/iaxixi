@@ -8,6 +8,8 @@
     "aigcDesc": "AI Content",
     "dialogue": "AI Chat",
     "dialogueDesc": "AI Dialogue",
+    "news": "News",
+    "newsDesc": "Hot News",
     "dashboard": "Dashboard",
     "dashboardDesc": "Data Dashboard",
     "projects": "Projects",
@@ -184,6 +186,12 @@
     "reloadEditor": "Reload Editor",
     "runWorkflow": "Run Workflow",
     "running": "Running..."
+  },
+  "news": {
+    "title": "Hot News",
+    "refresh": "Refresh",
+    "loadFailed": "Failed to load",
+    "retry": "Retry"
   },
   "weather": {
     "today": "Today",

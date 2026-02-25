@@ -21,6 +21,14 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: '**.oceancloudapi.com',
       },
+      {
+        protocol: 'https',
+        hostname: '**.toutiao.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.weibo.com.com',
+      },
     ],
   },
 

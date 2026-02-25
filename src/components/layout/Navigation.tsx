@@ -16,6 +16,7 @@ import {
   Menu,
   MessageCircle,
   Moon,
+  Newspaper,
   Palette,
   Sparkles,
   Sun,
@@ -71,6 +72,12 @@ const menuConfig: MenuConfig[] = [
     icon: MessageCircle,
     labelKey: 'dialogue',
     descKey: 'dialogueDesc',
+  },
+  {
+    path: '/news',
+    icon: Newspaper,
+    labelKey: 'news',
+    descKey: 'newsDesc',
   },
   {
     path: '/dashboard',

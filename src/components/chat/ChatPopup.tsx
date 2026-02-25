@@ -267,7 +267,7 @@ export default function ChatPopup() {
       <div
         role="toolbar"
         onMouseDown={onDragStart}
-        className="flex cursor-grab items-center gap-2 border-[var(--jp-mist)] border-b px-4 py-2.5 select-none active:cursor-grabbing"
+        className="flex cursor-grab select-none items-center gap-2 border-[var(--jp-mist)] border-b px-4 py-2.5 active:cursor-grabbing"
       >
         {botIcon && (
           <Image
