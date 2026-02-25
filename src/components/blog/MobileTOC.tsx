@@ -115,9 +115,9 @@ export default function MobileTOC() {
             tabIndex={-1}
           />
           {/* 目录内容 */}
-          <div className="absolute right-0 bottom-14 max-h-[60vh] w-72 max-w-[90vw] overflow-hidden rounded-md border border-[var(--jp-mist)] bg-[var(--jp-cream)] p-4 shadow-sm">
+          <div className="absolute right-0 bottom-14 max-h-[60vh] w-72 max-w-[90vw] overflow-hidden rounded-md border border-(--jp-mist) bg-(--jp-cream) p-4 shadow-sm">
             <div className="mb-3 flex items-center justify-between">
-              <h3 className="font-[family-name:var(--font-jp-sans)] font-medium text-[var(--jp-ink)] text-sm">
+              <h3 className="font-(family-name:--font-jp-sans) font-medium text-(--jp-ink) text-sm">
                 文章目录
               </h3>
               <Button
@@ -136,10 +136,10 @@ export default function MobileTOC() {
                 <button
                   key={item.id}
                   onClick={() => scrollToHeading(item.id)}
-                  className={`block w-full rounded px-3 py-1.5 text-left font-[family-name:var(--font-jp-sans)] text-sm transition-colors ${
+                  className={`block w-full rounded px-3 py-1.5 text-left font-(family-name:--font-jp-sans) text-sm transition-colors ${
                     activeId === item.id
-                      ? 'border-[var(--jp-vermilion)] border-l-2 bg-[var(--jp-paper)] text-[var(--jp-ink)]'
-                      : 'text-[var(--jp-ash)] hover:bg-[var(--jp-paper)] hover:text-[var(--jp-ink)]'
+                      ? 'border-(--jp-vermilion) border-l-2 bg-(--jp-paper) text-(--jp-ink)'
+                      : 'text-(--jp-ash) hover:bg-(--jp-paper) hover:text-(--jp-ink)'
                   } ${item.level === 2 ? 'pl-5' : item.level === 3 ? 'pl-7' : 'pl-3'}`}
                 >
                   <span className="line-clamp-2 leading-relaxed">{item.text}</span>

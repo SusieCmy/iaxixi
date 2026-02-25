@@ -31,11 +31,11 @@ export default function Blog() {
       <main>
         {/* 页面标题 */}
         <div className="mb-10">
-          <h1 className="mb-2 flex items-center gap-2 font-[family-name:var(--font-jp)] font-medium text-2xl text-[var(--jp-ink)]">
-            <BookOpen className="h-6 w-6 text-[var(--jp-vermilion)]" />
+          <h1 className="mb-2 flex items-center gap-2 font-(family-name:--font-jp) font-medium text-2xl text-(--jp-ink)">
+            <BookOpen className="h-6 w-6 text-(--jp-vermilion)" />
             技术博客
           </h1>
-          <p className="font-[family-name:var(--font-jp-sans)] text-[var(--jp-ash)] text-sm">
+          <p className="font-(family-name:--font-jp-sans) text-(--jp-ash) text-sm">
             分享前端开发经验与技术心得
           </p>
         </div>
@@ -45,16 +45,16 @@ export default function Blog() {
           {posts.map((post) => (
             <article
               key={post.slug}
-              className="group relative overflow-hidden border border-[var(--jp-mist)] bg-[var(--jp-cream)] transition-colors hover:border-[var(--jp-stone)]"
+              className="group relative overflow-hidden border border-(--jp-mist) bg-(--jp-cream) transition-colors hover:border-(--jp-stone)"
             >
               <Link href={`/blog/${post.slug}`} className="block h-full">
                 <div className="flex h-full flex-col p-5">
                   {/* 标题和描述 */}
                   <div className="mb-4 flex-1">
-                    <h2 className="mb-2 font-[family-name:var(--font-jp)] font-medium text-[var(--jp-ink)] text-lg transition-colors group-hover:text-[var(--jp-vermilion)]">
+                    <h2 className="mb-2 font-(family-name:--font-jp) font-medium text-(--jp-ink) text-lg transition-colors group-hover:text-(--jp-vermilion)">
                       {post.title}
                     </h2>
-                    <p className="line-clamp-2 font-[family-name:var(--font-jp-sans)] text-[var(--jp-stone)] text-sm leading-relaxed">
+                    <p className="line-clamp-2 font-(family-name:--font-jp-sans) text-(--jp-stone) text-sm leading-relaxed">
                       {post.description}
                     </p>
                   </div>
@@ -64,7 +64,7 @@ export default function Blog() {
                     {post.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="rounded-md border border-[var(--jp-mist)] bg-[var(--jp-paper)] px-2 py-0.5 font-[family-name:var(--font-jp-sans)] text-[var(--jp-ash)] text-xs"
+                        className="rounded-md border border-(--jp-mist) bg-(--jp-paper) px-2 py-0.5 font-(family-name:--font-jp-sans) text-(--jp-ash) text-xs"
                       >
                         {tag}
                       </span>
@@ -72,12 +72,12 @@ export default function Blog() {
                   </div>
 
                   {/* 底部信息 */}
-                  <div className="flex items-center justify-between border-[var(--jp-mist)] border-t pt-4">
-                    <div className="flex items-center gap-1.5 text-[var(--jp-ash)]">
+                  <div className="flex items-center justify-between border-(--jp-mist) border-t pt-4">
+                    <div className="flex items-center gap-1.5 text-(--jp-ash)">
                       <Calendar className="h-3.5 w-3.5" />
                       <time
                         dateTime={post.date}
-                        className="font-[family-name:var(--font-jp-sans)] text-xs"
+                        className="font-(family-name:--font-jp-sans) text-xs"
                       >
                         {new Date(post.date).toLocaleDateString('zh-CN', {
                           year: 'numeric',
@@ -86,9 +86,9 @@ export default function Blog() {
                         })}
                       </time>
                     </div>
-                    <div className="flex items-center gap-1.5 text-[var(--jp-ash)]">
+                    <div className="flex items-center gap-1.5 text-(--jp-ash)">
                       <Clock className="h-3.5 w-3.5" />
-                      <span className="font-[family-name:var(--font-jp-sans)] text-xs">
+                      <span className="font-(family-name:--font-jp-sans) text-xs">
                         {post.readingTime} 分钟
                       </span>
                     </div>
@@ -102,7 +102,7 @@ export default function Blog() {
         {/* 空状态 */}
         {posts.length === 0 && (
           <div className="py-16 text-center">
-            <p className="font-[family-name:var(--font-jp-sans)] text-[var(--jp-ash)]">
+            <p className="font-(family-name:--font-jp-sans) text-(--jp-ash)">
               暂无博客文章，敬请期待
             </p>
           </div>

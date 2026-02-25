@@ -85,7 +85,7 @@ export default function RootLayout({
       </head>
       <GoogleTagManager gtmId={ENV.GTM_ID} />
       <Script id="baidu-analytics" dangerouslySetInnerHTML={getBdAnalyticsTag()} />
-      <body className="bg-[var(--jp-cream)] font-sans text-[var(--jp-ink)] antialiased">
+      <body className="bg-(--jp-cream) font-sans text-(--jp-ink) antialiased">
         <ThemeProvider>
           <QueryProvider>{children}</QueryProvider>
         </ThemeProvider>

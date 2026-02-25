@@ -182,16 +182,14 @@ export default function Navigation() {
             <Link
               key={item.path}
               href={item.path}
-              className={`nav-menu-item relative px-1 py-2 font-[family-name:var(--font-jp-sans)] text-sm transition-colors duration-300 ${
-                active
-                  ? 'font-medium text-[var(--jp-ink)]'
-                  : 'text-[var(--jp-ash)] hover:text-[var(--jp-ink)]'
+              className={`nav-menu-item relative px-1 py-2 font-(family-name:--font-jp-sans) text-sm transition-colors duration-300 ${
+                active ? 'font-medium text-(--jp-ink)' : 'text-(--jp-ash) hover:text-(--jp-ink)'
               }`}
               title={item.description}
             >
               <span>{item.label}</span>
               {active && (
-                <span className="absolute bottom-0 left-0 h-px w-full bg-[var(--jp-vermilion)]" />
+                <span className="absolute bottom-0 left-0 h-px w-full bg-(--jp-vermilion)" />
               )}
             </Link>
           )
@@ -203,7 +201,7 @@ export default function Navigation() {
             <Button
               variant="ghost"
               size="icon"
-              className="nav-menu-item ml-4 h-8 w-8 text-[var(--jp-ash)] hover:text-[var(--jp-ink)]"
+              className="nav-menu-item ml-4 h-8 w-8 text-(--jp-ash) hover:text-(--jp-ink)"
               aria-label={t('toggleTheme')}
             >
               <Palette className="h-4 w-4" />
@@ -214,7 +212,7 @@ export default function Navigation() {
               <DropdownMenuItem
                 key={scheme.value}
                 onClick={() => setColorScheme(scheme.value)}
-                className="cursor-pointer gap-2 font-[family-name:var(--font-jp-sans)]"
+                className="cursor-pointer gap-2 font-(family-name:--font-jp-sans)"
               >
                 <span
                   className="h-3 w-3 shrink-0 rounded-full"
@@ -222,14 +220,14 @@ export default function Navigation() {
                 />
                 <span className="flex-1">{scheme.label}</span>
                 {colorScheme === scheme.value && (
-                  <Check className="h-3.5 w-3.5 text-[var(--jp-vermilion)]" />
+                  <Check className="h-3.5 w-3.5 text-(--jp-vermilion)" />
                 )}
               </DropdownMenuItem>
             ))}
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={handleThemeToggle}
-              className="cursor-pointer gap-2 font-[family-name:var(--font-jp-sans)]"
+              className="cursor-pointer gap-2 font-(family-name:--font-jp-sans)"
             >
               {themeType === 'light' ? (
                 <Moon className="h-3.5 w-3.5" />
@@ -256,7 +254,7 @@ export default function Navigation() {
             <Button
               variant="ghost"
               size="icon"
-              className="h-9 w-9 text-[var(--jp-ash)] hover:text-[var(--jp-ink)]"
+              className="h-9 w-9 text-(--jp-ash) hover:text-(--jp-ink)"
               aria-label={t('toggleTheme')}
             >
               <Palette className="h-5 w-5" />
@@ -267,7 +265,7 @@ export default function Navigation() {
               <DropdownMenuItem
                 key={scheme.value}
                 onClick={() => setColorScheme(scheme.value)}
-                className="cursor-pointer gap-2 font-[family-name:var(--font-jp-sans)]"
+                className="cursor-pointer gap-2 font-(family-name:--font-jp-sans)"
               >
                 <span
                   className="h-3 w-3 shrink-0 rounded-full"
@@ -275,14 +273,14 @@ export default function Navigation() {
                 />
                 <span className="flex-1">{scheme.label}</span>
                 {colorScheme === scheme.value && (
-                  <Check className="h-3.5 w-3.5 text-[var(--jp-vermilion)]" />
+                  <Check className="h-3.5 w-3.5 text-(--jp-vermilion)" />
                 )}
               </DropdownMenuItem>
             ))}
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={handleThemeToggle}
-              className="cursor-pointer gap-2 font-[family-name:var(--font-jp-sans)]"
+              className="cursor-pointer gap-2 font-(family-name:--font-jp-sans)"
             >
               {themeType === 'light' ? (
                 <Moon className="h-3.5 w-3.5" />
@@ -299,7 +297,7 @@ export default function Navigation() {
           variant="ghost"
           size="icon"
           onClick={toggleMobileMenu}
-          className="h-9 w-9 text-[var(--jp-ash)] hover:text-[var(--jp-ink)]"
+          className="h-9 w-9 text-(--jp-ash) hover:text-(--jp-ink)"
           aria-label={t('toggleMenu')}
         >
           {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -308,7 +306,7 @@ export default function Navigation() {
 
       {/* 移动端下拉菜单 */}
       {isMobileMenuOpen && (
-        <div className="absolute top-full right-0 left-0 z-50 mt-2 border-[var(--jp-mist)] border-b bg-[var(--jp-cream)] shadow-sm md:hidden">
+        <div className="absolute top-full right-0 left-0 z-50 mt-2 border-(--jp-mist) border-b bg-(--jp-cream) shadow-sm md:hidden">
           <nav className="space-y-1 p-4">
             {menuItems.map((item) => {
               const active = isActive(item.path)
@@ -318,10 +316,10 @@ export default function Navigation() {
                   key={item.path}
                   href={item.path}
                   onClick={closeMobileMenu}
-                  className={`mobile-nav-item block px-4 py-3 font-[family-name:var(--font-jp-sans)] transition-colors ${
+                  className={`mobile-nav-item block px-4 py-3 font-(family-name:--font-jp-sans) transition-colors ${
                     active
-                      ? 'border-[var(--jp-vermilion)] border-l-2 bg-[var(--jp-paper)] font-medium text-[var(--jp-ink)]'
-                      : 'text-[var(--jp-ash)] hover:bg-[var(--jp-paper)] hover:text-[var(--jp-ink)]'
+                      ? 'border-(--jp-vermilion) border-l-2 bg-(--jp-paper) font-medium text-(--jp-ink)'
+                      : 'text-(--jp-ash) hover:bg-(--jp-paper) hover:text-(--jp-ink)'
                   }`}
                   style={{ opacity: 0 }}
                 >

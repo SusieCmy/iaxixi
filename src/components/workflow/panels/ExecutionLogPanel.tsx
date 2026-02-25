@@ -28,9 +28,9 @@ function ExecutionLogPanel({ isOpen, onClose, logs, isRunning }: ExecutionLogPan
   const statusConfig = {
     running: {
       icon: Loader2,
-      color: 'text-[var(--jp-vermilion)]',
-      bg: 'bg-[var(--jp-vermilion)]/10',
-      border: 'border-[var(--jp-vermilion)]/20',
+      color: 'text-(--jp-vermilion)',
+      bg: 'bg-(--jp-vermilion)/10',
+      border: 'border-(--jp-vermilion)/20',
       label: '运行中',
     },
     success: {
@@ -50,14 +50,14 @@ function ExecutionLogPanel({ isOpen, onClose, logs, isRunning }: ExecutionLogPan
   }
 
   return (
-    <div className="fixed top-0 right-0 z-50 flex h-full w-80 flex-col border-[var(--jp-mist)] border-l bg-[var(--jp-cream)] shadow-2xl">
+    <div className="fixed top-0 right-0 z-50 flex h-full w-80 flex-col border-(--jp-mist) border-l bg-(--jp-cream) shadow-2xl">
       {/* 头部 */}
-      <div className="flex items-center justify-between border-[var(--jp-mist)] border-b px-4 py-3">
+      <div className="flex items-center justify-between border-(--jp-mist) border-b px-4 py-3">
         <div className="flex items-center gap-2">
-          <Play className="h-4 w-4 text-[var(--jp-vermilion)]" />
-          <h3 className="font-semibold text-[var(--jp-ink)]">执行日志</h3>
+          <Play className="h-4 w-4 text-(--jp-vermilion)" />
+          <h3 className="font-semibold text-(--jp-ink)">执行日志</h3>
           {isRunning && (
-            <span className="flex items-center gap-1 rounded-full bg-[var(--jp-vermilion)]/10 px-2 py-0.5 text-[var(--jp-vermilion)] text-xs">
+            <span className="flex items-center gap-1 rounded-full bg-(--jp-vermilion)/10 px-2 py-0.5 text-(--jp-vermilion) text-xs">
               <Loader2 className="h-3 w-3 animate-spin" />
               运行中
             </span>
@@ -65,7 +65,7 @@ function ExecutionLogPanel({ isOpen, onClose, logs, isRunning }: ExecutionLogPan
         </div>
         <button
           onClick={onClose}
-          className="flex h-7 w-7 items-center justify-center rounded-lg transition-colors hover:bg-[var(--jp-paper)]"
+          className="flex h-7 w-7 items-center justify-center rounded-lg transition-colors hover:bg-(--jp-paper)"
         >
           <X className="h-4 w-4" />
         </button>
@@ -74,7 +74,7 @@ function ExecutionLogPanel({ isOpen, onClose, logs, isRunning }: ExecutionLogPan
       {/* 日志列表 */}
       <div className="flex-1 space-y-2 overflow-y-auto p-3">
         {logs.length === 0 ? (
-          <div className="flex h-full flex-col items-center justify-center text-[var(--jp-ink)]/50">
+          <div className="flex h-full flex-col items-center justify-center text-(--jp-ink)/50">
             <Play className="mb-2 h-8 w-8" />
             <p className="text-sm">暂无执行日志</p>
           </div>
@@ -96,15 +96,15 @@ function ExecutionLogPanel({ isOpen, onClose, logs, isRunning }: ExecutionLogPan
                   />
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="truncate font-medium text-[var(--jp-ink)] text-sm">
+                      <span className="truncate font-medium text-(--jp-ink) text-sm">
                         {log.nodeName}
                       </span>
                       <span className={`text-xs ${config.color}`}>{config.label}</span>
                     </div>
                     {log.message && (
-                      <p className="mt-1 text-[var(--jp-ink)]/60 text-xs">{log.message}</p>
+                      <p className="mt-1 text-(--jp-ink)/60 text-xs">{log.message}</p>
                     )}
-                    <p className="mt-1 text-[var(--jp-ink)]/40 text-xs">
+                    <p className="mt-1 text-(--jp-ink)/40 text-xs">
                       {log.timestamp.toLocaleTimeString()}
                     </p>
                   </div>
@@ -117,14 +117,14 @@ function ExecutionLogPanel({ isOpen, onClose, logs, isRunning }: ExecutionLogPan
 
       {/* 底部统计 */}
       {logs.length > 0 && (
-        <div className="flex items-center justify-between border-[var(--jp-mist)] border-t px-4 py-3 text-sm">
+        <div className="flex items-center justify-between border-(--jp-mist) border-t px-4 py-3 text-sm">
           <div className="flex items-center gap-3">
             <span className="text-success">
               ✓ {logs.filter((l) => l.status === 'success').length}
             </span>
             <span className="text-error">✕ {logs.filter((l) => l.status === 'error').length}</span>
           </div>
-          <span className="text-[var(--jp-ink)]/50">共 {logs.length} 条</span>
+          <span className="text-(--jp-ink)/50">共 {logs.length} 条</span>
         </div>
       )}
     </div>

@@ -44,7 +44,7 @@ export default function LanguageSwitcher() {
         <Button
           variant="outline"
           size="sm"
-          className="gap-1.5 font-[family-name:var(--font-jp-sans)]"
+          className="gap-1.5 font-(family-name:--font-jp-sans)"
           aria-label="切换语言 / Switch Language"
         >
           {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Globe className="h-4 w-4" />}
@@ -57,8 +57,8 @@ export default function LanguageSwitcher() {
             key={lang.code}
             onClick={() => handleLanguageChange(lang.code)}
             disabled={isPending}
-            className={`font-[family-name:var(--font-jp-sans)] ${
-              locale === lang.code ? 'bg-[var(--jp-paper)]' : ''
+            className={`font-(family-name:--font-jp-sans) ${
+              locale === lang.code ? 'bg-(--jp-paper)' : ''
             }`}
           >
             <div className="flex w-full items-center gap-3">
@@ -66,7 +66,7 @@ export default function LanguageSwitcher() {
                 <div className="font-medium">{lang.name}</div>
                 <div className="text-xs opacity-60">{lang.desc}</div>
               </div>
-              {locale === lang.code && <Check className="h-4 w-4 text-[var(--jp-vermilion)]" />}
+              {locale === lang.code && <Check className="h-4 w-4 text-(--jp-vermilion)" />}
             </div>
           </DropdownMenuItem>
         ))}

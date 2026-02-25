@@ -28,7 +28,6 @@ function WeatherCard() {
   const { data, isLoading, error, refetch, isRefetching, useBrowser, handleLocateMe } = useWeather()
 
   useEffect(() => {
-    // 信息卡片
     animateElements('.weather-card', {
       translateY: [40, 0],
       delay: staggerDelay(0, 0.1),
@@ -53,28 +52,24 @@ function WeatherCard() {
   const getWeatherColor = (condition: WeatherCondition) => {
     switch (condition) {
       case 'sunny':
-        return 'text-[var(--jp-vermilion)]'
+        return 'text-(--jp-vermilion)'
       case 'night':
-        return 'text-[var(--jp-indigo)]'
+        return 'text-(--jp-indigo)'
       case 'rainy':
-        return 'text-[var(--jp-indigo)]'
+        return 'text-(--jp-indigo)'
       default:
-        return 'text-[var(--jp-stone)]'
+        return 'text-(--jp-stone)'
     }
-  }
-
-  const getWeatherGlow = (_condition: WeatherCondition) => {
-    return ''
   }
 
   if (isLoading || error || !data) {
     return (
-      <div className="weather-card relative w-full overflow-hidden border border-[var(--jp-mist)] bg-[var(--jp-cream)] opacity-0">
+      <div className="weather-card relative w-full overflow-hidden border border-(--jp-mist) bg-(--jp-cream) opacity-0">
         <div className="flex flex-col gap-4 p-5">
           <div className="flex items-center justify-between">
-            <div className="h-5 w-20 animate-pulse rounded bg-[var(--jp-mist)]" />
+            <div className="h-5 w-20 animate-pulse rounded bg-(--jp-mist)" />
             <div className="flex gap-2">
-              <div className="h-8 w-8 animate-pulse rounded-full bg-[var(--jp-mist)]" />
+              <div className="h-8 w-8 animate-pulse rounded-full bg-(--jp-mist)" />
               {(error || !data) && !isLoading ? (
                 <Button
                   variant="outline"
@@ -87,20 +82,20 @@ function WeatherCard() {
                   <RefreshCw className="size-4" />
                 </Button>
               ) : (
-                <div className="h-8 w-8 animate-pulse rounded-full bg-[var(--jp-mist)]" />
+                <div className="h-8 w-8 animate-pulse rounded-full bg-(--jp-mist)" />
               )}
             </div>
           </div>
           <div className="flex items-center gap-4">
-            <div className="size-14 animate-pulse rounded-full bg-[var(--jp-mist)]" />
+            <div className="size-14 animate-pulse rounded-full bg-(--jp-mist)" />
             <div className="flex flex-col gap-2">
-              <div className="h-10 w-24 animate-pulse rounded bg-[var(--jp-mist)]" />
-              <div className="h-4 w-16 animate-pulse rounded bg-[var(--jp-mist)]" />
+              <div className="h-10 w-24 animate-pulse rounded bg-(--jp-mist)" />
+              <div className="h-4 w-16 animate-pulse rounded bg-(--jp-mist)" />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3">
-            <div className="h-16 animate-pulse rounded-lg bg-[var(--jp-mist)]" />
-            <div className="h-16 animate-pulse rounded-lg bg-[var(--jp-mist)]" />
+            <div className="h-16 animate-pulse rounded-lg bg-(--jp-mist)" />
+            <div className="h-16 animate-pulse rounded-lg bg-(--jp-mist)" />
           </div>
         </div>
       </div>
@@ -109,16 +104,15 @@ function WeatherCard() {
 
   const MainIcon = getWeatherIcon(data.condition)
   const iconColor = getWeatherColor(data.condition)
-  const iconGlow = getWeatherGlow(data.condition)
 
   return (
-    <div className="weather-card group relative w-full overflow-hidden border border-[var(--jp-mist)] bg-[var(--jp-cream)] opacity-0 transition-colors hover:border-[var(--jp-stone)]">
+    <div className="weather-card group relative w-full overflow-hidden border border-(--jp-mist) bg-(--jp-cream) opacity-0 transition-colors hover:border-(--jp-stone)">
       <div className="flex flex-col gap-4 p-5">
         {/* 顶部栏：地点 + 操作 */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5">
-            <MapPin className="size-3.5 text-[var(--jp-ash)]" />
-            <span className="font-[family-name:var(--font-jp-sans)] font-medium text-[var(--jp-ink)] text-xs">
+            <MapPin className="size-3.5 text-(--jp-ash)" />
+            <span className="font-(family-name:--font-jp-sans) font-medium text-(--jp-ink) text-xs">
               {data.location}
             </span>
           </div>
@@ -130,10 +124,9 @@ function WeatherCard() {
               disabled={isRefetching}
               className={cn(
                 'h-8 w-8 rounded-full',
-                useBrowser && 'border-[var(--jp-vermilion)] text-[var(--jp-vermilion)]'
+                useBrowser && 'border-(--jp-vermilion) text-(--jp-vermilion)'
               )}
-              title="Locate Me"
-              aria-label="Locate Me"
+              aria-label="定位"
             >
               <Navigation className="size-4" />
             </Button>
@@ -152,18 +145,18 @@ function WeatherCard() {
 
         {/* 主要天气信息 */}
         <div className="flex items-center gap-4">
-          <MainIcon className={cn('size-14 shrink-0', iconColor, iconGlow)} />
+          <MainIcon className={cn('size-14 shrink-0', iconColor)} />
           <div className="flex flex-col">
             <div className="flex items-baseline gap-1">
-              <span className="font-[family-name:var(--font-jp)] font-semibold text-4xl text-[var(--jp-ink)]">
+              <span className="font-(family-name:--font-jp) font-semibold text-4xl text-(--jp-ink)">
                 {data.temp}
               </span>
-              <span className="text-[var(--jp-ash)] text-xl">°C</span>
+              <span className="text-(--jp-ash) text-xl">°C</span>
             </div>
-            <p className="font-[family-name:var(--font-jp-sans)] text-[var(--jp-stone)] text-sm">
+            <p className="font-(family-name:--font-jp-sans) text-(--jp-stone) text-sm">
               {data.conditionText}
             </p>
-            <p className="font-[family-name:var(--font-jp-sans)] text-[var(--jp-ash)] text-xs">
+            <p className="font-(family-name:--font-jp-sans) text-(--jp-ash) text-xs">
               {data.high}° / {data.low}°
             </p>
           </div>
@@ -171,24 +164,24 @@ function WeatherCard() {
 
         {/* 湿度和风速 */}
         <div className="grid grid-cols-2 gap-3">
-          <div className="flex items-center gap-2 rounded-lg border border-[var(--jp-mist)] bg-[var(--jp-paper)] p-3">
-            <Droplets className="size-5 text-[var(--jp-indigo)]" />
+          <div className="flex items-center gap-2 rounded-lg border border-(--jp-mist) bg-(--jp-paper) p-3">
+            <Droplets className="size-5 text-(--jp-indigo)" />
             <div>
-              <p className="font-[family-name:var(--font-jp-sans)] text-[var(--jp-ash)] text-xs">
+              <p className="font-(family-name:--font-jp-sans) text-(--jp-ash) text-xs">
                 {t('humidity')}
               </p>
-              <p className="font-[family-name:var(--font-jp)] font-medium text-[var(--jp-ink)] text-lg">
+              <p className="font-(family-name:--font-jp) font-medium text-(--jp-ink) text-lg">
                 {data.humidity}%
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-2 rounded-lg border border-[var(--jp-mist)] bg-[var(--jp-paper)] p-3">
-            <Wind className="size-5 text-[var(--jp-moss)]" />
+          <div className="flex items-center gap-2 rounded-lg border border-(--jp-mist) bg-(--jp-paper) p-3">
+            <Wind className="size-5 text-(--jp-moss)" />
             <div>
-              <p className="font-[family-name:var(--font-jp-sans)] text-[var(--jp-ash)] text-xs">
+              <p className="font-(family-name:--font-jp-sans) text-(--jp-ash) text-xs">
                 {data.windDir}
               </p>
-              <p className="font-[family-name:var(--font-jp)] font-medium text-[var(--jp-ink)] text-lg">
+              <p className="font-(family-name:--font-jp) font-medium text-(--jp-ink) text-lg">
                 {data.windSpeed} km/h
               </p>
             </div>

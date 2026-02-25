@@ -102,7 +102,7 @@ function CustomEdge({
         >
           <button
             onClick={onEdgeDelete}
-            className="flex h-5 w-5 items-center justify-center rounded-full border border-[var(--jp-mist)] bg-[var(--jp-cream)] text-[var(--jp-ink)]/40 shadow-sm transition-all hover:scale-110 hover:border-[var(--jp-error)] hover:bg-[var(--jp-error)] hover:text-white"
+            className="flex h-5 w-5 items-center justify-center rounded-full border border-(--jp-mist) bg-(--jp-cream) text-(--jp-ink)/40 shadow-sm transition-all hover:scale-110 hover:border-(--jp-error) hover:bg-(--jp-error) hover:text-white"
             title="删除连接"
           >
             <X className="h-3 w-3" />

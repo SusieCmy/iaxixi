@@ -69,30 +69,30 @@ export default async function LocaleLayout({
       </header>
       <main className="relative z-10">{children}</main>
       <HideInAigc>
-        <footer className="relative z-10 border-[var(--jp-mist)] border-t bg-[var(--jp-cream)] py-12">
+        <footer className="relative z-10 border-(--jp-mist) border-t bg-(--jp-cream) py-12">
           <div className="mx-auto max-w-screen-2xl px-6">
             <nav className="mb-8 flex justify-center gap-8">
               <Link
                 href={`/${locale}/blog`}
-                className="font-[family-name:var(--font-jp-sans)] text-[var(--jp-ash)] text-sm transition-colors hover:text-[var(--jp-ink)]"
+                className="font-(family-name:--font-jp-sans) text-(--jp-ash) text-sm transition-colors hover:text-(--jp-ink)"
               >
                 {t('blog')}
               </Link>
               <Link
                 href={`/${locale}/projects`}
-                className="font-[family-name:var(--font-jp-sans)] text-[var(--jp-ash)] text-sm transition-colors hover:text-[var(--jp-ink)]"
+                className="font-(family-name:--font-jp-sans) text-(--jp-ash) text-sm transition-colors hover:text-(--jp-ink)"
               >
                 {t('projects')}
               </Link>
               <Link
                 href={`/${locale}/about`}
-                className="font-[family-name:var(--font-jp-sans)] text-[var(--jp-ash)] text-sm transition-colors hover:text-[var(--jp-ink)]"
+                className="font-(family-name:--font-jp-sans) text-(--jp-ash) text-sm transition-colors hover:text-(--jp-ink)"
               >
                 {t('about')}
               </Link>
               <Link
                 href={`/${locale}/contact`}
-                className="font-[family-name:var(--font-jp-sans)] text-[var(--jp-ash)] text-sm transition-colors hover:text-[var(--jp-ink)]"
+                className="font-(family-name:--font-jp-sans) text-(--jp-ash) text-sm transition-colors hover:text-(--jp-ink)"
               >
                 {t('contact')}
               </Link>
@@ -103,7 +103,7 @@ export default async function LocaleLayout({
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Twitter"
-                className="text-[var(--jp-ash)] transition-colors hover:text-[var(--jp-ink)]"
+                className="text-(--jp-ash) transition-colors hover:text-(--jp-ink)"
               >
                 <TwitterIcon className="h-5 w-5" />
               </a>
@@ -112,17 +112,17 @@ export default async function LocaleLayout({
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub"
-                className="text-[var(--jp-ash)] transition-colors hover:text-[var(--jp-ink)]"
+                className="text-(--jp-ash) transition-colors hover:text-(--jp-ink)"
               >
                 <GithubIcon className="h-5 w-5" />
               </a>
             </div>
-            <p className="mt-8 text-center font-[family-name:var(--font-jp-sans)] text-[var(--jp-ash)] text-xs">
+            <p className="mt-8 text-center font-(family-name:--font-jp-sans) text-(--jp-ash) text-xs">
               <a
                 href="https://beian.miit.gov.cn/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="transition-colors hover:text-[var(--jp-ink)]"
+                className="transition-colors hover:text-(--jp-ink)"
               >
                 湘ICP备2023003507号
               </a>

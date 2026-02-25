@@ -45,24 +45,23 @@ function SwitchNode({ data, selected }: SwitchNodeProps) {
   const statusStyles = {
     idle: {
       border: selected
-        ? 'border-[var(--jp-warning)] shadow-[var(--jp-warning)]/20 shadow-xl ring-1 ring-[var(--jp-warning)]/50'
-        : 'border-[var(--jp-warning)]/60 shadow-lg shadow-[var(--jp-warning)]/5 hover:border-[var(--jp-warning)] hover:shadow-[var(--jp-warning)]/10 hover:shadow-xl',
-      bg: 'bg-[var(--jp-cream)]',
+        ? 'border-(--jp-warning) shadow-(--jp-warning)/20 shadow-xl ring-1 ring-(--jp-warning)/50'
+        : 'border-(--jp-warning)/60 shadow-lg shadow-(--jp-warning)/5 hover:border-(--jp-warning) hover:shadow-(--jp-warning)/10 hover:shadow-xl',
+      bg: 'bg-(--jp-cream)',
     },
     running: {
       border:
-        'border-[var(--jp-warning)] shadow-[var(--jp-warning)]/30 shadow-xl ring-2 ring-[var(--jp-warning)]/50 animate-pulse',
-      bg: 'bg-[var(--jp-cream)]',
+        'border-(--jp-warning) shadow-(--jp-warning)/30 shadow-xl ring-2 ring-(--jp-warning)/50 animate-pulse',
+      bg: 'bg-(--jp-cream)',
     },
     success: {
       border:
-        'border-[var(--jp-success)] shadow-[var(--jp-success)]/20 shadow-xl ring-1 ring-[var(--jp-success)]/50',
-      bg: 'bg-[var(--jp-success)]/5',
+        'border-(--jp-success) shadow-(--jp-success)/20 shadow-xl ring-1 ring-(--jp-success)/50',
+      bg: 'bg-(--jp-success)/5',
     },
     error: {
-      border:
-        'border-[var(--jp-error)] shadow-[var(--jp-error)]/20 shadow-xl ring-1 ring-[var(--jp-error)]/50',
-      bg: 'bg-[var(--jp-error)]/10',
+      border: 'border-(--jp-error) shadow-(--jp-error)/20 shadow-xl ring-1 ring-(--jp-error)/50',
+      bg: 'bg-(--jp-error)/10',
     },
   }[data.status || 'idle']
 
@@ -84,35 +83,35 @@ function SwitchNode({ data, selected }: SwitchNodeProps) {
         {/* 标题栏 */}
         <div
           className={cn(
-            'flex items-center justify-between border-[var(--jp-mist)] border-b px-3 py-2.5',
-            data.status === 'error' ? 'bg-[var(--jp-error)]/5' : 'bg-[var(--jp-warning)]/10'
+            'flex items-center justify-between border-(--jp-mist) border-b px-3 py-2.5',
+            data.status === 'error' ? 'bg-(--jp-error)/5' : 'bg-(--jp-warning)/10'
           )}
         >
           <div
             className={cn(
               'flex h-8 w-8 items-center justify-center rounded-lg',
               data.status === 'error'
-                ? 'bg-[var(--jp-error)]/20 text-[var(--jp-error)]'
-                : 'bg-[var(--jp-warning)]/20 text-[var(--jp-ink)]'
+                ? 'bg-(--jp-error)/20 text-(--jp-error)'
+                : 'bg-(--jp-warning)/20 text-(--jp-ink)'
             )}
           >
             <GitBranch className="h-4 w-4" />
           </div>
           {/* 更多操作 */}
-          <button className="flex h-6 w-6 items-center justify-center rounded-md text-[var(--jp-ink)]/40 hover:bg-[var(--jp-paper)] hover:text-[var(--jp-ink)]">
+          <button className="flex h-6 w-6 items-center justify-center rounded-md text-(--jp-ink)/40 hover:bg-(--jp-paper) hover:text-(--jp-ink)">
             <MoreHorizontal className="h-4 w-4" />
           </button>
         </div>
 
         {/* 内容区域 - 输出标签 */}
         <div className="flex flex-col justify-between gap-6 p-3 pt-4">
-          <div className="flex items-center justify-end font-medium text-[var(--jp-ink)]/70 text-xs">
+          <div className="flex items-center justify-end font-medium text-(--jp-ink)/70 text-xs">
             <span>分支 1</span>
           </div>
-          <div className="flex items-center justify-end font-medium text-[var(--jp-ink)]/70 text-xs">
+          <div className="flex items-center justify-end font-medium text-(--jp-ink)/70 text-xs">
             <span>分支 2</span>
           </div>
-          <div className="flex items-center justify-end font-medium text-[var(--jp-ink)]/70 text-xs">
+          <div className="flex items-center justify-end font-medium text-(--jp-ink)/70 text-xs">
             <span>默认</span>
           </div>
         </div>
@@ -122,7 +121,7 @@ function SwitchNode({ data, selected }: SwitchNodeProps) {
       <Handle
         type="target"
         position={Position.Left}
-        className="-left-2! h-3.5! w-3.5! border-2! border-[var(--jp-warning)]! bg-[var(--jp-cream)]! transition-all hover:scale-125"
+        className="-left-2! h-3.5! w-3.5! border-2! border-(--jp-warning)! bg-(--jp-cream)! transition-all hover:scale-125"
       />
 
       {/* 右侧 - 输出 (3个) */}
@@ -131,21 +130,21 @@ function SwitchNode({ data, selected }: SwitchNodeProps) {
         type="source"
         position={Position.Right}
         id="case-1"
-        className="-right-2! top-[70px]! h-3.5! w-3.5! border-2! border-[var(--jp-warning)]! bg-[var(--jp-cream)]! transition-all hover:scale-125"
+        className="-right-2! top-[70px]! h-3.5! w-3.5! border-2! border-(--jp-warning)! bg-(--jp-cream)! transition-all hover:scale-125"
       />
       {/* 分支 2 */}
       <Handle
         type="source"
         position={Position.Right}
         id="case-2"
-        className="-right-2! top-[110px]! h-3.5! w-3.5! border-2! border-[var(--jp-warning)]! bg-[var(--jp-cream)]! transition-all hover:scale-125"
+        className="-right-2! top-[110px]! h-3.5! w-3.5! border-2! border-(--jp-warning)! bg-(--jp-cream)! transition-all hover:scale-125"
       />
       {/* 默认分支 */}
       <Handle
         type="source"
         position={Position.Right}
         id="default"
-        className="-right-2! top-[150px]! h-3.5! w-3.5! border-2! border-[var(--jp-warning)]! bg-[var(--jp-cream)]! transition-all hover:scale-125"
+        className="-right-2! top-[150px]! h-3.5! w-3.5! border-2! border-(--jp-warning)! bg-(--jp-cream)! transition-all hover:scale-125"
       />
 
       {/* 快捷添加按钮 - 悬停显示 */}
@@ -162,9 +161,8 @@ function SwitchNode({ data, selected }: SwitchNodeProps) {
             setShowBranchSelector(!showBranchSelector)
           }}
           className={cn(
-            'flex h-6 w-6 items-center justify-center rounded-full border border-[var(--jp-mist)] bg-[var(--jp-cream)] text-[var(--jp-ink)]/60 shadow-sm transition-all hover:scale-110 hover:border-[var(--jp-warning)] hover:bg-[var(--jp-warning)] hover:text-white',
-            showBranchSelector &&
-              'scale-110 border-[var(--jp-warning)] bg-[var(--jp-warning)] text-white'
+            'flex h-6 w-6 items-center justify-center rounded-full border border-(--jp-mist) bg-(--jp-cream) text-(--jp-ink)/60 shadow-sm transition-all hover:scale-110 hover:border-(--jp-warning) hover:bg-(--jp-warning) hover:text-white',
+            showBranchSelector && 'scale-110 border-(--jp-warning) bg-(--jp-warning) text-white'
           )}
           title={data.addNodeTooltip || 'Add Next Node'}
         >
@@ -173,16 +171,16 @@ function SwitchNode({ data, selected }: SwitchNodeProps) {
 
         {/* 分支选择菜单 */}
         {showBranchSelector && (
-          <div className="fade-in zoom-in-95 absolute right-0 bottom-full mb-2 w-32 animate-in overflow-hidden rounded-lg border border-[var(--jp-mist)] bg-[var(--jp-cream)] shadow-xl duration-200">
+          <div className="fade-in zoom-in-95 absolute right-0 bottom-full mb-2 w-32 animate-in overflow-hidden rounded-lg border border-(--jp-mist) bg-(--jp-cream) shadow-xl duration-200">
             <div className="p-1">
               <button
                 onClick={(e) => {
                   e.stopPropagation()
                   handleAddClick('case-1')
                 }}
-                className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left text-xs hover:bg-[var(--jp-paper)]"
+                className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left text-xs hover:bg-(--jp-paper)"
               >
-                <div className="h-1.5 w-1.5 rounded-full bg-[var(--jp-warning)]" />
+                <div className="h-1.5 w-1.5 rounded-full bg-(--jp-warning)" />
                 分支 1
               </button>
               <button
@@ -190,9 +188,9 @@ function SwitchNode({ data, selected }: SwitchNodeProps) {
                   e.stopPropagation()
                   handleAddClick('case-2')
                 }}
-                className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left text-xs hover:bg-[var(--jp-paper)]"
+                className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left text-xs hover:bg-(--jp-paper)"
               >
-                <div className="h-1.5 w-1.5 rounded-full bg-[var(--jp-warning)]" />
+                <div className="h-1.5 w-1.5 rounded-full bg-(--jp-warning)" />
                 分支 2
               </button>
               <button
@@ -200,9 +198,9 @@ function SwitchNode({ data, selected }: SwitchNodeProps) {
                   e.stopPropagation()
                   handleAddClick('default')
                 }}
-                className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left text-xs hover:bg-[var(--jp-paper)]"
+                className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left text-xs hover:bg-(--jp-paper)"
               >
-                <div className="h-1.5 w-1.5 rounded-full bg-[var(--jp-ash)]" />
+                <div className="h-1.5 w-1.5 rounded-full bg-(--jp-ash)" />
                 默认分支
               </button>
             </div>
@@ -217,7 +215,7 @@ function SwitchNode({ data, selected }: SwitchNodeProps) {
             e.stopPropagation()
             data.onDelete?.()
           }}
-          className="flex h-6 w-6 items-center justify-center rounded-full border border-[var(--jp-mist)] bg-[var(--jp-cream)] text-[var(--jp-ink)]/40 shadow-sm transition-all hover:scale-110 hover:border-[var(--jp-error)] hover:bg-[var(--jp-error)] hover:text-white"
+          className="flex h-6 w-6 items-center justify-center rounded-full border border-(--jp-mist) bg-(--jp-cream) text-(--jp-ink)/40 shadow-sm transition-all hover:scale-110 hover:border-(--jp-error) hover:bg-(--jp-error) hover:text-white"
           title={data.deleteNodeTooltip || 'Delete Node'}
         >
           <Trash2 className="h-3.5 w-3.5" />

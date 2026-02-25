@@ -29,7 +29,7 @@ const markdownComponents: Components = {
         {String(children).replace(/\n$/, '')}
       </SyntaxHighlighter>
     ) : (
-      <code className="rounded bg-[var(--jp-cream)] px-1 py-0.5 text-xs" {...props}>
+      <code className="rounded bg-(--jp-cream) px-1 py-0.5 text-xs" {...props}>
         {children}
       </code>
     )
@@ -40,12 +40,12 @@ const markdownComponents: Components = {
   ol: ({ children }) => <ol className="mb-1.5 list-decimal pl-4">{children}</ol>,
   li: ({ children }) => <li className="mb-0.5">{children}</li>,
   blockquote: ({ children }) => (
-    <blockquote className="my-1.5 border-[var(--jp-vermilion)] border-l-2 pl-2 text-[var(--jp-stone)]">
+    <blockquote className="my-1.5 border-(--jp-vermilion) border-l-2 pl-2 text-(--jp-stone)">
       {children}
     </blockquote>
   ),
   a: ({ href, children }) => (
-    <a href={href} className="text-[var(--jp-indigo)] underline" target="_blank" rel="noreferrer">
+    <a href={href} className="text-(--jp-indigo) underline" target="_blank" rel="noreferrer">
       {children}
     </a>
   ),
@@ -57,7 +57,7 @@ function MessageBubble({ message, botIcon }: { message: ChatMessage; botIcon?: s
   return (
     <div className={`flex gap-2 ${isUser ? 'flex-row-reverse' : ''}`}>
       {isUser ? (
-        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[var(--jp-vermilion)] text-white">
+        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-(--jp-vermilion) text-white">
           <User className="h-3.5 w-3.5" />
         </div>
       ) : botIcon ? (
@@ -69,24 +69,22 @@ function MessageBubble({ message, botIcon }: { message: ChatMessage; botIcon?: s
           className="h-7 w-7 shrink-0 rounded-full object-cover"
         />
       ) : (
-        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[var(--jp-paper)] text-[var(--jp-vermilion)]">
+        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-(--jp-paper) text-(--jp-vermilion)">
           <Sparkles className="h-3.5 w-3.5" />
         </div>
       )}
       <div
         className={`max-w-[80%] rounded-2xl px-3 py-2 text-sm leading-relaxed ${
-          isUser
-            ? 'bg-[var(--jp-vermilion)] text-white'
-            : 'bg-[var(--jp-paper)] text-[var(--jp-ink)]'
+          isUser ? 'bg-(--jp-vermilion) text-white' : 'bg-(--jp-paper) text-(--jp-ink)'
         }`}
       >
         {message.isThinking ? (
-          <span className="inline-flex items-center gap-1 text-[var(--jp-ash)]">
+          <span className="inline-flex items-center gap-1 text-(--jp-ash)">
             <span className="animate-pulse">检索中</span>
             <span className="inline-flex gap-0.5">
-              <span className="h-1 w-1 animate-bounce rounded-full bg-[var(--jp-ash)] [animation-delay:0ms]" />
-              <span className="h-1 w-1 animate-bounce rounded-full bg-[var(--jp-ash)] [animation-delay:150ms]" />
-              <span className="h-1 w-1 animate-bounce rounded-full bg-[var(--jp-ash)] [animation-delay:300ms]" />
+              <span className="h-1 w-1 animate-bounce rounded-full bg-(--jp-ash) [animation-delay:0ms]" />
+              <span className="h-1 w-1 animate-bounce rounded-full bg-(--jp-ash) [animation-delay:150ms]" />
+              <span className="h-1 w-1 animate-bounce rounded-full bg-(--jp-ash) [animation-delay:300ms]" />
             </span>
           </span>
         ) : isUser ? (
@@ -241,7 +239,7 @@ export default function ChatPopup() {
     return (
       <button
         onClick={() => setMinimized(false)}
-        className="fixed right-6 bottom-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-[var(--jp-vermilion)] shadow-lg transition-transform hover:scale-105"
+        className="fixed right-6 bottom-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-(--jp-vermilion) shadow-lg transition-transform hover:scale-105"
       >
         {botIcon ? (
           <Image
@@ -260,14 +258,14 @@ export default function ChatPopup() {
 
   return (
     <div
-      className="fixed z-50 flex h-[500px] w-[380px] flex-col overflow-hidden rounded-2xl border border-[var(--jp-mist)] bg-[var(--jp-cream)] shadow-xl"
+      className="fixed z-50 flex h-[500px] w-[380px] flex-col overflow-hidden rounded-2xl border border-(--jp-mist) bg-(--jp-cream) shadow-xl"
       style={{ right: `${24 - position.x}px`, bottom: `${24 - position.y}px` }}
     >
       {/* Header - 可拖拽 */}
       <div
         role="toolbar"
         onMouseDown={onDragStart}
-        className="flex cursor-grab select-none items-center gap-2 border-[var(--jp-mist)] border-b px-4 py-2.5 active:cursor-grabbing"
+        className="flex cursor-grab select-none items-center gap-2 border-(--jp-mist) border-b px-4 py-2.5 active:cursor-grabbing"
       >
         {botIcon && (
           <Image
@@ -278,13 +276,13 @@ export default function ChatPopup() {
             className="h-6 w-6 rounded-full object-cover"
           />
         )}
-        <span className="flex-1 truncate font-medium text-[var(--jp-ink)] text-sm">{botName}</span>
+        <span className="flex-1 truncate font-medium text-(--jp-ink) text-sm">{botName}</span>
         {messages.length > 0 && (
           <Button
             variant="ghost"
             size="sm"
             onClick={clearMessages}
-            className="h-7 w-7 p-0 text-[var(--jp-ash)] hover:text-[var(--jp-error)]"
+            className="h-7 w-7 p-0 text-(--jp-ash) hover:text-(--jp-error)"
           >
             <Trash2 className="h-3 w-3" />
           </Button>
@@ -293,7 +291,7 @@ export default function ChatPopup() {
           variant="ghost"
           size="sm"
           onClick={() => setMinimized(true)}
-          className="h-7 w-7 p-0 text-[var(--jp-ash)]"
+          className="h-7 w-7 p-0 text-(--jp-ash)"
         >
           <Minus className="h-3 w-3" />
         </Button>
@@ -301,7 +299,7 @@ export default function ChatPopup() {
           variant="ghost"
           size="sm"
           onClick={closeChat}
-          className="h-7 w-7 p-0 text-[var(--jp-ash)]"
+          className="h-7 w-7 p-0 text-(--jp-ash)"
         >
           <X className="h-3 w-3" />
         </Button>
@@ -321,9 +319,9 @@ export default function ChatPopup() {
                   className="mx-auto h-10 w-10 rounded-full object-cover"
                 />
               ) : (
-                <Sparkles className="mx-auto h-10 w-10 text-[var(--jp-mist)]" />
+                <Sparkles className="mx-auto h-10 w-10 text-(--jp-mist)" />
               )}
-              <p className="mt-3 text-[var(--jp-ash)] text-xs">{botDescription || '开始对话吧'}</p>
+              <p className="mt-3 text-(--jp-ash) text-xs">{botDescription || '开始对话吧'}</p>
             </div>
           </div>
         ) : (
@@ -332,14 +330,14 @@ export default function ChatPopup() {
       </div>
 
       {/* Input */}
-      <div className="border-[var(--jp-mist)] border-t px-3 py-2">
+      <div className="border-(--jp-mist) border-t px-3 py-2">
         <div className="flex items-end gap-2">
           <Button
             type="button"
             size="sm"
             variant="ghost"
             onClick={() => setVoiceMode(!voiceMode)}
-            className="h-8 w-8 shrink-0 p-0 text-[var(--jp-ash)]"
+            className="h-8 w-8 shrink-0 p-0 text-(--jp-ash)"
           >
             {voiceMode ? <Keyboard className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
           </Button>
@@ -355,10 +353,10 @@ export default function ChatPopup() {
               disabled={transcribeMutation.isPending}
               className={`flex h-8 flex-1 items-center justify-center rounded-lg border text-sm transition-colors ${
                 isRecording
-                  ? 'border-[var(--jp-vermilion)] bg-[var(--jp-vermilion)]/10 text-[var(--jp-vermilion)]'
+                  ? 'border-(--jp-vermilion) bg-(--jp-vermilion)/10 text-(--jp-vermilion)'
                   : transcribeMutation.isPending
-                    ? 'border-[var(--jp-mist)] text-[var(--jp-ash)] opacity-60'
-                    : 'border-[var(--jp-mist)] text-[var(--jp-ash)]'
+                    ? 'border-(--jp-mist) text-(--jp-ash) opacity-60'
+                    : 'border-(--jp-mist) text-(--jp-ash)'
               }`}
             >
               {transcribeMutation.isPending ? '识别中...' : isRecording ? '松开发送' : '按住说话'}
@@ -371,14 +369,14 @@ export default function ChatPopup() {
                 onKeyDown={handleKeyDown}
                 placeholder="输入消息..."
                 rows={1}
-                className="max-h-20 min-h-[32px] flex-1 resize-none rounded-lg border border-[var(--jp-mist)] bg-transparent px-2.5 py-1.5 text-[var(--jp-ink)] text-sm placeholder:text-[var(--jp-ash)] focus:outline-none focus:ring-1 focus:ring-[var(--jp-vermilion)]"
+                className="max-h-20 min-h-[32px] flex-1 resize-none rounded-lg border border-(--jp-mist) bg-transparent px-2.5 py-1.5 text-(--jp-ink) text-sm placeholder:text-(--jp-ash) focus:outline-none focus:ring-1 focus:ring-(--jp-vermilion)"
               />
               {isLoading ? (
                 <Button
                   type="button"
                   size="sm"
                   onClick={stopGeneration}
-                  className="h-8 w-8 shrink-0 rounded-lg bg-[var(--jp-ash)] p-0 hover:bg-[var(--jp-stone)]"
+                  className="h-8 w-8 shrink-0 rounded-lg bg-(--jp-ash) p-0 hover:bg-(--jp-stone)"
                 >
                   <Square className="h-3 w-3 text-white" />
                 </Button>
@@ -387,7 +385,7 @@ export default function ChatPopup() {
                   type="submit"
                   size="sm"
                   disabled={!input.trim()}
-                  className="h-8 w-8 shrink-0 rounded-lg bg-[var(--jp-vermilion)] p-0 hover:bg-[var(--jp-vermilion)]/90 disabled:opacity-40"
+                  className="h-8 w-8 shrink-0 rounded-lg bg-(--jp-vermilion) p-0 hover:bg-(--jp-vermilion)/90 disabled:opacity-40"
                 >
                   <Send className="h-3 w-3 text-white" />
                 </Button>

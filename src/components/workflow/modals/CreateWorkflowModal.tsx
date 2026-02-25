@@ -93,7 +93,7 @@ export default function CreateWorkflowModal({
           {/* 工作流名称 */}
           <div className="space-y-2">
             <label htmlFor="workflow-name" className="font-medium text-sm">
-              工作流名称 <span className="text-[var(--jp-error)]">*</span>
+              工作流名称 <span className="text-(--jp-error)">*</span>
             </label>
             <Input
               id="workflow-name"
@@ -117,7 +117,7 @@ export default function CreateWorkflowModal({
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={4}
-              className="w-full resize-none rounded-lg border border-[var(--jp-mist)] bg-[var(--jp-cream)] px-3 py-2 text-sm transition-all focus:border-[var(--jp-vermilion)] focus:outline-none focus:ring-1 focus:ring-[var(--jp-vermilion)]"
+              className="w-full resize-none rounded-lg border border-(--jp-mist) bg-(--jp-cream) px-3 py-2 text-sm transition-all focus:border-(--jp-vermilion) focus:outline-none focus:ring-1 focus:ring-(--jp-vermilion)"
               placeholder="请输入工作流描述（可选）"
             />
           </div>
@@ -132,7 +132,7 @@ export default function CreateWorkflowModal({
               name="group"
               value={group}
               onChange={(e) => setGroup(e.target.value)}
-              className="w-full rounded-lg border border-[var(--jp-mist)] bg-[var(--jp-cream)] px-3 py-2 text-sm transition-all focus:border-[var(--jp-vermilion)] focus:outline-none focus:ring-1 focus:ring-[var(--jp-vermilion)]"
+              className="w-full rounded-lg border border-(--jp-mist) bg-(--jp-cream) px-3 py-2 text-sm transition-all focus:border-(--jp-vermilion) focus:outline-none focus:ring-1 focus:ring-(--jp-vermilion)"
             >
               {GROUP_OPTIONS.map((option) => (
                 <option key={option.value} value={option.value}>

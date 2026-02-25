@@ -56,8 +56,5 @@ export const getTagStyle = (tag: string): string => {
     教程: 'bg-indigo-100 text-indigo-800 border border-indigo-200',
   }
 
-  return (
-    tagStyles[tagLower] ||
-    'bg-[var(--jp-mist)]/50 text-[var(--jp-ink)]/70 border border-[var(--jp-mist)]'
-  )
+  return tagStyles[tagLower] || 'bg-(--jp-mist)/50 text-(--jp-ink)/70 border border-(--jp-mist)'
 }

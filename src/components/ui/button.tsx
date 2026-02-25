@@ -5,18 +5,17 @@ import * as React from 'react'
 import { cn } from '@/lib/utils'
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--jp-vermilion)] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-(--jp-vermilion) disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
   {
     variants: {
       variant: {
-        default: 'bg-[var(--jp-vermilion)] text-white shadow hover:bg-[var(--jp-vermilion)]/90',
-        destructive: 'bg-[var(--jp-error)] text-white shadow-sm hover:bg-[var(--jp-error)]/90',
+        default: 'bg-(--jp-vermilion) text-white shadow hover:bg-(--jp-vermilion)/90',
+        destructive: 'bg-(--jp-error) text-white shadow-sm hover:bg-(--jp-error)/90',
         outline:
-          'border border-[var(--jp-mist)] bg-transparent shadow-sm hover:bg-[var(--jp-paper)] hover:text-[var(--jp-ink)]',
-        secondary:
-          'bg-[var(--jp-paper)] text-[var(--jp-ink)] shadow-sm hover:bg-[var(--jp-paper)]/80',
-        ghost: 'hover:bg-[var(--jp-paper)] hover:text-[var(--jp-ink)]',
-        link: 'text-[var(--jp-vermilion)] underline-offset-4 hover:underline',
+          'border border-(--jp-mist) bg-transparent shadow-sm hover:bg-(--jp-paper) hover:text-(--jp-ink)',
+        secondary: 'bg-(--jp-paper) text-(--jp-ink) shadow-sm hover:bg-(--jp-paper)/80',
+        ghost: 'hover:bg-(--jp-paper) hover:text-(--jp-ink)',
+        link: 'text-(--jp-vermilion) underline-offset-4 hover:underline',
       },
       size: {
         default: 'h-9 px-4 py-2',

@@ -447,22 +447,22 @@ export default function WorkflowEditor() {
 
           {/* 顶部工具栏 */}
           <Panel position="top-left">
-            <div className="flex items-center gap-2 rounded-xl border border-[var(--jp-mist)]/50 bg-[var(--jp-cream)]/95 p-2 shadow-lg backdrop-blur-sm">
+            <div className="flex items-center gap-2 rounded-xl border border-(--jp-mist)/50 bg-(--jp-cream)/95 p-2 shadow-lg backdrop-blur-sm">
               <Link
                 href="/aigc"
-                className="flex h-9 w-9 items-center justify-center rounded-lg transition-all hover:bg-[var(--jp-paper)]"
+                className="flex h-9 w-9 items-center justify-center rounded-lg transition-all hover:bg-(--jp-paper)"
                 title={t('backToList')}
               >
                 <ArrowLeft className="h-4 w-4" />
               </Link>
               {!isNew && (
                 <>
-                  <div className="h-6 w-px bg-[var(--jp-mist)]/50" />
+                  <div className="h-6 w-px bg-(--jp-mist)/50" />
                   <div className="flex flex-col justify-center py-1 pr-3 pl-1">
-                    <h1 className="line-clamp-1 font-semibold text-[var(--jp-ink)] text-sm leading-tight">
+                    <h1 className="line-clamp-1 font-semibold text-(--jp-ink) text-sm leading-tight">
                       {name}
                     </h1>
-                    <p className="line-clamp-1 text-[var(--jp-ink)]/60 text-xs leading-tight">
+                    <p className="line-clamp-1 text-(--jp-ink)/60 text-xs leading-tight">
                       {description || t('noDescription')}
                     </p>
                   </div>
@@ -472,23 +472,23 @@ export default function WorkflowEditor() {
           </Panel>
 
           <Panel position="top-right">
-            <div className="flex items-center gap-2 rounded-xl border border-[var(--jp-mist)]/50 bg-[var(--jp-cream)]/95 p-2 shadow-lg backdrop-blur-sm">
+            <div className="flex items-center gap-2 rounded-xl border border-(--jp-mist)/50 bg-(--jp-cream)/95 p-2 shadow-lg backdrop-blur-sm">
               {!isNew && (
                 <>
                   <button
                     onClick={() => setShowNameDialog(true)}
-                    className="flex h-9 items-center gap-2 rounded-lg px-3 transition-all hover:bg-[var(--jp-paper)]"
+                    className="flex h-9 items-center gap-2 rounded-lg px-3 transition-all hover:bg-(--jp-paper)"
                     title={t('editWorkflowInfo')}
                   >
                     <FileText className="h-4 w-4" />
                     <span className="text-sm">{t('edit')}</span>
                   </button>
-                  <div className="h-6 w-px bg-[var(--jp-mist)]/50" />
+                  <div className="h-6 w-px bg-(--jp-mist)/50" />
                 </>
               )}
               <button
                 onClick={handleSave}
-                className="flex h-9 items-center gap-2 rounded-lg bg-[var(--jp-vermilion)] px-3 text-[var(--jp-vermilion)]-content transition-all hover:bg-[var(--jp-vermilion)]/90"
+                className="flex h-9 items-center gap-2 rounded-lg bg-(--jp-vermilion) px-3 text-(--jp-vermilion)-content transition-all hover:bg-(--jp-vermilion)/90"
                 title={t('saveWorkflow')}
               >
                 <Save className="h-4 w-4" />
@@ -502,10 +502,10 @@ export default function WorkflowEditor() {
             <button
               disabled={isRunning}
               onClick={runWorkflow}
-              className={`flex items-center gap-2 rounded-lg px-6 py-2.5 font-medium text-[var(--jp-vermilion)]-content transition-colors ${
+              className={`flex items-center gap-2 rounded-lg px-6 py-2.5 font-medium text-(--jp-vermilion)-content transition-colors ${
                 isRunning
-                  ? 'cursor-not-allowed bg-[var(--jp-vermilion)]/70'
-                  : 'bg-[var(--jp-vermilion)] hover:bg-[var(--jp-vermilion)]/90'
+                  ? 'cursor-not-allowed bg-(--jp-vermilion)/70'
+                  : 'bg-(--jp-vermilion) hover:bg-(--jp-vermilion)/90'
               }`}
             >
               {isRunning ? (

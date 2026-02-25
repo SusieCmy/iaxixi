@@ -14,7 +14,7 @@ export default function Header() {
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
-      className="relative z-50 mx-auto flex min-h-14 max-w-screen-2xl items-center justify-between gap-4 border-[var(--jp-mist)] border-b bg-[var(--jp-cream)]/90 px-6 backdrop-blur-sm"
+      className="relative z-50 mx-auto flex min-h-14 max-w-screen-2xl items-center justify-between gap-4 border-(--jp-mist) border-b bg-(--jp-cream)/90 px-6 backdrop-blur-sm"
     >
       <div className="flex h-full shrink-0 items-center">
         <Link href={'/'} title="chenmuyu" className="group">

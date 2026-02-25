@@ -24,6 +24,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useEffect, useRef } from 'react'
+import NewsCard from '@/components/news/NewsCard'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import TextType from '@/components/ui/TextType'
@@ -149,7 +150,7 @@ const UserInfoPage = () => {
       <div className="mb-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* 左侧：个人介绍卡片 */}
         <div className="lg:col-span-2">
-          <div className="info-card group relative h-full overflow-hidden border border-[var(--jp-mist)] bg-[var(--jp-cream)] p-6 opacity-0 transition-colors hover:border-[var(--jp-stone)] sm:p-8">
+          <div className="info-card group relative h-full overflow-hidden border border-(--jp-mist) bg-(--jp-cream) p-6 opacity-0 transition-colors hover:border-(--jp-stone) sm:p-8">
             <div className="flex flex-col items-center gap-6 sm:gap-8 md:flex-row md:items-start">
               {/* 头像 */}
               <div className="group/avatar relative shrink-0">
@@ -166,12 +167,12 @@ const UserInfoPage = () => {
               {/* 个人信息 */}
               <div className="flex-1 text-center md:text-left">
                 <h1
-                  className="mb-2 font-[family-name:var(--font-jp)] font-medium text-3xl text-[var(--jp-ink)] sm:text-4xl"
+                  className="mb-2 font-(family-name:--font-jp) font-medium text-3xl text-(--jp-ink) sm:text-4xl"
                   onClick={() => analytics.clickUserName()}
                 >
                   <p>{t('name')}</p>
                 </h1>
-                <p className="mb-4 font-[family-name:var(--font-jp-sans)] text-[var(--jp-stone)] text-base sm:text-lg">
+                <p className="mb-4 font-(family-name:--font-jp-sans) text-(--jp-stone) text-base sm:text-lg">
                   {t('position')}
                 </p>
 
@@ -179,29 +180,29 @@ const UserInfoPage = () => {
                 <div className="mb-5 flex flex-wrap justify-center gap-2 md:justify-start">
                   <Badge
                     variant="outline"
-                    className="gap-1.5 px-3 py-1.5 font-[family-name:var(--font-jp-sans)]"
+                    className="gap-1.5 px-3 py-1.5 font-(family-name:--font-jp-sans)"
                   >
-                    <Sparkles className="h-3.5 w-3.5 text-[var(--jp-vermilion)]" />
+                    <Sparkles className="h-3.5 w-3.5 text-(--jp-vermilion)" />
                     {t('tags.webDeveloper')}
                   </Badge>
                   <Badge
                     variant="outline"
-                    className="gap-1.5 px-3 py-1.5 font-[family-name:var(--font-jp-sans)]"
+                    className="gap-1.5 px-3 py-1.5 font-(family-name:--font-jp-sans)"
                   >
-                    <Code2 className="h-3.5 w-3.5 text-[var(--jp-indigo)]" />
+                    <Code2 className="h-3.5 w-3.5 text-(--jp-indigo)" />
                     {t('tags.fullStack')}
                   </Badge>
                   <Badge
                     variant="outline"
-                    className="gap-1.5 px-3 py-1.5 font-[family-name:var(--font-jp-sans)]"
+                    className="gap-1.5 px-3 py-1.5 font-(family-name:--font-jp-sans)"
                   >
-                    <Heart className="h-3.5 w-3.5 text-[var(--jp-moss)]" />
+                    <Heart className="h-3.5 w-3.5 text-(--jp-moss)" />
                     {t('tags.openSource')}
                   </Badge>
                 </div>
 
                 {/* 位置和时间 */}
-                <div className="mb-5 flex flex-wrap justify-center gap-4 font-[family-name:var(--font-jp-sans)] text-[var(--jp-ash)] text-sm md:justify-start">
+                <div className="mb-5 flex flex-wrap justify-center gap-4 font-(family-name:--font-jp-sans) text-(--jp-ash) text-sm md:justify-start">
                   <div className="flex items-center gap-1.5">
                     <MapPin className="h-4 w-4" />
                     <span>{t('location')}</span>
@@ -235,12 +236,12 @@ const UserInfoPage = () => {
             </div>
 
             {/* 个人简介 */}
-            <div className="relative mt-6 border-[var(--jp-mist)] border-t pt-6 sm:mt-8 sm:pt-8">
-              <h2 className="mb-3 flex items-center gap-2 font-[family-name:var(--font-jp)] font-medium text-[var(--jp-ink)] text-lg">
-                <Sparkles className="h-5 w-5 text-[var(--jp-vermilion)]" />
+            <div className="relative mt-6 border-(--jp-mist) border-t pt-6 sm:mt-8 sm:pt-8">
+              <h2 className="mb-3 flex items-center gap-2 font-(family-name:--font-jp) font-medium text-(--jp-ink) text-lg">
+                <Sparkles className="h-5 w-5 text-(--jp-vermilion)" />
                 {t('aboutTitle')}
               </h2>
-              <div className="font-[family-name:var(--font-jp-sans)] text-[var(--jp-stone)] text-sm leading-relaxed sm:text-base">
+              <div className="font-(family-name:--font-jp-sans) text-(--jp-stone) text-sm leading-relaxed sm:text-base">
                 <TextType
                   text={[t('introduction')]}
                   typingSpeed={50}
@@ -256,19 +257,20 @@ const UserInfoPage = () => {
         {/* 右侧：天气卡片（首页）或 统计数据卡片（其他页面） */}
         <div className="lg:col-span-1">
           {isHomePage ? (
-            /* 首页展示天气卡片 */
-            <div className="flex">
+            /* 首页展示天气卡片 + 新闻卡片 */
+            <div className="flex flex-col gap-6">
               <WeatherCard />
+              <NewsCard />
             </div>
           ) : (
             /* 其他页面展示统计数据卡片 */
-            <div className="info-card relative h-full w-full overflow-hidden border border-[var(--jp-mist)] bg-[var(--jp-cream)] opacity-0 transition-colors hover:border-[var(--jp-stone)]">
+            <div className="info-card relative h-full w-full overflow-hidden border border-(--jp-mist) bg-(--jp-cream) opacity-0 transition-colors hover:border-(--jp-stone)">
               <div className="flex flex-col gap-4 p-5">
                 {/* 标题 */}
                 <div className="flex items-center gap-2">
-                  <Award className="h-4 w-4 text-[var(--jp-vermilion)]" />
+                  <Award className="h-4 w-4 text-(--jp-vermilion)" />
                   <span
-                    className="font-[family-name:var(--font-jp)] font-medium text-[var(--jp-ink)] text-sm"
+                    className="font-(family-name:--font-jp) font-medium text-(--jp-ink) text-sm"
                     role="button"
                     tabIndex={0}
                     onClick={() => analytics.viewStats()}
@@ -285,14 +287,14 @@ const UserInfoPage = () => {
                     return (
                       <div
                         key={stat.label}
-                        className="stat-item flex items-center gap-2 rounded-lg border border-[var(--jp-mist)] bg-[var(--jp-paper)] p-3 opacity-0 transition-colors hover:border-[var(--jp-stone)]"
+                        className="stat-item flex items-center gap-2 rounded-lg border border-(--jp-mist) bg-(--jp-paper) p-3 opacity-0 transition-colors hover:border-(--jp-stone)"
                       >
                         <Icon className={`h-5 w-5 shrink-0 ${stat.iconColor}`} />
                         <div>
-                          <p className="font-[family-name:var(--font-jp)] font-medium text-[var(--jp-ink)] text-lg">
+                          <p className="font-(family-name:--font-jp) font-medium text-(--jp-ink) text-lg">
                             {stat.value}
                           </p>
-                          <p className="font-[family-name:var(--font-jp-sans)] text-[var(--jp-ash)] text-xs">
+                          <p className="font-(family-name:--font-jp-sans) text-(--jp-ash) text-xs">
                             {stat.label}
                           </p>
                         </div>
@@ -302,39 +304,39 @@ const UserInfoPage = () => {
                 </div>
 
                 {/* 快速链接 */}
-                <div className="border-[var(--jp-mist)] border-t pt-4">
+                <div className="border-(--jp-mist) border-t pt-4">
                   <div className="mb-3 flex items-center gap-2">
-                    <ExternalLink className="h-3.5 w-3.5 text-[var(--jp-ash)]" />
-                    <span className="font-[family-name:var(--font-jp-sans)] font-medium text-[var(--jp-ash)] text-xs">
+                    <ExternalLink className="h-3.5 w-3.5 text-(--jp-ash)" />
+                    <span className="font-(family-name:--font-jp-sans) font-medium text-(--jp-ash) text-xs">
                       {t('quickAccess.title')}
                     </span>
                   </div>
                   <div className="space-y-2">
                     <Link
                       href={ROUTES.BLOG}
-                      className="group/link flex items-center justify-between rounded-lg border border-[var(--jp-mist)] bg-[var(--jp-paper)] p-3 transition-colors hover:border-[var(--jp-stone)]"
+                      className="group/link flex items-center justify-between rounded-lg border border-(--jp-mist) bg-(--jp-paper) p-3 transition-colors hover:border-(--jp-stone)"
                       onClick={() => analytics.navigateToBlog()}
                     >
                       <div className="flex items-center gap-2">
-                        <BookOpen className="h-4 w-4 text-[var(--jp-indigo)]" />
-                        <span className="font-[family-name:var(--font-jp-sans)] text-[var(--jp-ink)] text-sm">
+                        <BookOpen className="h-4 w-4 text-(--jp-indigo)" />
+                        <span className="font-(family-name:--font-jp-sans) text-(--jp-ink) text-sm">
                           {t('quickAccess.blog')}
                         </span>
                       </div>
-                      <ExternalLink className="h-4 w-4 text-[var(--jp-ash)] opacity-0 transition-opacity group-hover/link:opacity-100" />
+                      <ExternalLink className="h-4 w-4 text-(--jp-ash) opacity-0 transition-opacity group-hover/link:opacity-100" />
                     </Link>
                     <Link
                       href={ROUTES.PROJECTS}
-                      className="group/link flex items-center justify-between rounded-lg border border-[var(--jp-mist)] bg-[var(--jp-paper)] p-3 transition-colors hover:border-[var(--jp-stone)]"
+                      className="group/link flex items-center justify-between rounded-lg border border-(--jp-mist) bg-(--jp-paper) p-3 transition-colors hover:border-(--jp-stone)"
                       onClick={() => analytics.navigateToProjects()}
                     >
                       <div className="flex items-center gap-2">
-                        <Briefcase className="h-4 w-4 text-[var(--jp-moss)]" />
-                        <span className="font-[family-name:var(--font-jp-sans)] text-[var(--jp-ink)] text-sm">
+                        <Briefcase className="h-4 w-4 text-(--jp-moss)" />
+                        <span className="font-(family-name:--font-jp-sans) text-(--jp-ink) text-sm">
                           {t('quickAccess.projects')}
                         </span>
                       </div>
-                      <ExternalLink className="h-4 w-4 text-[var(--jp-ash)] opacity-0 transition-opacity group-hover/link:opacity-100" />
+                      <ExternalLink className="h-4 w-4 text-(--jp-ash) opacity-0 transition-opacity group-hover/link:opacity-100" />
                     </Link>
                   </div>
                 </div>

@@ -20,9 +20,9 @@ export default function ReadingProgress() {
   }, [])
 
   return (
-    <div className="fixed top-0 left-0 z-50 h-0.5 w-full bg-[var(--jp-mist)]">
+    <div className="fixed top-0 left-0 z-50 h-0.5 w-full bg-(--jp-mist)">
       <div
-        className="h-full bg-[var(--jp-vermilion)] transition-all duration-150 ease-out"
+        className="h-full bg-(--jp-vermilion) transition-all duration-150 ease-out"
         style={{ width: `${progress}%` }}
       />
     </div>
