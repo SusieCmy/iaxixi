@@ -16,6 +16,8 @@ import { Button } from '@/components/ui/button'
 import { type ChatMessage, useCozeChat } from '@/hooks/useCozeChat'
 import useChatStore from '@/store/useChatStore'
 
+const CURSOR_PLACEHOLDER = '\u200B__CURSOR__'
+
 const markdownComponents: Components = {
   code: ({ className, children, ...props }) => {
     const match = /language-(\w+)/.exec(className || '')
@@ -34,7 +36,26 @@ const markdownComponents: Components = {
       </code>
     )
   },
-  p: ({ children }) => <p className="mb-1.5 last:mb-0">{children}</p>,
+  p: ({ children }) => {
+    // 把最后一个文本节点里的占位符替换成光标元素
+    const nodes = Array.isArray(children) ? children : [children]
+    const processed = nodes.map((child, i) => {
+      if (
+        i === nodes.length - 1 &&
+        typeof child === 'string' &&
+        child.endsWith(CURSOR_PLACEHOLDER)
+      ) {
+        return (
+          <span key="cursor-wrap">
+            {child.replace(CURSOR_PLACEHOLDER, '')}
+            <span className="ml-0.5 inline-block h-3.5 w-0.5 animate-pulse bg-current align-middle" />
+          </span>
+        )
+      }
+      return child
+    })
+    return <p className="mb-1.5 last:mb-0">{processed}</p>
+  },
   h3: ({ children }) => <h3 className="mt-2 mb-1 font-medium text-sm">{children}</h3>,
   ul: ({ children }) => <ul className="mb-1.5 list-disc pl-4">{children}</ul>,
   ol: ({ children }) => <ol className="mb-1.5 list-decimal pl-4">{children}</ol>,
@@ -91,10 +112,9 @@ function MessageBubble({ message, botIcon }: { message: ChatMessage; botIcon?: s
           <p className="whitespace-pre-wrap break-words">{message.content}</p>
         ) : (
           <div className="break-words [&>*:first-child]:mt-0">
-            <ReactMarkdown components={markdownComponents}>{message.content}</ReactMarkdown>
-            {message.isStreaming && (
-              <span className="ml-0.5 inline-block h-3.5 w-0.5 animate-pulse bg-current align-middle" />
-            )}
+            <ReactMarkdown components={markdownComponents}>
+              {message.isStreaming ? message.content + CURSOR_PLACEHOLDER : message.content}
+            </ReactMarkdown>
           </div>
         )}
       </div>
