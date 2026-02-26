@@ -5,23 +5,9 @@
  */
 'use client'
 
-import {
-  Award,
-  BookOpen,
-  Briefcase,
-  Calendar,
-  Code2,
-  Coffee,
-  ExternalLink,
-  Github,
-  Heart,
-  Mail,
-  MapPin,
-  Sparkles,
-} from 'lucide-react'
+import { Calendar, Code2, Github, Heart, Mail, MapPin, Sparkles } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useEffect, useRef } from 'react'
 import NewsCard from '@/components/news/NewsCard'
@@ -29,17 +15,9 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import TextType from '@/components/ui/TextType'
 import WeatherCard from '@/components/weather/WeatherCard'
-import { EXTERNAL_LINKS, ROUTES } from '@/constants/routes'
+import { EXTERNAL_LINKS } from '@/constants/routes'
 import analytics from '@/lib/analytics'
 import { animateElements, staggerDelay } from '@/lib/animations'
-
-// 技术栈配置
-const _techStack = {
-  frontend: ['JavaScript', 'TypeScript', 'React', 'Vue', 'Next.js'],
-  styling: ['Tailwind CSS', 'CSS3', 'SCSS', 'DaisyUI'],
-  tools: ['Git', 'Vite', 'Webpack', 'npm', 'pnpm'],
-  others: ['Node.js', 'GSAP', 'Anime.js', 'Zustand'],
-}
 
 // 社交链接
 const socialLinks = [
@@ -58,38 +36,6 @@ const socialLinks = [
 const UserInfoPage = () => {
   const t = useTranslations('userInfo')
   const containerRef = useRef<HTMLDivElement>(null)
-  const pathname = usePathname()
-
-  // 判断是否在首页（支持中英文路径）
-  const isHomePage = pathname === '/' || pathname === '/zh' || pathname === '/en'
-
-  // 统计数据
-  const stats = [
-    {
-      icon: Code2,
-      label: t('stats.projectExperience'),
-      value: t('stats.projectsValue'),
-      iconColor: 'text-blue-500',
-    },
-    {
-      icon: BookOpen,
-      label: t('stats.techArticles'),
-      value: t('stats.articlesValue'),
-      iconColor: 'text-green-500',
-    },
-    {
-      icon: Award,
-      label: t('stats.openSource'),
-      value: t('stats.openSourceValue'),
-      iconColor: 'text-purple-500',
-    },
-    {
-      icon: Coffee,
-      label: t('stats.codeLines'),
-      value: t('stats.codeLinesValue'),
-      iconColor: 'text-orange-500',
-    },
-  ]
 
   // 入场动画
   useEffect(() => {
@@ -256,93 +202,10 @@ const UserInfoPage = () => {
 
         {/* 右侧：天气卡片（首页）或 统计数据卡片（其他页面） */}
         <div className="lg:col-span-1">
-          {isHomePage ? (
-            /* 首页展示天气卡片 + 新闻卡片 */
-            <div className="flex flex-col gap-6">
-              <WeatherCard />
-              <NewsCard />
-            </div>
-          ) : (
-            /* 其他页面展示统计数据卡片 */
-            <div className="info-card relative h-full w-full overflow-hidden border border-(--jp-mist) bg-(--jp-cream) opacity-0 transition-colors hover:border-(--jp-stone)">
-              <div className="flex flex-col gap-4 p-5">
-                {/* 标题 */}
-                <div className="flex items-center gap-2">
-                  <Award className="h-4 w-4 text-(--jp-vermilion)" />
-                  <span
-                    className="font-(family-name:--font-jp) font-medium text-(--jp-ink) text-sm"
-                    role="button"
-                    tabIndex={0}
-                    onClick={() => analytics.viewStats()}
-                    onKeyDown={(e) => e.key === 'Enter' && analytics.viewStats()}
-                  >
-                    {t('stats.title')}
-                  </span>
-                </div>
-
-                {/* 统计数据 */}
-                <div className="grid grid-cols-2 gap-3">
-                  {stats.map((stat) => {
-                    const Icon = stat.icon
-                    return (
-                      <div
-                        key={stat.label}
-                        className="stat-item flex items-center gap-2 rounded-lg border border-(--jp-mist) bg-(--jp-paper) p-3 opacity-0 transition-colors hover:border-(--jp-stone)"
-                      >
-                        <Icon className={`h-5 w-5 shrink-0 ${stat.iconColor}`} />
-                        <div>
-                          <p className="font-(family-name:--font-jp) font-medium text-(--jp-ink) text-lg">
-                            {stat.value}
-                          </p>
-                          <p className="font-(family-name:--font-jp-sans) text-(--jp-ash) text-xs">
-                            {stat.label}
-                          </p>
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-
-                {/* 快速链接 */}
-                <div className="border-(--jp-mist) border-t pt-4">
-                  <div className="mb-3 flex items-center gap-2">
-                    <ExternalLink className="h-3.5 w-3.5 text-(--jp-ash)" />
-                    <span className="font-(family-name:--font-jp-sans) font-medium text-(--jp-ash) text-xs">
-                      {t('quickAccess.title')}
-                    </span>
-                  </div>
-                  <div className="space-y-2">
-                    <Link
-                      href={ROUTES.BLOG}
-                      className="group/link flex items-center justify-between rounded-lg border border-(--jp-mist) bg-(--jp-paper) p-3 transition-colors hover:border-(--jp-stone)"
-                      onClick={() => analytics.navigateToBlog()}
-                    >
-                      <div className="flex items-center gap-2">
-                        <BookOpen className="h-4 w-4 text-(--jp-indigo)" />
-                        <span className="font-(family-name:--font-jp-sans) text-(--jp-ink) text-sm">
-                          {t('quickAccess.blog')}
-                        </span>
-                      </div>
-                      <ExternalLink className="h-4 w-4 text-(--jp-ash) opacity-0 transition-opacity group-hover/link:opacity-100" />
-                    </Link>
-                    <Link
-                      href={ROUTES.PROJECTS}
-                      className="group/link flex items-center justify-between rounded-lg border border-(--jp-mist) bg-(--jp-paper) p-3 transition-colors hover:border-(--jp-stone)"
-                      onClick={() => analytics.navigateToProjects()}
-                    >
-                      <div className="flex items-center gap-2">
-                        <Briefcase className="h-4 w-4 text-(--jp-moss)" />
-                        <span className="font-(family-name:--font-jp-sans) text-(--jp-ink) text-sm">
-                          {t('quickAccess.projects')}
-                        </span>
-                      </div>
-                      <ExternalLink className="h-4 w-4 text-(--jp-ash) opacity-0 transition-opacity group-hover/link:opacity-100" />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+          <div className="flex flex-col gap-6">
+            <WeatherCard />
+            <NewsCard />
+          </div>
         </div>
       </div>
     </div>

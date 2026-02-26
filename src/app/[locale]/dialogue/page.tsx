@@ -83,10 +83,11 @@ export default function DialoguePage() {
     <div className="mx-auto min-h-screen max-w-screen-2xl px-6 py-8">
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="font-(family-name:--font-jp) font-medium text-2xl text-(--jp-ink)">
+          <h1 className="mb-2 flex items-center gap-2 font-(family-name:--font-jp) font-medium text-2xl text-(--jp-ink)">
+            <Bot className="h-6 w-6 text-(--jp-vermilion)" />
             智能体
           </h1>
-          <p className="mt-1 font-(family-name:--font-jp-sans) text-(--jp-ash) text-sm">
+          <p className="font-(family-name:--font-jp-sans) text-(--jp-ash) text-sm">
             我的智能体列表
           </p>
         </div>

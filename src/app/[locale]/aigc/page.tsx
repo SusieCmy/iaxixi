@@ -81,14 +81,17 @@ export default function AIGCPage() {
   }
 
   return (
-    <div className="mx-auto max-w-screen-2xl py-8 sm:py-12">
+    <div className="mx-auto max-w-screen-2xl px-6 py-8">
       {/* 页面头部 */}
       <div className="mb-8 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Sparkles className="h-5 w-5 text-(--jp-vermilion)" />
-          <h1 className="font-(family-name:--font-jp) font-medium text-2xl text-(--jp-ink)">
+        <div>
+          <h1 className="mb-2 flex items-center gap-2 font-(family-name:--font-jp) font-medium text-2xl text-(--jp-ink)">
+            <Sparkles className="h-6 w-6 text-(--jp-vermilion)" />
             {t('title')}
           </h1>
+          <p className="font-(family-name:--font-jp-sans) text-(--jp-ash) text-sm">
+            {t('subtitle')}
+          </p>
         </div>
         <button
           type="button"

@@ -54,7 +54,7 @@ export const metadata: Metadata = {
 
 export default function Index() {
   return (
-    <div className="mx-auto max-w-screen-2xl font-[family-name:var(--font-geist-sans)]">
+    <div className="mx-auto max-w-screen-2xl font-(family-name:--font-geist-sans)">
       <UserInfoPage />
     </div>
   )

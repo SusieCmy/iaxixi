@@ -6,7 +6,7 @@ import NewsList from '@/components/news/NewsList'
 
 export default function NewsPage() {
   return (
-    <main className="mx-auto max-w-screen-2xl px-6">
+    <main className="mx-auto max-w-screen-2xl px-6 py-8">
       <NewsList />
     </main>
   )

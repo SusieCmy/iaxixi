@@ -78,14 +78,17 @@ export default function NewsList() {
   const items: NewsItem[] = data?.items || []
 
   return (
-    <div className="mx-auto max-w-screen-2xl py-8 sm:py-12">
+    <div className="mx-auto max-w-screen-2xl">
       {/* 标题栏 */}
       <div className="mb-6 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <TrendingUp className="h-5 w-5 text-(--jp-vermilion)" />
-          <h1 className="font-(family-name:--font-jp) font-medium text-2xl text-(--jp-ink)">
+        <div>
+          <h1 className="mb-2 flex items-center gap-2 font-(family-name:--font-jp) font-medium text-2xl text-(--jp-ink)">
+            <TrendingUp className="h-6 w-6 text-(--jp-vermilion)" />
             {t('title')}
           </h1>
+          <p className="font-(family-name:--font-jp-sans) text-(--jp-ash) text-sm">
+            实时热点，每日资讯
+          </p>
         </div>
         <Button
           variant="outline"

@@ -8,9 +8,9 @@
 
 export default function Home() {
   return (
-    <div className="mx-auto min-h-screen max-w-screen-2xl font-[family-name:var(--font-geist-sans)]">
+    <div className="mx-auto min-h-screen max-w-screen-2xl font-(family-name:--font-geist-sans)]">
       <main className="" />
-      <footer className="row-start-3 flex flex-wrap items-center justify-center gap-[24px]" />
+      <footer className="row-start-3 flex flex-wrap items-center justify-center gap-6" />
     </div>
   )
 }
