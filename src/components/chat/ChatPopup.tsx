@@ -26,7 +26,7 @@ const markdownComponents: Components = {
         style={oneDark}
         language={match[1]}
         PreTag="div"
-        className="!my-2 !rounded-md !text-xs"
+        className="my-2! rounded-md! text-xs!"
       >
         {String(children).replace(/\n$/, '')}
       </SyntaxHighlighter>
@@ -109,9 +109,9 @@ function MessageBubble({ message, botIcon }: { message: ChatMessage; botIcon?: s
             </span>
           </span>
         ) : isUser ? (
-          <p className="whitespace-pre-wrap break-words">{message.content}</p>
+          <p className="whitespace-pre-wrap wrap-break-word">{message.content}</p>
         ) : (
-          <div className="break-words [&>*:first-child]:mt-0">
+          <div className="wrap-break-word [&>*:first-child]:mt-0">
             <ReactMarkdown components={markdownComponents}>
               {message.isStreaming ? message.content + CURSOR_PLACEHOLDER : message.content}
             </ReactMarkdown>
@@ -278,7 +278,7 @@ export default function ChatPopup() {
 
   return (
     <div
-      className="fixed z-50 flex h-[500px] w-[380px] flex-col overflow-hidden rounded-2xl border border-(--jp-mist) bg-(--jp-cream) shadow-xl"
+      className="fixed z-50 flex h-125 w-95 flex-col overflow-hidden rounded-2xl border border-(--jp-mist) bg-(--jp-cream) shadow-xl"
       style={{ right: `${24 - position.x}px`, bottom: `${24 - position.y}px` }}
     >
       {/* Header - 可拖拽 */}
@@ -389,7 +389,7 @@ export default function ChatPopup() {
                 onKeyDown={handleKeyDown}
                 placeholder="输入消息..."
                 rows={1}
-                className="max-h-20 min-h-[32px] flex-1 resize-none rounded-lg border border-(--jp-mist) bg-transparent px-2.5 py-1.5 text-(--jp-ink) text-sm placeholder:text-(--jp-ash) focus:outline-none focus:ring-1 focus:ring-(--jp-vermilion)"
+                className="max-h-20 min-h-8 flex-1 resize-none rounded-lg border border-(--jp-mist) bg-transparent px-2.5 py-1.5 text-(--jp-ink) text-sm placeholder:text-(--jp-ash) focus:outline-none focus:ring-1 focus:ring-(--jp-vermilion)"
               />
               {isLoading ? (
                 <Button
