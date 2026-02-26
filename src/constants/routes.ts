@@ -48,6 +48,6 @@ export const NAV_ITEMS = [
   { label: '首页', href: ROUTES.HOME },
   { label: '关于', href: ROUTES.ABOUT },
   { label: '博客', href: ROUTES.BLOG },
-  { label: '项目', href: ROUTES.PROJECTS },
+  { label: '历程', href: ROUTES.PROJECTS },
   { label: '联系', href: ROUTES.CONTACT },
 ]

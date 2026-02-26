@@ -93,13 +93,13 @@ export default function DialoguePage() {
         </div>
         <Button
           variant="outline"
-          size="sm"
+          size="icon"
           onClick={() => refetch()}
           disabled={isRefetching}
-          className="gap-1.5"
+          className="h-8 w-8 rounded-full"
+          aria-label={t('refresh')}
         >
-          <RefreshCw className={`h-3.5 w-3.5 ${isRefetching ? 'animate-spin' : ''}`} />
-          {t('retry')}
+          <RefreshCw className={`h-4 w-4 ${isRefetching ? 'animate-spin' : ''}`} />
         </Button>
       </div>
 
