@@ -97,7 +97,6 @@ export default function DialoguePage() {
           onClick={() => refetch()}
           disabled={isRefetching}
           className="h-8 w-8 rounded-full"
-          aria-label={t('refresh')}
         >
           <RefreshCw className={`h-4 w-4 ${isRefetching ? 'animate-spin' : ''}`} />
         </Button>
