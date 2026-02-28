@@ -182,7 +182,7 @@ export default function Navigation() {
             <Link
               key={item.path}
               href={item.path}
-              className={`nav-menu-item relative px-1 py-2 font-(family-name:--font-jp-sans) text-sm transition-colors duration-300 ${
+              className={`nav-menu-item font-(family-name:--font-jp-sans) relative px-1 py-2 text-sm transition-colors duration-300 ${
                 active ? 'font-medium text-(--jp-ink)' : 'text-(--jp-ash) hover:text-(--jp-ink)'
               }`}
               title={item.description}
@@ -212,7 +212,7 @@ export default function Navigation() {
               <DropdownMenuItem
                 key={scheme.value}
                 onClick={() => setColorScheme(scheme.value)}
-                className="cursor-pointer gap-2 font-(family-name:--font-jp-sans)"
+                className="font-(family-name:--font-jp-sans) cursor-pointer gap-2"
               >
                 <span
                   className="h-3 w-3 shrink-0 rounded-full"
@@ -227,7 +227,7 @@ export default function Navigation() {
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={handleThemeToggle}
-              className="cursor-pointer gap-2 font-(family-name:--font-jp-sans)"
+              className="font-(family-name:--font-jp-sans) cursor-pointer gap-2"
             >
               {themeType === 'light' ? (
                 <Moon className="h-3.5 w-3.5" />
@@ -265,7 +265,7 @@ export default function Navigation() {
               <DropdownMenuItem
                 key={scheme.value}
                 onClick={() => setColorScheme(scheme.value)}
-                className="cursor-pointer gap-2 font-(family-name:--font-jp-sans)"
+                className="font-(family-name:--font-jp-sans) cursor-pointer gap-2"
               >
                 <span
                   className="h-3 w-3 shrink-0 rounded-full"
@@ -280,7 +280,7 @@ export default function Navigation() {
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={handleThemeToggle}
-              className="cursor-pointer gap-2 font-(family-name:--font-jp-sans)"
+              className="font-(family-name:--font-jp-sans) cursor-pointer gap-2"
             >
               {themeType === 'light' ? (
                 <Moon className="h-3.5 w-3.5" />
@@ -316,7 +316,7 @@ export default function Navigation() {
                   key={item.path}
                   href={item.path}
                   onClick={closeMobileMenu}
-                  className={`mobile-nav-item block px-4 py-3 font-(family-name:--font-jp-sans) transition-colors ${
+                  className={`mobile-nav-item font-(family-name:--font-jp-sans) block px-4 py-3 transition-colors ${
                     active
                       ? 'border-(--jp-vermilion) border-l-2 bg-(--jp-paper) font-medium text-(--jp-ink)'
                       : 'text-(--jp-ash) hover:bg-(--jp-paper) hover:text-(--jp-ink)'

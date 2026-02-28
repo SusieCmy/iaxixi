@@ -15,6 +15,7 @@ import HideInAigc from '@/components/layout/HideInAigc'
 import StructuredData from '@/components/seo/StructuredData'
 import ToastContainer from '@/components/toast/ToastContainer'
 import ScrollToTopOnRouteChange from '@/components/ui/ScrollToTopOnRouteChange'
+import { VoiceCall } from '@/components/voice/VoiceCall'
 import { routing } from '@/i18n/routing'
 
 export function generateStaticParams() {
@@ -59,6 +60,9 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider messages={messages}>
+      <div className="fixed bottom-6 left-6 z-50">
+        <VoiceCall botId={process.env.NEXT_PUBLIC_COZE_BOT_ID!} />
+      </div>
       <ScrollToTopOnRouteChange />
       <ToastContainer />
       <header className="sticky top-0 z-50">
@@ -117,7 +121,7 @@ export default async function LocaleLayout({
                 <GithubIcon className="h-5 w-5" />
               </a>
             </div>
-            <p className="mt-8 text-center font-(family-name:--font-jp-sans) text-(--jp-ash) text-xs">
+            <p className="font-(family-name:--font-jp-sans) mt-8 text-center text-(--jp-ash) text-xs">
               <a
                 href="https://beian.miit.gov.cn/"
                 target="_blank"

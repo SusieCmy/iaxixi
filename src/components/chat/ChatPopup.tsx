@@ -8,69 +8,10 @@ import { useMutation } from '@tanstack/react-query'
 import { Keyboard, Mic, Minus, Send, Sparkles, Square, Trash2, User, X } from 'lucide-react'
 import Image from 'next/image'
 import { type FormEvent, useCallback, useEffect, useRef, useState } from 'react'
-import type { Components } from 'react-markdown'
-import ReactMarkdown from 'react-markdown'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { Button } from '@/components/ui/button'
+import { MarkdownContent } from '@/components/ui/MarkdownContent'
 import { type ChatMessage, useCozeChat } from '@/hooks/useCozeChat'
 import useChatStore from '@/store/useChatStore'
-
-const CURSOR_PLACEHOLDER = '\u200B__CURSOR__'
-
-const markdownComponents: Components = {
-  code: ({ className, children, ...props }) => {
-    const match = /language-(\w+)/.exec(className || '')
-    return match ? (
-      <SyntaxHighlighter
-        style={oneDark}
-        language={match[1]}
-        PreTag="div"
-        className="my-2! rounded-md! text-xs!"
-      >
-        {String(children).replace(/\n$/, '')}
-      </SyntaxHighlighter>
-    ) : (
-      <code className="rounded bg-(--jp-cream) px-1 py-0.5 text-xs" {...props}>
-        {children}
-      </code>
-    )
-  },
-  p: ({ children }) => {
-    // 把最后一个文本节点里的占位符替换成光标元素
-    const nodes = Array.isArray(children) ? children : [children]
-    const processed = nodes.map((child, i) => {
-      if (
-        i === nodes.length - 1 &&
-        typeof child === 'string' &&
-        child.endsWith(CURSOR_PLACEHOLDER)
-      ) {
-        return (
-          <span key="cursor-wrap">
-            {child.replace(CURSOR_PLACEHOLDER, '')}
-            <span className="ml-0.5 inline-block h-3.5 w-0.5 animate-pulse bg-current align-middle" />
-          </span>
-        )
-      }
-      return child
-    })
-    return <p className="mb-1.5 last:mb-0">{processed}</p>
-  },
-  h3: ({ children }) => <h3 className="mt-2 mb-1 font-medium text-sm">{children}</h3>,
-  ul: ({ children }) => <ul className="mb-1.5 list-disc pl-4">{children}</ul>,
-  ol: ({ children }) => <ol className="mb-1.5 list-decimal pl-4">{children}</ol>,
-  li: ({ children }) => <li className="mb-0.5">{children}</li>,
-  blockquote: ({ children }) => (
-    <blockquote className="my-1.5 border-(--jp-vermilion) border-l-2 pl-2 text-(--jp-stone)">
-      {children}
-    </blockquote>
-  ),
-  a: ({ href, children }) => (
-    <a href={href} className="text-(--jp-indigo) underline" target="_blank" rel="noreferrer">
-      {children}
-    </a>
-  ),
-}
 
 function MessageBubble({ message, botIcon }: { message: ChatMessage; botIcon?: string }) {
   const isUser = message.role === 'user'
@@ -109,13 +50,9 @@ function MessageBubble({ message, botIcon }: { message: ChatMessage; botIcon?: s
             </span>
           </span>
         ) : isUser ? (
-          <p className="whitespace-pre-wrap wrap-break-word">{message.content}</p>
+          <p className="wrap-break-word whitespace-pre-wrap">{message.content}</p>
         ) : (
-          <div className="wrap-break-word [&>*:first-child]:mt-0">
-            <ReactMarkdown components={markdownComponents}>
-              {message.isStreaming ? message.content + CURSOR_PLACEHOLDER : message.content}
-            </ReactMarkdown>
-          </div>
+          <MarkdownContent streaming={message.isStreaming}>{message.content}</MarkdownContent>
         )}
       </div>
     </div>
@@ -389,7 +326,7 @@ export default function ChatPopup() {
                 onKeyDown={handleKeyDown}
                 placeholder="输入消息..."
                 rows={1}
-                className="max-h-20 min-h-8 flex-1 resize-none rounded-lg border border-(--jp-mist) bg-transparent px-2.5 py-1.5 text-(--jp-ink) text-sm placeholder:text-(--jp-ash) focus:outline-none focus:ring-1 focus:ring-(--jp-vermilion)"
+                className="max-h-20 min-h-8 flex-1 resize-none rounded-lg border border-(--jp-mist) bg-transparent px-2.5 py-1.5 text-(--jp-ink) text-sm placeholder:text-(--jp-ash) focus:outline-none focus:ring-(--jp-vermilion) focus:ring-1"
               />
               {isLoading ? (
                 <Button

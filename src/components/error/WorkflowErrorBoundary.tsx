@@ -95,7 +95,7 @@ class WorkflowErrorBoundary extends Component<Props, State> {
             </div>
 
             {/* 错误标题 */}
-            <h2 className="mb-2 font-bold text-2xl text-(--jp-ink)">{fallbackTitle}</h2>
+            <h2 className="mb-2 font-bold text-(--jp-ink) text-2xl">{fallbackTitle}</h2>
 
             {/* 错误描述 */}
             <p className="mb-6 text-(--jp-ink)/70">{fallbackMessage}</p>

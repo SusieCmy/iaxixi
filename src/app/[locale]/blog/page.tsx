@@ -31,7 +31,7 @@ export default function Blog() {
       <main>
         {/* 页面标题 */}
         <div className="mb-10">
-          <h1 className="mb-2 flex items-center gap-2 font-(family-name:--font-jp) font-medium text-2xl text-(--jp-ink)">
+          <h1 className="font-(family-name:--font-jp) mb-2 flex items-center gap-2 font-medium text-(--jp-ink) text-2xl">
             <BookOpen className="h-6 w-6 text-(--jp-vermilion)" />
             技术博客
           </h1>
@@ -51,10 +51,10 @@ export default function Blog() {
                 <div className="flex h-full flex-col p-5">
                   {/* 标题和描述 */}
                   <div className="mb-4 flex-1">
-                    <h2 className="mb-2 font-(family-name:--font-jp) font-medium text-(--jp-ink) text-lg transition-colors group-hover:text-(--jp-vermilion)">
+                    <h2 className="font-(family-name:--font-jp) mb-2 font-medium text-(--jp-ink) text-lg transition-colors group-hover:text-(--jp-vermilion)">
                       {post.title}
                     </h2>
-                    <p className="line-clamp-2 font-(family-name:--font-jp-sans) text-(--jp-stone) text-sm leading-relaxed">
+                    <p className="font-(family-name:--font-jp-sans) line-clamp-2 text-(--jp-stone) text-sm leading-relaxed">
                       {post.description}
                     </p>
                   </div>
@@ -64,7 +64,7 @@ export default function Blog() {
                     {post.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="rounded-md border border-(--jp-mist) bg-(--jp-paper) px-2 py-0.5 font-(family-name:--font-jp-sans) text-(--jp-ash) text-xs"
+                        className="font-(family-name:--font-jp-sans) rounded-md border border-(--jp-mist) bg-(--jp-paper) px-2 py-0.5 text-(--jp-ash) text-xs"
                       >
                         {tag}
                       </span>

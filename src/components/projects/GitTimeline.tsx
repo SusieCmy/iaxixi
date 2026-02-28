@@ -54,7 +54,7 @@ export function GitTimeline({ commits }: Props) {
     <div className="mx-auto max-w-screen-2xl px-6 py-8">
       {/* 页面标题 */}
       <div className="mb-10">
-        <h1 className="mb-2 flex items-center gap-2 font-(family-name:--font-jp) font-medium text-2xl text-(--jp-ink)">
+        <h1 className="font-(family-name:--font-jp) mb-2 flex items-center gap-2 font-medium text-(--jp-ink) text-2xl">
           <GitBranch className="h-6 w-6 text-(--jp-vermilion)" />
           历程
         </h1>
@@ -64,7 +64,7 @@ export function GitTimeline({ commits }: Props) {
       </div>
 
       {commits.length === 0 ? (
-        <div className="tl-group flex flex-col items-center gap-3 py-24 opacity-0 text-(--jp-ash)">
+        <div className="tl-group flex flex-col items-center gap-3 py-24 text-(--jp-ash) opacity-0">
           <span className="font-(family-name:--font-jp-sans) text-sm">暂无提交记录</span>
         </div>
       ) : (
@@ -81,10 +81,10 @@ export function GitTimeline({ commits }: Props) {
                 <div key={month} className="tl-group relative flex gap-6 opacity-0 sm:gap-8">
                   {/* 月份 */}
                   <div className="w-20 shrink-0 pt-1 text-right sm:w-24">
-                    <span className="font-(family-name:--font-jp) text-(--jp-ink) text-base font-medium">
+                    <span className="font-(family-name:--font-jp) font-medium text-(--jp-ink) text-base">
                       {year}
                     </span>
-                    <span className="block font-(family-name:--font-jp-sans) text-(--jp-ash) text-xs">
+                    <span className="font-(family-name:--font-jp-sans) block text-(--jp-ash) text-xs">
                       {mon}月
                     </span>
                   </div>
@@ -103,7 +103,7 @@ export function GitTimeline({ commits }: Props) {
                           <div className="flex items-start gap-2">
                             {label !== 'other' && (
                               <span
-                                className={`mt-0.5 shrink-0 rounded-sm px-1.5 py-0.5 font-(family-name:--font-jp-sans) text-white text-xs ${color}`}
+                                className={`font-(family-name:--font-jp-sans) mt-0.5 shrink-0 rounded-sm px-1.5 py-0.5 text-white text-xs ${color}`}
                               >
                                 {label}
                               </span>
@@ -116,7 +116,7 @@ export function GitTimeline({ commits }: Props) {
                             </span>
                           </div>
                           {commit.body && (
-                            <p className="mt-1 pl-10 font-(family-name:--font-jp-sans) text-(--jp-stone) text-xs leading-relaxed">
+                            <p className="font-(family-name:--font-jp-sans) mt-1 pl-10 text-(--jp-stone) text-xs leading-relaxed">
                               {commit.body}
                             </p>
                           )}

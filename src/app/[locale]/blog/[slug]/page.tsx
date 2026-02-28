@@ -118,7 +118,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <nav className="mb-8">
           <Link
             href="/blog"
-            className="group inline-flex items-center font-(family-name:--font-jp-sans) text-(--jp-ash) text-sm transition-colors hover:text-(--jp-ink)"
+            className="group font-(family-name:--font-jp-sans) inline-flex items-center text-(--jp-ash) text-sm transition-colors hover:text-(--jp-ink)"
           >
             <ArrowLeft className="group-hover:-translate-x-1 mr-1.5 h-4 w-4 transition-transform" />
             返回博客列表
@@ -127,15 +127,15 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         {/* 文章头部 */}
         <header className="mb-10 border-(--jp-mist) border-b pb-8">
-          <h1 className="mb-3 font-(family-name:--font-jp) font-medium text-3xl text-(--jp-ink)">
+          <h1 className="font-(family-name:--font-jp) mb-3 font-medium text-(--jp-ink) text-3xl">
             {post.title}
           </h1>
-          <p className="mb-6 font-(family-name:--font-jp-sans) text-(--jp-stone) text-base leading-relaxed">
+          <p className="font-(family-name:--font-jp-sans) mb-6 text-(--jp-stone) text-base leading-relaxed">
             {post.description}
           </p>
 
           {/* 文章元数据 */}
-          <div className="mb-5 flex flex-wrap items-center gap-4 font-(family-name:--font-jp-sans) text-(--jp-ash) text-sm">
+          <div className="font-(family-name:--font-jp-sans) mb-5 flex flex-wrap items-center gap-4 text-(--jp-ash) text-sm">
             <div className="flex items-center gap-1.5">
               <Calendar className="h-4 w-4" />
               <time dateTime={post.date}>
@@ -157,7 +157,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             {post.tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-md border border-(--jp-mist) bg-(--jp-paper) px-2.5 py-1 font-(family-name:--font-jp-sans) text-(--jp-stone) text-xs"
+                className="font-(family-name:--font-jp-sans) rounded-md border border-(--jp-mist) bg-(--jp-paper) px-2.5 py-1 text-(--jp-stone) text-xs"
               >
                 {tag}
               </span>
@@ -166,7 +166,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </header>
 
         {/* 文章内容 */}
-        <article className="prose prose-lg max-w-none prose-blockquote:border-(--jp-vermilion) prose-pre:bg-(--jp-paper) prose-headings:font-(family-name:--font-jp) prose-p:font-(family-name:--font-jp-sans) prose-blockquote:text-(--jp-stone) prose-code:text-(--jp-ink) prose-headings:text-(--jp-ink) prose-p:text-(--jp-stone) prose-strong:text-(--jp-ink)">
+        <article className="prose prose-lg prose-headings:font-(family-name:--font-jp) prose-p:font-(family-name:--font-jp-sans) max-w-none prose-blockquote:border-(--jp-vermilion) prose-pre:bg-(--jp-paper) prose-blockquote:text-(--jp-stone) prose-code:text-(--jp-ink) prose-headings:text-(--jp-ink) prose-p:text-(--jp-stone) prose-strong:text-(--jp-ink)">
           <ReactMarkdown
             components={
               {
@@ -188,7 +188,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   )
                 },
                 h1: ({ children }) => (
-                  <h1 className="mt-12 mb-6 border-(--jp-mist) border-b pb-4 font-medium text-2xl text-(--jp-ink)">
+                  <h1 className="mt-12 mb-6 border-(--jp-mist) border-b pb-4 font-medium text-(--jp-ink) text-2xl">
                     {children}
                   </h1>
                 ),

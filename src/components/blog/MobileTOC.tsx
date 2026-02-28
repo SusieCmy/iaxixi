@@ -136,7 +136,7 @@ export default function MobileTOC() {
                 <button
                   key={item.id}
                   onClick={() => scrollToHeading(item.id)}
-                  className={`block w-full rounded px-3 py-1.5 text-left font-(family-name:--font-jp-sans) text-sm transition-colors ${
+                  className={`font-(family-name:--font-jp-sans) block w-full rounded px-3 py-1.5 text-left text-sm transition-colors ${
                     activeId === item.id
                       ? 'border-(--jp-vermilion) border-l-2 bg-(--jp-paper) text-(--jp-ink)'
                       : 'text-(--jp-ash) hover:bg-(--jp-paper) hover:text-(--jp-ink)'

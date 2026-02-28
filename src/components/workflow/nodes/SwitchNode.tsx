@@ -121,7 +121,7 @@ function SwitchNode({ data, selected }: SwitchNodeProps) {
       <Handle
         type="target"
         position={Position.Left}
-        className="-left-2! h-3.5! w-3.5! border-2! border-(--jp-warning)! bg-(--jp-cream)! transition-all hover:scale-125"
+        className="-left-2! h-3.5! w-3.5! border-(--jp-warning)! border-2! bg-(--jp-cream)! transition-all hover:scale-125"
       />
 
       {/* 右侧 - 输出 (3个) */}
@@ -130,21 +130,21 @@ function SwitchNode({ data, selected }: SwitchNodeProps) {
         type="source"
         position={Position.Right}
         id="case-1"
-        className="-right-2! top-[70px]! h-3.5! w-3.5! border-2! border-(--jp-warning)! bg-(--jp-cream)! transition-all hover:scale-125"
+        className="-right-2! top-[70px]! h-3.5! w-3.5! border-(--jp-warning)! border-2! bg-(--jp-cream)! transition-all hover:scale-125"
       />
       {/* 分支 2 */}
       <Handle
         type="source"
         position={Position.Right}
         id="case-2"
-        className="-right-2! top-[110px]! h-3.5! w-3.5! border-2! border-(--jp-warning)! bg-(--jp-cream)! transition-all hover:scale-125"
+        className="-right-2! top-[110px]! h-3.5! w-3.5! border-(--jp-warning)! border-2! bg-(--jp-cream)! transition-all hover:scale-125"
       />
       {/* 默认分支 */}
       <Handle
         type="source"
         position={Position.Right}
         id="default"
-        className="-right-2! top-[150px]! h-3.5! w-3.5! border-2! border-(--jp-warning)! bg-(--jp-cream)! transition-all hover:scale-125"
+        className="-right-2! top-[150px]! h-3.5! w-3.5! border-(--jp-warning)! border-2! bg-(--jp-cream)! transition-all hover:scale-125"
       />
 
       {/* 快捷添加按钮 - 悬停显示 */}

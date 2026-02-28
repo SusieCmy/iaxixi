@@ -113,12 +113,12 @@ const UserInfoPage = () => {
               {/* 个人信息 */}
               <div className="flex-1 text-center md:text-left">
                 <h1
-                  className="mb-2 font-(family-name:--font-jp) font-medium text-3xl text-(--jp-ink) sm:text-4xl"
+                  className="font-(family-name:--font-jp) mb-2 font-medium text-(--jp-ink) text-3xl sm:text-4xl"
                   onClick={() => analytics.clickUserName()}
                 >
                   <p>{t('name')}</p>
                 </h1>
-                <p className="mb-4 font-(family-name:--font-jp-sans) text-(--jp-stone) text-base sm:text-lg">
+                <p className="font-(family-name:--font-jp-sans) mb-4 text-(--jp-stone) text-base sm:text-lg">
                   {t('position')}
                 </p>
 
@@ -126,21 +126,21 @@ const UserInfoPage = () => {
                 <div className="mb-5 flex flex-wrap justify-center gap-2 md:justify-start">
                   <Badge
                     variant="outline"
-                    className="gap-1.5 px-3 py-1.5 font-(family-name:--font-jp-sans)"
+                    className="font-(family-name:--font-jp-sans) gap-1.5 px-3 py-1.5"
                   >
                     <Sparkles className="h-3.5 w-3.5 text-(--jp-vermilion)" />
                     {t('tags.webDeveloper')}
                   </Badge>
                   <Badge
                     variant="outline"
-                    className="gap-1.5 px-3 py-1.5 font-(family-name:--font-jp-sans)"
+                    className="font-(family-name:--font-jp-sans) gap-1.5 px-3 py-1.5"
                   >
                     <Code2 className="h-3.5 w-3.5 text-(--jp-indigo)" />
                     {t('tags.fullStack')}
                   </Badge>
                   <Badge
                     variant="outline"
-                    className="gap-1.5 px-3 py-1.5 font-(family-name:--font-jp-sans)"
+                    className="font-(family-name:--font-jp-sans) gap-1.5 px-3 py-1.5"
                   >
                     <Heart className="h-3.5 w-3.5 text-(--jp-moss)" />
                     {t('tags.openSource')}
@@ -148,7 +148,7 @@ const UserInfoPage = () => {
                 </div>
 
                 {/* 位置和时间 */}
-                <div className="mb-5 flex flex-wrap justify-center gap-4 font-(family-name:--font-jp-sans) text-(--jp-ash) text-sm md:justify-start">
+                <div className="font-(family-name:--font-jp-sans) mb-5 flex flex-wrap justify-center gap-4 text-(--jp-ash) text-sm md:justify-start">
                   <div className="flex items-center gap-1.5">
                     <MapPin className="h-4 w-4" />
                     <span>{t('location')}</span>
@@ -183,7 +183,7 @@ const UserInfoPage = () => {
 
             {/* 个人简介 */}
             <div className="relative mt-6 border-(--jp-mist) border-t pt-6 sm:mt-8 sm:pt-8">
-              <h2 className="mb-3 flex items-center gap-2 font-(family-name:--font-jp) font-medium text-(--jp-ink) text-lg">
+              <h2 className="font-(family-name:--font-jp) mb-3 flex items-center gap-2 font-medium text-(--jp-ink) text-lg">
                 <Sparkles className="h-5 w-5 text-(--jp-vermilion)" />
                 {t('aboutTitle')}
               </h2>

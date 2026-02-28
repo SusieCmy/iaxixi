@@ -58,7 +58,7 @@ export default function NewsCard() {
 
         {/* 错误状态 */}
         {error && (
-          <p className="py-3 text-center font-(family-name:--font-jp-sans) text-(--jp-ash) text-xs">
+          <p className="font-(family-name:--font-jp-sans) py-3 text-center text-(--jp-ash) text-xs">
             暂时无法获取新闻
           </p>
         )}
@@ -75,7 +75,7 @@ export default function NewsCard() {
                 className="group flex items-start gap-2.5 py-3 transition-colors"
               >
                 <span
-                  className={`mt-0.5 shrink-0 font-(family-name:--font-jp) font-bold text-xs ${
+                  className={`font-(family-name:--font-jp) mt-0.5 shrink-0 font-bold text-xs ${
                     index === 0
                       ? 'text-(--jp-vermilion)'
                       : index === 1
@@ -85,7 +85,7 @@ export default function NewsCard() {
                 >
                   {index + 1}
                 </span>
-                <span className="flex-1 font-(family-name:--font-jp-sans) text-(--jp-ink) text-xs leading-relaxed transition-colors group-hover:text-(--jp-vermilion) line-clamp-2">
+                <span className="font-(family-name:--font-jp-sans) line-clamp-2 flex-1 text-(--jp-ink) text-xs leading-relaxed transition-colors group-hover:text-(--jp-vermilion)">
                   {item.title}
                 </span>
                 <ExternalLink className="mt-0.5 h-3 w-3 shrink-0 text-(--jp-ash) opacity-0 transition-opacity group-hover:opacity-100" />

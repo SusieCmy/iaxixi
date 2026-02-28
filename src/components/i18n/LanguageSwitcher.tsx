@@ -44,7 +44,7 @@ export default function LanguageSwitcher() {
         <Button
           variant="outline"
           size="sm"
-          className="gap-1.5 font-(family-name:--font-jp-sans)"
+          className="font-(family-name:--font-jp-sans) gap-1.5"
           aria-label="切换语言 / Switch Language"
         >
           {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Globe className="h-4 w-4" />}

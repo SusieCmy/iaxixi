@@ -158,7 +158,7 @@ function DefaultNode({ data, selected }: DefaultNodeProps) {
       <Handle
         type="target"
         position={Position.Left}
-        className="-left-2! h-3.5! w-3.5! border-2! border-(--jp-vermilion)! bg-(--jp-cream)! transition-all hover:scale-125"
+        className="-left-2! h-3.5! w-3.5! border-(--jp-vermilion)! border-2! bg-(--jp-cream)! transition-all hover:scale-125"
       />
 
       {/* 右侧 - 输出（始终渲染所有 Handle，通过 CSS 控制可见性） */}
@@ -168,7 +168,7 @@ function DefaultNode({ data, selected }: DefaultNodeProps) {
         position={Position.Right}
         id="source-default"
         className={cn(
-          '-right-2! h-3.5! w-3.5! border-2! border-(--jp-vermilion)! bg-(--jp-cream)! transition-all hover:scale-125',
+          '-right-2! h-3.5! w-3.5! border-(--jp-vermilion)! border-2! bg-(--jp-cream)! transition-all hover:scale-125',
           data.enableErrorHandling && 'pointer-events-none! opacity-0!'
         )}
       />
@@ -178,7 +178,7 @@ function DefaultNode({ data, selected }: DefaultNodeProps) {
         position={Position.Right}
         id="source-success"
         className={cn(
-          '-right-2! top-[40%]! h-3.5! w-3.5! border-2! border-(--jp-success)! bg-(--jp-cream)! transition-all hover:scale-125',
+          '-right-2! top-[40%]! h-3.5! w-3.5! border-(--jp-success)! border-2! bg-(--jp-cream)! transition-all hover:scale-125',
           !data.enableErrorHandling && 'pointer-events-none! opacity-0!'
         )}
       />
@@ -188,7 +188,7 @@ function DefaultNode({ data, selected }: DefaultNodeProps) {
         position={Position.Right}
         id="source-failure"
         className={cn(
-          '-right-2! top-[70%]! h-3.5! w-3.5! border-2! border-(--jp-error)! bg-(--jp-cream)! transition-all hover:scale-125',
+          '-right-2! top-[70%]! h-3.5! w-3.5! border-(--jp-error)! border-2! bg-(--jp-cream)! transition-all hover:scale-125',
           !data.enableErrorHandling && 'pointer-events-none! opacity-0!'
         )}
       />

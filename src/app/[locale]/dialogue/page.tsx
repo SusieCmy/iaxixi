@@ -37,7 +37,7 @@ function BotCard({ bot }: { bot: BotInfo }) {
         )}
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
-            <h3 className="truncate font-(family-name:--font-jp-sans) font-medium text-(--jp-ink)">
+            <h3 className="font-(family-name:--font-jp-sans) truncate font-medium text-(--jp-ink)">
               {bot.name}
             </h3>
             {bot.is_published && (
@@ -51,7 +51,7 @@ function BotCard({ bot }: { bot: BotInfo }) {
               {bot.description}
             </p>
           )}
-          <p className="mt-2 text-[10px] text-(--jp-mist)">
+          <p className="mt-2 text-(--jp-mist) text-[10px]">
             更新于 {new Date(bot.updated_at * 1000).toLocaleDateString('zh-CN')}
           </p>
         </div>
@@ -83,7 +83,7 @@ export default function DialoguePage() {
     <div className="mx-auto min-h-screen max-w-screen-2xl px-6 py-8">
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="mb-2 flex items-center gap-2 font-(family-name:--font-jp) font-medium text-2xl text-(--jp-ink)">
+          <h1 className="font-(family-name:--font-jp) mb-2 flex items-center gap-2 font-medium text-(--jp-ink) text-2xl">
             <Bot className="h-6 w-6 text-(--jp-vermilion)" />
             智能体
           </h1>

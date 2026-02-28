@@ -8,7 +8,7 @@
 
 export default function Home() {
   return (
-    <div className="mx-auto min-h-screen max-w-screen-2xl font-(family-name:--font-geist-sans)]">
+    <div className="font-(family-name:--font-geist-sans)] mx-auto min-h-screen max-w-screen-2xl">
       <main className="" />
       <footer className="row-start-3 flex flex-wrap items-center justify-center gap-6" />
     </div>

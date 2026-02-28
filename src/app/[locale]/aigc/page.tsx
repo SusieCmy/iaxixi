@@ -85,7 +85,7 @@ export default function AIGCPage() {
       {/* 页面头部 */}
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="mb-2 flex items-center gap-2 font-(family-name:--font-jp) font-medium text-2xl text-(--jp-ink)">
+          <h1 className="font-(family-name:--font-jp) mb-2 flex items-center gap-2 font-medium text-(--jp-ink) text-2xl">
             <Sparkles className="h-6 w-6 text-(--jp-vermilion)" />
             {t('title')}
           </h1>
@@ -96,7 +96,7 @@ export default function AIGCPage() {
         <button
           type="button"
           onClick={() => setShowCreateModal(true)}
-          className="flex items-center gap-1.5 rounded-lg border border-(--jp-mist) bg-(--jp-cream) px-4 py-2 font-(family-name:--font-jp-sans) text-(--jp-ink) text-sm transition-colors hover:border-(--jp-vermilion) hover:text-(--jp-vermilion)"
+          className="font-(family-name:--font-jp-sans) flex items-center gap-1.5 rounded-lg border border-(--jp-mist) bg-(--jp-cream) px-4 py-2 text-(--jp-ink) text-sm transition-colors hover:border-(--jp-vermilion) hover:text-(--jp-vermilion)"
           aria-label={t('createWorkflow')}
         >
           <Plus className="h-4 w-4" />
@@ -110,16 +110,16 @@ export default function AIGCPage() {
           <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-lg border border-(--jp-mist) bg-(--jp-paper)">
             <FileText className="h-6 w-6 text-(--jp-ash)" />
           </div>
-          <h3 className="mb-2 font-(family-name:--font-jp) font-medium text-(--jp-ink) text-base">
+          <h3 className="font-(family-name:--font-jp) mb-2 font-medium text-(--jp-ink) text-base">
             {t('emptyTitle')}
           </h3>
-          <p className="mb-6 font-(family-name:--font-jp-sans) text-(--jp-ash) text-sm">
+          <p className="font-(family-name:--font-jp-sans) mb-6 text-(--jp-ash) text-sm">
             {t('emptyDescription')}
           </p>
           <button
             type="button"
             onClick={() => setShowCreateModal(true)}
-            className="flex items-center gap-1.5 rounded-lg border border-(--jp-vermilion) px-5 py-2 font-(family-name:--font-jp-sans) text-(--jp-vermilion) text-sm transition-colors hover:bg-(--jp-vermilion) hover:text-white"
+            className="font-(family-name:--font-jp-sans) flex items-center gap-1.5 rounded-lg border border-(--jp-vermilion) px-5 py-2 text-(--jp-vermilion) text-sm transition-colors hover:bg-(--jp-vermilion) hover:text-white"
             aria-label={t('createWorkflow')}
           >
             <Plus className="h-4 w-4" />
@@ -136,7 +136,7 @@ export default function AIGCPage() {
                 <button
                   type="button"
                   onClick={(e) => handleDelete(workflow.id, e)}
-                  className="absolute top-4 right-4 p-1.5 text-(--jp-ash) opacity-0 transition-all group-hover:opacity-100 hover:text-(--jp-vermilion)"
+                  className="absolute top-4 right-4 p-1.5 text-(--jp-ash) opacity-0 transition-all hover:text-(--jp-vermilion) group-hover:opacity-100"
                   title={t('deleteWorkflow')}
                   aria-label={t('deleteWorkflow')}
                 >
@@ -144,17 +144,17 @@ export default function AIGCPage() {
                 </button>
 
                 {/* 名称 */}
-                <h3 className="mb-2 pr-6 font-(family-name:--font-jp) font-medium text-(--jp-ink) text-base transition-colors group-hover:text-(--jp-vermilion) truncate">
+                <h3 className="font-(family-name:--font-jp) mb-2 truncate pr-6 font-medium text-(--jp-ink) text-base transition-colors group-hover:text-(--jp-vermilion)">
                   {workflow.name}
                 </h3>
 
                 {/* 描述 */}
-                <p className="mb-4 font-(family-name:--font-jp-sans) text-(--jp-stone) text-xs leading-relaxed line-clamp-2">
+                <p className="font-(family-name:--font-jp-sans) mb-4 line-clamp-2 text-(--jp-stone) text-xs leading-relaxed">
                   {workflow.description || t('noDescription')}
                 </p>
 
                 {/* 底部信息 */}
-                <div className="flex items-center gap-4 border-(--jp-mist) border-t pt-3 font-(family-name:--font-jp-sans) text-(--jp-ash) text-xs">
+                <div className="font-(family-name:--font-jp-sans) flex items-center gap-4 border-(--jp-mist) border-t pt-3 text-(--jp-ash) text-xs">
                   <div className="flex items-center gap-1">
                     <FileText className="h-3 w-3" />
                     <span>{t('nodeCount', { count: workflow.nodes?.length || 0 })}</span>

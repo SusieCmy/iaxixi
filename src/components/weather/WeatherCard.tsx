@@ -148,7 +148,7 @@ function WeatherCard() {
           <MainIcon className={cn('size-14 shrink-0', iconColor)} />
           <div className="flex flex-col">
             <div className="flex items-baseline gap-1">
-              <span className="font-(family-name:--font-jp) font-semibold text-4xl text-(--jp-ink)">
+              <span className="font-(family-name:--font-jp) font-semibold text-(--jp-ink) text-4xl">
                 {data.temp}
               </span>
               <span className="text-(--jp-ash) text-xl">°C</span>

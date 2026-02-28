@@ -35,7 +35,7 @@ function TriggerNode({ data }: TriggerNodeProps) {
   return (
     <div className="group relative">
       {/* 节点主体 - 圆形设计 */}
-      <div className="relative flex h-20 w-20 items-center justify-center rounded-full border-2 border-(--jp-vermilion) bg-gradient-to-br from-(--jp-vermilion)/10 to-(--jp-vermilion)/5 shadow-(--jp-vermilion)/20 shadow-lg transition-all hover:scale-105 hover:border-(--jp-vermilion)/80 hover:shadow-(--jp-vermilion)/30 hover:shadow-xl">
+      <div className="relative flex h-20 w-20 items-center justify-center rounded-full border-(--jp-vermilion) border-2 bg-gradient-to-br from-(--jp-vermilion)/10 to-(--jp-vermilion)/5 shadow-(--jp-vermilion)/20 shadow-lg transition-all hover:scale-105 hover:border-(--jp-vermilion)/80 hover:shadow-(--jp-vermilion)/30 hover:shadow-xl">
         {/* 图标 */}
         <Icon className="h-8 w-8 text-(--jp-vermilion)" />
 
@@ -43,7 +43,7 @@ function TriggerNode({ data }: TriggerNodeProps) {
         <Handle
           type="source"
           position={Position.Right}
-          className="-right-2! h-3.5! w-3.5! border-2! border-(--jp-vermilion)! bg-(--jp-cream)! transition-all hover:scale-125!"
+          className="-right-2! h-3.5! w-3.5! border-(--jp-vermilion)! border-2! bg-(--jp-cream)! transition-all hover:scale-125!"
         />
       </div>
 

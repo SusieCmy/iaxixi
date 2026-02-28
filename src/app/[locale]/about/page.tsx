@@ -29,7 +29,7 @@ export default function About() {
     <div className="mx-auto max-w-screen-2xl px-6 py-8">
       {/* 标题 */}
       <div className="about-item mb-12 opacity-0">
-        <h1 className="mb-2 flex items-center gap-2 font-(family-name:--font-jp) font-medium text-2xl text-(--jp-ink)">
+        <h1 className="font-(family-name:--font-jp) mb-2 flex items-center gap-2 font-medium text-(--jp-ink) text-2xl">
           <User className="h-6 w-6 text-(--jp-vermilion)" />
           关于我
         </h1>

@@ -44,27 +44,27 @@ function formatTime(pubDate: string) {
 function RankBadge({ index }: { index: number }) {
   if (index === 0) {
     return (
-      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded font-(family-name:--font-jp) font-bold text-white text-xs bg-(--jp-vermilion)">
+      <span className="font-(family-name:--font-jp) flex h-5 w-5 shrink-0 items-center justify-center rounded bg-(--jp-vermilion) font-bold text-white text-xs">
         1
       </span>
     )
   }
   if (index === 1) {
     return (
-      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded font-(family-name:--font-jp) font-bold text-white text-xs bg-(--jp-stone)">
+      <span className="font-(family-name:--font-jp) flex h-5 w-5 shrink-0 items-center justify-center rounded bg-(--jp-stone) font-bold text-white text-xs">
         2
       </span>
     )
   }
   if (index === 2) {
     return (
-      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded font-(family-name:--font-jp) font-bold text-white text-xs bg-(--jp-moss)">
+      <span className="font-(family-name:--font-jp) flex h-5 w-5 shrink-0 items-center justify-center rounded bg-(--jp-moss) font-bold text-white text-xs">
         3
       </span>
     )
   }
   return (
-    <span className="flex h-5 w-5 shrink-0 items-center justify-center font-(family-name:--font-jp) text-(--jp-ash) text-xs">
+    <span className="font-(family-name:--font-jp) flex h-5 w-5 shrink-0 items-center justify-center text-(--jp-ash) text-xs">
       {index + 1}
     </span>
   )
@@ -82,7 +82,7 @@ export default function NewsList() {
       {/* 标题栏 */}
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="mb-2 flex items-center gap-2 font-(family-name:--font-jp) font-medium text-2xl text-(--jp-ink)">
+          <h1 className="font-(family-name:--font-jp) mb-2 flex items-center gap-2 font-medium text-(--jp-ink) text-2xl">
             <TrendingUp className="h-6 w-6 text-(--jp-vermilion)" />
             {t('title')}
           </h1>
@@ -109,7 +109,7 @@ export default function NewsList() {
             key={source.id}
             type="button"
             onClick={() => setSourceId(source.id)}
-            className={`rounded-full border px-4 py-1.5 font-(family-name:--font-jp-sans) text-sm transition-colors ${
+            className={`font-(family-name:--font-jp-sans) rounded-full border px-4 py-1.5 text-sm transition-colors ${
               sourceId === source.id
                 ? 'border-(--jp-vermilion) bg-(--jp-vermilion) text-white'
                 : 'border-(--jp-mist) bg-(--jp-cream) text-(--jp-stone) hover:border-(--jp-stone) hover:text-(--jp-ink)'
@@ -125,7 +125,7 @@ export default function NewsList() {
         <div className="space-y-2">
           {Array.from({ length: 10 }).map((_, i) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: static skeleton
-            <div key={i} className="flex items-center gap-3 border-b border-(--jp-mist) py-3.5">
+            <div key={i} className="flex items-center gap-3 border-(--jp-mist) border-b py-3.5">
               <div className="h-5 w-5 animate-pulse rounded bg-(--jp-mist)" />
               <div className="h-4 flex-1 animate-pulse rounded bg-(--jp-mist)" />
               <div className="h-3 w-14 animate-pulse rounded bg-(--jp-mist)" />
@@ -153,12 +153,12 @@ export default function NewsList() {
               href={item.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-3 py-3.5 transition-colors hover:bg-(--jp-paper) -mx-3 px-3 rounded-lg"
+              className="group -mx-3 flex items-center gap-3 rounded-lg px-3 py-3.5 transition-colors hover:bg-(--jp-paper)"
             >
               <RankBadge index={index} />
 
               {/* 标题 */}
-              <span className="flex-1 font-(family-name:--font-jp-sans) text-(--jp-ink) text-sm leading-relaxed group-hover:text-(--jp-vermilion) transition-colors">
+              <span className="font-(family-name:--font-jp-sans) flex-1 text-(--jp-ink) text-sm leading-relaxed transition-colors group-hover:text-(--jp-vermilion)">
                 {item.title}
               </span>
 
