@@ -12,7 +12,7 @@ import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 export const CURSOR_PLACEHOLDER = '\u200B__CURSOR__'
 
 const markdownComponents: Components = {
-  code: ({ className, children, ...props }) => {
+  code: ({ className, children }) => {
     const match = /language-(\w+)/.exec(className || '')
     return match ? (
       <SyntaxHighlighter
@@ -24,9 +24,7 @@ const markdownComponents: Components = {
         {String(children).replace(/\n$/, '')}
       </SyntaxHighlighter>
     ) : (
-      <code className="rounded bg-(--jp-cream) px-1 py-0.5 text-xs" {...props}>
-        {children}
-      </code>
+      <code className="rounded bg-(--jp-cream) px-1 py-0.5 text-xs">{children}</code>
     )
   },
   p: ({ children }) => {
